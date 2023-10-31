@@ -98,7 +98,7 @@ function App(): JSX.Element {
 
 const styles = StyleSheet.create({
   sectionContainer: {
-    marginTop: 32,
+    marginTop: 30,
     paddingHorizontal: 24,
   },
   sectionTitle: {
