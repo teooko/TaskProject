@@ -1,11 +1,16 @@
 import React from 'react';
 import {SafeAreaView, Text} from "react-native";
+import Page from "./src/pages/Page";
 
 const App = () => {
 
   return (
     <SafeAreaView>
-     <Text>Hello</Text>
+        <Page>
+            <Text>
+                Hello
+            </Text>
+        </Page>
     </SafeAreaView>
   );
 }
