@@ -1,17 +1,17 @@
-import {Button, Text, View} from "react-native";
+﻿import {Button, Text, View} from "react-native";
 import Page from "../Page";
 import React from "react";
 
-function Home({ navigation }) {
+function Timer({ navigation }) {
     return (
         <View>
             <Page navigation={navigation}>
                 <Text>
-                    HOMEEE
+                    TIMEEER
                 </Text>
             </Page>
         </View>
     );
 }
 
-export default Home
+export default Timer

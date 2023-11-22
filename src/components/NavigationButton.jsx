@@ -2,9 +2,9 @@
 import {SvgXml} from "react-native-svg";
 import * as React from "react";
 
-const NavigationButton = ({icon}) => {
+const NavigationButton = ({icon, onPress}) => {
     return (
-        <Pressable style={styles.button} hitSlop={{top: 15, left: 15, bottom: 15, right: 15}} onPress={() => {console.log('Pressed!')}}>
+        <Pressable style={styles.button} hitSlop={{top: 15, left: 15, bottom: 15, right: 15}} onPress={onPress}>
             <SvgXml xml={icon} width="20" height="20" style={styles.icon}/>
         </Pressable>
     )

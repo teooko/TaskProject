@@ -2,11 +2,11 @@
 import { icons } from "../../assets/Icons";
 import * as React from "react";
 import NavigationButton from "../../components/NavigationButton";
-const NavigationBar = () => {
+const NavigationBar = ({navigation}) => {
     const {menu, profile} = icons;
     return (
         <View style={styles.navigationBar}>
-            <NavigationButton icon={menu} />
+            <NavigationButton icon={menu} onPress={() => navigation.openDrawer()}/>
             <NavigationButton icon={profile} />
         </View>
     )
