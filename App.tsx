@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {View, Text, Button, StyleSheet, Pressable} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import {
     createDrawerNavigator,
@@ -9,19 +9,25 @@ import {
 } from '@react-navigation/drawer';
 import Home from "./src/pages/Home";
 import Timer from "./src/pages/Timer";
-
-function Notifications() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Notifications Screen</Text>
-        </View>
-    );
-}
-
+import {icons} from "./src/assets/Icons";
+import {SvgXml} from "react-native-svg";
 function CustomDrawerContent(props) {
+    
     return (
-        <DrawerContentScrollView {...props} style={styles.page}>
-            <DrawerItemList {...props} />
+        <DrawerContentScrollView {...props} >
+            <Pressable onPress={() => props.navigation.navigate('Home')}>
+                <SvgXml xml={icons.house} width="20" height="20"></SvgXml>
+                <Text>
+                    Home
+                </Text>
+            </Pressable>
+            <Pressable onPress={() => props.navigation.navigate('Timer')}>
+                <SvgXml xml={icons.clock} width="20" height="20"></SvgXml>
+                <Text>
+                    Timer
+                </Text>
+            </Pressable>
+            {/*
             <DrawerItem
                 label="Close drawer"
                 onPress={() => props.navigation.closeDrawer()}
@@ -30,6 +36,7 @@ function CustomDrawerContent(props) {
                 label="Toggle drawer"
                 onPress={() => props.navigation.toggleDrawer()}
             />
+            */}
         </DrawerContentScrollView>
     );
 }
@@ -51,14 +58,20 @@ function MyDrawer() {
 
 export default function App() {
     return (
-        <NavigationContainer>
+        <NavigationContainer theme={MyTheme}>
             <MyDrawer />
         </NavigationContainer>
     );
 }
 
-const styles = StyleSheet.create({
-    page: {
-        backgroundColor: 'red'
-    }
-});
+const MyTheme = {
+    dark: true,
+    colors: {
+        primary: 'white',
+        background: 'white',
+        card: '#DF5454',
+        text: 'black',
+        border: 'green',
+        notification: 'yellow',
+    },
+};
