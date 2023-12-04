@@ -1,17 +1,19 @@
-﻿import {DrawerContentScrollView, DrawerItem, DrawerItemList} from "@react-navigation/drawer";
+﻿import {createDrawerNavigator} from "@react-navigation/drawer";
+import CustomDrawerContent from "./CustomDrawerContent";
+import Home from "../Home";
+import Timer from "../Timer";
+import * as React from "react";
 
-function CustomDrawer(props) {
+const Drawer = createDrawerNavigator();
+
+const CustomDrawer = () => {
     return (
-        <DrawerContentScrollView {...props}>
-            <DrawerItemList {...props} />
-            <DrawerItem
-                label="Close drawer"
-                onPress={() => props.navigation.closeDrawer()}
-            />
-            <DrawerItem
-                label="Toggle drawer"
-                onPress={() => props.navigation.toggleDrawer()}
-            />
-        </DrawerContentScrollView>
+        <Drawer.Navigator screenOptions={{ headerShown: false }} 
+                          drawerContent={(props) => <CustomDrawerContent {...props} />}>
+            <Drawer.Screen name="Home" component={Home} />
+            <Drawer.Screen name="Timer" component={Timer} />
+        </Drawer.Navigator>
     );
 }
+
+export default CustomDrawer;
