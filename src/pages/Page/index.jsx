@@ -6,9 +6,9 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 const Page = ({children, navigation}) => {
     return (
-        <LinearGradient colors={['#DF5454', '#B83838']}>
-            <ScrollView style={styles.page}>
-                <NavigationBar navigation={navigation}/>
+        <LinearGradient colors={['#DF5454', '#B83838']} style={styles.page}>
+            <ScrollView style={styles.page} contentContainerStyle={{flex: 1}}>
+                <NavigationBar navigation={navigation} />
                 {children}
             </ScrollView>
         </LinearGradient>
@@ -18,8 +18,7 @@ const Page = ({children, navigation}) => {
 const styles = StyleSheet.create({
     page: {
         height: '100%',
-        marginLeft: 10,
-        marginRight: 10,
+        
     }
 });
 
