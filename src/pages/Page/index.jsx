@@ -1,9 +1,6 @@
 ﻿import {ScrollView, StyleSheet} from "react-native";
 import LinearGradient from 'react-native-linear-gradient';
 import NavigationBar from './NavigationBar'
-import { Button, View } from 'react-native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-
 const Page = ({children, navigation}) => {
     return (
         <LinearGradient colors={['#DF5454', '#B83838']} style={styles.page}>
@@ -18,7 +15,6 @@ const Page = ({children, navigation}) => {
 const styles = StyleSheet.create({
     page: {
         height: '100%',
-        
     }
 });
 

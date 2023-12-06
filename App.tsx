@@ -2,23 +2,23 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import CustomDrawer from "./src/pages/Page/CustomDrawer";
 
-
 export default function App() {
     return (
-        <NavigationContainer theme={MyTheme}>
+        <NavigationContainer theme={theme}>
             <CustomDrawer/>
         </NavigationContainer>
     );
 }
 
-const MyTheme = {
+const theme = {
     dark: true,
     colors: {
         primary: 'white',
         background: 'white',
         card: '#DF5454',
-        text: 'black',
-        border: 'green',
-        notification: 'yellow',
+        text: 'white',
+        border: 'white',
+        notification: 'white',
     },
 };
+
