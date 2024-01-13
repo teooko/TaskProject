@@ -1,11 +1,15 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import CustomDrawer from "./src/pages/Page/CustomDrawer";
+import {Provider} from "react-redux";
+import Store from "./src/store";
 
 export default function App() {
     return (
         <NavigationContainer theme={theme}>
-            <CustomDrawer/>
+            <Provider store={Store}>
+                <CustomDrawer/>
+            </Provider>
         </NavigationContainer>
     );
 }
