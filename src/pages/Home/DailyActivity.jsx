@@ -1,6 +1,7 @@
 ﻿import {StyleSheet, Text} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import React from "react";
+import Piechart from "../../components/Piechart";
 
 const DailyActivity = () => {
     return (
@@ -8,6 +9,7 @@ const DailyActivity = () => {
             <Text style={styles.dailyActivityLabel}>
                 Today's Activity
             </Text>
+            <Piechart />
         </LinearGradient>
     )
 }
