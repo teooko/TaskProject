@@ -8,8 +8,14 @@ const Drawer = createDrawerNavigator();
 
 const CustomDrawer = () => {
     return (
-        <Drawer.Navigator screenOptions={{ headerShown: false }} 
-                          drawerContent={(props) => <CustomDrawerContent {...props} />}>
+        <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props}/>}
+                          screenOptions={{
+                              headerShown: false,
+                              swipeEdgeWidth: 5,
+                              swipeMinDistance: 50
+                          }}
+                          
+        >
             <Drawer.Screen name="Home" component={Home} />
             <Drawer.Screen name="Timer" component={Timer} />
         </Drawer.Navigator>
