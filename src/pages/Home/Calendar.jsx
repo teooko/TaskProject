@@ -1,4 +1,4 @@
-﻿import {StyleSheet, Text, View} from "react-native";
+﻿import {StyleSheet, View} from "react-native";
 import React from "react";
 import ScrollingCalendar from "../../components/ScrollingCalendar";
 
@@ -12,8 +12,6 @@ const Calendar = () => {
 
 const styles = StyleSheet.create({
     calendar: {
-        width: '100%',
-        height: 140,
         paddingLeft: 5,
         paddingRight: 5
     }
