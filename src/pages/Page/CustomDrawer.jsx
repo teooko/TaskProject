@@ -14,7 +14,6 @@ const CustomDrawer = () => {
                               swipeEdgeWidth: 5,
                               swipeMinDistance: 50
                           }}
-                          
         >
             <Drawer.Screen name="Home" component={Home} />
             <Drawer.Screen name="Timer" component={Timer} />

@@ -39,19 +39,10 @@ const Piechart = () => {
                 height={220}
                 paddingLeft={(Dimensions.get('window').width/4).toString()}
                 chartConfig={{
-                    backgroundColor: '#1cc910',
-                    backgroundGradientFrom: '#eff3ff',
-                    backgroundGradientTo: '#efefef',
-                    decimalPlaces: 2,
-                    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                    style: {
-                        borderRadius: 16,
-                    },
+                    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`
                 }}
                 accessor="population"
                 backgroundColor="transparent"
-                marginLeft="50%"
-                marginRight="50%"
                 absolute
                 fromZero
             />
@@ -60,9 +51,10 @@ const Piechart = () => {
 }
 const styles = StyleSheet.create({
     pieChart: {
-        flex: 1,
+        display: "flex",
         flexDirection: "row",
-        justifyContent: "center"
+        justifyContent: "center",
+        height: 220
     }
 })
 export default Piechart;

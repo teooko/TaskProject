@@ -1,4 +1,4 @@
-import {View} from "react-native";
+import {ScrollView} from "react-native";
 import Page from "../Page";
 import React from "react";
 import {StyleSheet} from "react-native";
@@ -8,19 +8,16 @@ import DailyActivity from "./DailyActivity";
 const Home = ({ navigation }) => {
     return (
             <Page navigation={navigation}>
-                <View style={styles.container}>
+                <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }} overScrollMode={"never"} showsVerticalScrollIndicator={false}>
                     <Calendar />
                     <DailyActivity />
-                </View>
+                </ScrollView>
             </Page>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
-        height: '100%',
-        flexGrow: 1
     },
 })
 export default Home

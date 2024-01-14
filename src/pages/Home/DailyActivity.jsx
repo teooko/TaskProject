@@ -1,4 +1,4 @@
-﻿import {StyleSheet, Text} from "react-native";
+﻿import {Dimensions, StyleSheet, Text, View} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import React from "react";
 import Piechart from "../../components/Piechart";
@@ -16,14 +16,13 @@ const DailyActivity = () => {
 
 const styles = StyleSheet.create({
     dailyActivity: {
-        width: '100%',
-        height: '100%',
-        
-        borderRadius: 40,
+        flex: 1,
+        flexGrow: 1,
+        borderRadius: 30,
     },
     dailyActivityLabel: {
         fontSize: 20,
-        
+        color: "white",
         marginLeft: "auto",
         marginRight: "auto",
         marginTop: 10
