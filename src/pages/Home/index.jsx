@@ -8,16 +8,11 @@ import DailyActivity from "./DailyActivity";
 const Home = ({ navigation }) => {
     return (
             <Page navigation={navigation}>
-                <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }} overScrollMode={"never"} showsVerticalScrollIndicator={false}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }} overScrollMode={"never"} showsVerticalScrollIndicator={false}>
                     <Calendar />
                     <DailyActivity />
                 </ScrollView>
             </Page>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-    },
-})
 export default Home

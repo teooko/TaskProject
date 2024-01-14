@@ -16,7 +16,6 @@ const DailyActivity = () => {
 
 const styles = StyleSheet.create({
     dailyActivity: {
-        flex: 1,
         flexGrow: 1,
         borderRadius: 30,
     },
