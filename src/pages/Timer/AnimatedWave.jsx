@@ -10,21 +10,28 @@ const AnimatedWave = ({style}) => {
                 <Svg height="20" width="100%" style={{...styles.squiggly, ...styles.squigglyThree}}>
                     <Path
                         d="M0,10 C50,30 50,-10 100,10 L100,0 L0,0 Z"
-                        fill="blue"
+                        fill="#B83838"
                     />
                 </Svg>
                 <Svg height="20" width="100%" style={{...styles.squiggly, ...styles.squigglyTwo}}>
                     <Path
                         d="M0,10 C50,30 50,-10 100,10 L100,0 L0,0 Z"
-                        fill="blue"
+                        fill="#B83838"
                     />
                 </Svg>
                 <Svg height="20" width="100%" style={styles.squiggly}>
                     <Path
                         d="M0,10 C50,30 50,-10 100,10 L100,0 L0,0 Z"
-                        fill="blue"
+                        fill="#B83838"
                     />
                 </Svg>
+                <Svg height="20" width="100%" style={{...styles.squiggly, ...styles.squigglyFour}}>
+                    <Path
+                        d="M0,10 C50,30 50,-10 100,10 L100,0 L0,0 Z"
+                        fill="#B83838"
+                    />
+                </Svg>
+                
             </Animated.View>
         </View>
     )
@@ -42,14 +49,9 @@ const styles = StyleSheet.create({
     frontWave: {
         position: "absolute",
         zIndex: 2,
-        backgroundColor: "blue",
-        width: 200,
-        height: 200,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 1,
-        shadowRadius: 40,
-        elevation: 50,
+        backgroundColor: "#B83838",
+        width: 250,
+        height: 250
     },
     squiggly: {
         position: "absolute",
@@ -61,6 +63,9 @@ const styles = StyleSheet.create({
     },
     squigglyThree: {
         left: -100
+    },
+    squigglyFour: {
+        left: 200
     },
     animationContainer: {
         top: 200,

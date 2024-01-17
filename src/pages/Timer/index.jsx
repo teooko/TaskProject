@@ -25,7 +25,7 @@ function Timer({ navigation }) {
     }))
     const handlePress = () => {
         offset.value = withRepeat(withTiming(100, {duration: 1000, easing: Easing.inOut(Easing.linear)}), -1);
-        offset2.value = withRepeat(withTiming(-100, {duration: 1500, easing: Easing.inOut(Easing.linear)}), -1);
+        offset2.value = withRepeat(withTiming(-100, {duration: 1655, easing: Easing.inOut(Easing.linear)}), -1);
     }
     return (
         <View>
@@ -40,19 +40,25 @@ function Timer({ navigation }) {
                             <Svg height="20" width="100%" style={{...styles.squiggly, ...styles.squigglyThree}}>
                                 <Path
                                     d="M0,10 C50,30 50,-10 100,10 L100,0 L0,0 Z"
-                                    fill="aqua"
+                                    fill="#DF5454"
                                 />
                             </Svg>
                             <Svg height="20" width="100%" style={{...styles.squiggly, ...styles.squigglyTwo}}>
                                 <Path
                                     d="M0,10 C50,30 50,-10 100,10 L100,0 L0,0 Z"
-                                    fill="aqua"
+                                    fill="#DF5454"
                                 />
                             </Svg>
                             <Svg height="20" width="100%" style={styles.squiggly}>
                                 <Path
                                     d="M0,10 C50,30 50,-10 100,10 L100,0 L0,0 Z"
-                                    fill="aqua"
+                                    fill="#DF5454"
+                                />
+                            </Svg>
+                            <Svg height="20" width="100%" style={{...styles.squiggly, ...styles.squigglyFour}}>
+                                <Path
+                                    d="M0,10 C50,30 50,-10 100,10 L100,0 L0,0 Z"
+                                    fill="#DF5454"
                                 />
                             </Svg>
                         </Animated.View>
@@ -77,10 +83,10 @@ const styles = StyleSheet.create({
     frontWave: {
         position: "absolute",
         zIndex: 1,
-        backgroundColor: "aqua",
+        backgroundColor: "#DF5454",
         top: 100,
-        width: 200,
-        height: 200,
+        width: 250,
+        height: 250,
     },
     squiggly: {
         position: "absolute",
@@ -93,14 +99,17 @@ const styles = StyleSheet.create({
     squigglyThree: {
         left: -100
     },
+    squigglyFour: {
+        left: -200
+    },
     animationContainer: {
-        top: 200,
+        top: 100,
         left: 80,
-        width: 200,
-        height: 200,
-        borderRadius: 100,
+        width: 250,
+        height: 250,
+        borderRadius: 150,
         overflow: "hidden",
-        backgroundColor: "#B53535"
+        backgroundColor: "#FFC165"
     }
 })
 export default Timer
