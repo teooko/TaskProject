@@ -40,9 +40,9 @@ const styles = StyleSheet.create({
         marginRight: "auto",
     },
     frontWave: {
+        position: "absolute",
         zIndex: 2,
         backgroundColor: "blue",
-        top: 50,
         width: 200,
         height: 200,
         shadowColor: '#000',

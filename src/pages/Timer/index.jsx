@@ -16,12 +16,16 @@ import AnimatedWave from "./AnimatedWave";
 function Timer({ navigation }) {
     const {started, minutes, seconds, controlTimer} = UseTimer(2, 0);
     const offset = useSharedValue(0);
-    
+    const offset2 = useSharedValue(0)
     const style = useAnimatedProps(() => ({
         transform: [{translateX: offset.value}],
     }))
+    const style2 = useAnimatedProps(() => ({
+        transform: [{translateX: offset2.value}],
+    }))
     const handlePress = () => {
         offset.value = withRepeat(withTiming(100, {duration: 1000, easing: Easing.inOut(Easing.linear)}), -1);
+        offset2.value = withRepeat(withTiming(-100, {duration: 1500, easing: Easing.inOut(Easing.linear)}), -1);
     }
     return (
         <View>
@@ -31,7 +35,29 @@ function Timer({ navigation }) {
                 </Text>*/}
                 <Button title={started ? "stop" : "start"}  onPress={() => handlePress()}/>
                 <View style={styles.animationContainer}>
-                    <AnimatedWave style={style} />
+                    <View style={styles.frontWave}>
+                        <Animated.View style={style2} >
+                            <Svg height="20" width="100%" style={{...styles.squiggly, ...styles.squigglyThree}}>
+                                <Path
+                                    d="M0,10 C50,30 50,-10 100,10 L100,0 L0,0 Z"
+                                    fill="aqua"
+                                />
+                            </Svg>
+                            <Svg height="20" width="100%" style={{...styles.squiggly, ...styles.squigglyTwo}}>
+                                <Path
+                                    d="M0,10 C50,30 50,-10 100,10 L100,0 L0,0 Z"
+                                    fill="aqua"
+                                />
+                            </Svg>
+                            <Svg height="20" width="100%" style={styles.squiggly}>
+                                <Path
+                                    d="M0,10 C50,30 50,-10 100,10 L100,0 L0,0 Z"
+                                    fill="aqua"
+                                />
+                            </Svg>
+                        </Animated.View>
+                        <AnimatedWave style={style} />
+                    </View>
                 </View>
                 
             </Page>
@@ -49,20 +75,16 @@ const styles = StyleSheet.create({
         marginRight: "auto",
     },
     frontWave: {
-        zIndex: 2,
-        backgroundColor: "blue",
-        top: 50,
+        position: "absolute",
+        zIndex: 1,
+        backgroundColor: "aqua",
+        top: 100,
         width: 200,
         height: 200,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 1,
-        shadowRadius: 40,
-        elevation: 50,
     },
     squiggly: {
         position: "absolute",
-        transform: [{ scaleY: -1 }],
+        transform: [{ scaleY: -1 }, { scaleX: -1 }],
         bottom: 0,
     },
     squigglyTwo: {
@@ -77,7 +99,8 @@ const styles = StyleSheet.create({
         width: 200,
         height: 200,
         borderRadius: 100,
-        overflow: "hidden"
+        overflow: "hidden",
+        backgroundColor: "#B53535"
     }
 })
 export default Timer
