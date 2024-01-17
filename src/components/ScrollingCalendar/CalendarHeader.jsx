@@ -19,7 +19,8 @@ const CalendarHeader = () => {
 const styles = StyleSheet.create({
     header: {
         color: "white",
-        paddingLeft: 5
+        paddingLeft: 5,
+        fontSize: 15
     }
 })
 export default CalendarHeader;

@@ -17,7 +17,8 @@ const DailyActivity = () => {
 const styles = StyleSheet.create({
     dailyActivity: {
         flexGrow: 1,
-        borderRadius: 30,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30
     },
     dailyActivityLabel: {
         fontSize: 20,
