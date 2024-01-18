@@ -1,71 +1,30 @@
-﻿import {Button, Text, View} from "react-native";
+﻿import {Button, View} from "react-native";
 import Page from "../Page";
 import React from "react";
 import {StyleSheet} from "react-native";
 import UseTimer from "../../hooks/useTimer";
-import Svg, {Path} from "react-native-svg";
-import Animated, {
-    Easing,
-    useAnimatedProps,
-    useAnimatedStyle,
-    useSharedValue,
-    withRepeat,
-    withTiming
-} from "react-native-reanimated";
-import AnimatedWave from "./AnimatedWave";
+import UseAnimatedWave from "../../hooks/useAnimatedWave";
+import TimerAnimation from "./TimerAnimation";
 function Timer({ navigation }) {
     const {started, minutes, seconds, controlTimer} = UseTimer(2, 0);
-    const offset = useSharedValue(0);
-    const offset2 = useSharedValue(0)
-    const style = useAnimatedProps(() => ({
-        transform: [{translateX: offset.value}],
-    }))
-    const style2 = useAnimatedProps(() => ({
-        transform: [{translateX: offset2.value}],
-    }))
+    
+    const [frontWaveStyle, startFrontAnimation] = UseAnimatedWave(0, 100, 1000);
+    const [backWaveStyle, startBackAnimation] = UseAnimatedWave(0, -100, 1655);
+    
     const handlePress = () => {
-        offset.value = withRepeat(withTiming(100, {duration: 1000, easing: Easing.inOut(Easing.linear)}), -1);
-        offset2.value = withRepeat(withTiming(-100, {duration: 1655, easing: Easing.inOut(Easing.linear)}), -1);
+        startFrontAnimation();
+        startBackAnimation();
     }
+    
     return (
         <View>
             <Page navigation={navigation}>
                 {/*<Text style={styles.timer}>
                     {minutes > 9 ? minutes : "0" + minutes} : {seconds > 9 ? seconds : "0" + seconds}
                 </Text>*/}
-                <Button title={started ? "stop" : "start"}  onPress={() => handlePress()}/>
-                <View style={styles.animationContainer}>
-                    <View style={styles.frontWave}>
-                        <Animated.View style={style2} >
-                            <Svg height="20" width="100%" style={{...styles.squiggly, ...styles.squigglyThree}}>
-                                <Path
-                                    d="M0,10 C50,30 50,-10 100,10 L100,0 L0,0 Z"
-                                    fill="#DF5454"
-                                />
-                            </Svg>
-                            <Svg height="20" width="100%" style={{...styles.squiggly, ...styles.squigglyTwo}}>
-                                <Path
-                                    d="M0,10 C50,30 50,-10 100,10 L100,0 L0,0 Z"
-                                    fill="#DF5454"
-                                />
-                            </Svg>
-                            <Svg height="20" width="100%" style={styles.squiggly}>
-                                <Path
-                                    d="M0,10 C50,30 50,-10 100,10 L100,0 L0,0 Z"
-                                    fill="#DF5454"
-                                />
-                            </Svg>
-                            <Svg height="20" width="100%" style={{...styles.squiggly, ...styles.squigglyFour}}>
-                                <Path
-                                    d="M0,10 C50,30 50,-10 100,10 L100,0 L0,0 Z"
-                                    fill="#DF5454"
-                                />
-                            </Svg>
-                        </Animated.View>
-                        <AnimatedWave style={style} />
-                    </View>
-                </View>
                 
+                <Button title={started ? "stop" : "start"}  onPress={() => handlePress()}/>
+                <TimerAnimation backWaveStyle={backWaveStyle} frontWaveStyle={frontWaveStyle} />
             </Page>
         </View>
     );
@@ -79,37 +38,6 @@ const styles = StyleSheet.create({
         marginBottom: "auto",
         marginLeft: "auto",
         marginRight: "auto",
-    },
-    frontWave: {
-        position: "absolute",
-        zIndex: 1,
-        backgroundColor: "#DF5454",
-        top: 100,
-        width: 250,
-        height: 250,
-    },
-    squiggly: {
-        position: "absolute",
-        transform: [{ scaleY: -1 }, { scaleX: -1 }],
-        bottom: 0,
-    },
-    squigglyTwo: {
-        left: 100
-    },
-    squigglyThree: {
-        left: -100
-    },
-    squigglyFour: {
-        left: -200
-    },
-    animationContainer: {
-        top: 100,
-        left: 80,
-        width: 250,
-        height: 250,
-        borderRadius: 150,
-        overflow: "hidden",
-        backgroundColor: "#FFC165"
     }
 })
 export default Timer
