@@ -1,4 +1,4 @@
-﻿import {Button, View} from "react-native";
+﻿import {Button, View, Text} from "react-native";
 import Page from "../Page";
 import React from "react";
 import {StyleSheet} from "react-native";
@@ -19,12 +19,11 @@ function Timer({ navigation }) {
     return (
         <View>
             <Page navigation={navigation}>
-                {/*<Text style={styles.timer}>
-                    {minutes > 9 ? minutes : "0" + minutes} : {seconds > 9 ? seconds : "0" + seconds}
-                </Text>*/}
-                
                 <Button title={started ? "stop" : "start"}  onPress={() => handlePress()}/>
                 <TimerAnimation backWaveStyle={backWaveStyle} frontWaveStyle={frontWaveStyle} />
+                <Text style={styles.timer}>
+                    {minutes > 9 ? minutes : "0" + minutes} : {seconds > 9 ? seconds : "0" + seconds}
+                </Text>
             </Page>
         </View>
     );
@@ -32,12 +31,12 @@ function Timer({ navigation }) {
 
 const styles = StyleSheet.create({
     timer: {
-        fontSize: 70,
+        zIndex: 2,
+        fontSize: 60,
+        position: "absolute",
+        top: "40%",
+        left: "30%",
         color: "white",
-        marginTop: "auto",
-        marginBottom: "auto",
-        marginLeft: "auto",
-        marginRight: "auto",
     }
 })
 export default Timer
