@@ -1,17 +1,39 @@
-﻿import {Easing, useAnimatedProps, useSharedValue, withRepeat, withTiming} from "react-native-reanimated";
+﻿import {
+    cancelAnimation,
+    Easing, ReduceMotion,
+    useAnimatedProps,
+    useSharedValue,
+    withRepeat, withSpring,
+    withTiming
+} from "react-native-reanimated";
 
 const useAnimatedWave = (initialValue, toValue, duration) => {
-    const offset = useSharedValue(initialValue);
+    const offsetX = useSharedValue(initialValue);
+    const offsetY = useSharedValue(20);
     
     const animatedStyle = useAnimatedProps(() => ({
-        transform: [{translateX: offset.value}],
+        transform: [{translateX: offsetX.value}, {translateY: offsetY.value}],
     }))
     
     const startAnimation = () => {
-        offset.value = withRepeat(withTiming(toValue, {duration: duration, easing: Easing.inOut(Easing.linear)}), -1);
+        offsetX.value = 0;
+        offsetX.value = withRepeat(withTiming(toValue, {duration: duration, easing: Easing.inOut(Easing.linear)}), 0);
+        offsetY.value = withRepeat(withSpring(0,{
+            mass: 1,
+            damping: 20,
+            stiffness: 120,
+        } ), 1);
     }
     
-return [animatedStyle, startAnimation];
+    const stopAnimation = () => {
+        offsetY.value = withSpring(20,{
+            mass: 1,
+            damping: 10,
+            stiffness: 50,
+        }, () => cancelAnimation(offsetX) );
+    }
+    
+return [animatedStyle, startAnimation, stopAnimation];
 }
 
 export default useAnimatedWave;

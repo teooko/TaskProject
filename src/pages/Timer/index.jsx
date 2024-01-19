@@ -10,12 +10,20 @@ const { height, width } = Dimensions.get('window');
 function Timer({ navigation }) {
     const {started, minutes, seconds, controlTimer} = UseTimer(2, 0);
     
-    const [frontWaveStyle, startFrontAnimation] = UseAnimatedWave(0, 100, 1000);
-    const [backWaveStyle, startBackAnimation] = UseAnimatedWave(0, -100, 1700);
+    const [frontWaveStyle, startFrontAnimation, stopFrontAnimation] = UseAnimatedWave(0, 100, 1000);
+    const [backWaveStyle, startBackAnimation, stopBackAnimation] = UseAnimatedWave(0, -100, 1700);
     
     const handlePress = () => {
-        startFrontAnimation();
-        startBackAnimation();
+        if(!started) {
+            controlTimer();
+            startFrontAnimation();
+            startBackAnimation();
+        }
+        else {
+            controlTimer();
+            stopFrontAnimation();
+            stopBackAnimation();
+        }
     }
     
     return (
