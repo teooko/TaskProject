@@ -17,9 +17,9 @@ const AnimatedWave = ({animatedStyle, color}) => {
 
 const styles = StyleSheet.create({
     wave: {
-        top: 50,
-        width: 250,
-        height: 250,
+        top: 150,
+        width: 300,
+        height: 300,
         position: "absolute"
     }
 })

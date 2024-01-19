@@ -12,13 +12,15 @@ const TimerAnimation = ({backWaveStyle, frontWaveStyle}) => {
 }
 const styles = StyleSheet.create({
     animationContainer: {
-        top: 100,
-        left: 50,
-        width: 250,
-        height: 250,
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginTop: "auto",
+        marginBottom: "auto",
+        width: 300,
+        height: 300,
         borderRadius: 150,
         overflow: "hidden",
-        backgroundColor: "#FFC165"
+        backgroundColor: "#F2986B"
     }
 })
 
