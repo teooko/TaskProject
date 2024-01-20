@@ -20,17 +20,17 @@ const useAnimatedWave = (initialValue, toValue, duration) => {
         offsetX.value = withRepeat(withTiming(toValue, {duration: duration, easing: Easing.inOut(Easing.linear)}), 0);
         offsetY.value = withRepeat(withSpring(0,{
             mass: 1,
-            damping: 20,
+            damping: 8,
             stiffness: 120,
         } ), 1);
     }
     
     const stopAnimation = () => {
-        offsetY.value = withSpring(20,{
+        offsetY.value = withTiming(20,{
             mass: 1,
-            damping: 10,
+            damping: 2,
             stiffness: 50,
-        }, () => cancelAnimation(offsetX) );
+        } );
     }
     
 return [animatedStyle, startAnimation, stopAnimation];

@@ -20,9 +20,9 @@ function Timer({ navigation }) {
             startBackAnimation();
         }
         else {
-            controlTimer();
             stopFrontAnimation();
             stopBackAnimation();
+            controlTimer();
         }
     }
     
