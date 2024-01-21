@@ -13,7 +13,7 @@ const { height, width } = Dimensions.get('window');
 function Timer({ navigation }) {
     const {start, pause} = icons;
     const [svg, setSvg] = useState(start);
-    const {started, minutes, seconds, controlTimer} = UseTimer(0, 30);
+    const {started, minutes, seconds, controlTimer} = UseTimer(25, 0);
     
     const [frontWaveStyle, startFrontAnimation, stopFrontAnimation] = UseAnimatedWave(0, 100, 1000);
     const [backWaveStyle, startBackAnimation, stopBackAnimation] = UseAnimatedWave(0, -100, 1700);
