@@ -12,9 +12,9 @@ import NavigationButton from "../../components/NavigationButton";
 
 const { height, width } = Dimensions.get('window');
 function Timer({ navigation }) {
-    const {start, pause} = icons;
+    const {start, pause, reset, rest} = icons;
     const [svg, setSvg] = useState(start);
-    const {started, minutes, seconds, controlTimer} = UseTimer(25, 0);
+    const {started, minutes, seconds, controlTimer} = UseTimer(5, 30);
     
     const [frontWaveStyle, startFrontAnimation, stopFrontAnimation] = UseAnimatedWave(0, 100, 1000);
     const [backWaveStyle, startBackAnimation, stopBackAnimation] = UseAnimatedWave(0, -100, 1700);
@@ -44,8 +44,10 @@ function Timer({ navigation }) {
                 <Text style={styles.timer}>
                     {minutes > 9 ? minutes : "0" + minutes} : {seconds > 9 ? seconds : "0" + seconds}
                 </Text>
-                <View style={styles.button}>
-                    <NavigationButton icon={svg} onPress={() => handlePress()} size={50} />
+                <View style={styles.controls}>
+                        <NavigationButton icon={rest} onPress={() => handlePress()} size={40} />
+                        <NavigationButton icon={svg} onPress={() => handlePress()} size={50} />
+                        <NavigationButton icon={reset} onPress={() => handlePress()} size={30} />
                 </View>
             </Page>
         </View>
@@ -58,7 +60,7 @@ const styles = StyleSheet.create({
         fontSize: 60,
         position: "absolute",
         marginLeft: width / 2 - 90,
-        marginTop: height / 2 - 50,
+        marginTop: height / 2 - 60,
         color: "white",
         width: 180
     },
@@ -66,11 +68,16 @@ const styles = StyleSheet.create({
         fill: "white"
     },
     button: {
-        marginLeft: "auto",
-        marginRight: "auto",
         marginBottom: 30,
         width: 20,
         height: 20,
-    }
+    },
+    controls: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignItems: "center",
+        height: 70,
+    },
 })
 export default Timer
