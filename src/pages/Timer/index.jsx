@@ -8,6 +8,7 @@ import TimerAnimation from "./TimerAnimation";
 import useAnimatedRise from "../../hooks/useAnimatedRise";
 import {SvgXml} from "react-native-svg";
 import {icons} from "../../assets/Icons";
+import NavigationButton from "../../components/NavigationButton";
 
 const { height, width } = Dimensions.get('window');
 function Timer({ navigation }) {
@@ -43,9 +44,9 @@ function Timer({ navigation }) {
                 <Text style={styles.timer}>
                     {minutes > 9 ? minutes : "0" + minutes} : {seconds > 9 ? seconds : "0" + seconds}
                 </Text>
-                <Pressable style={styles.button} hitSlop={{top: 15, left: 15, bottom: 15, right: 15}} onPress={() => handlePress()}>
-                    <SvgXml xml={svg} width="40" height="40" style={styles.icon}/>
-                </Pressable>
+                <View style={styles.button}>
+                    <NavigationButton icon={svg} onPress={() => handlePress()} size={50} />
+                </View>
             </Page>
         </View>
     );

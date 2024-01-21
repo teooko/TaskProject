@@ -6,8 +6,8 @@ const NavigationBar = ({navigation}) => {
     const {menu, profile} = icons;
     return (
         <View style={styles.navigationBar}>
-            <NavigationButton icon={menu} onPress={() => navigation.openDrawer()}/>
-            <NavigationButton icon={profile} />
+            <NavigationButton icon={menu} onPress={() => navigation.openDrawer()} size={20}/>
+            <NavigationButton icon={profile} size={20}/>
         </View>
     )
 }
