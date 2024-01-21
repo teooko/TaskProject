@@ -9,6 +9,7 @@ import useAnimatedRise from "../../hooks/useAnimatedRise";
 import {SvgXml} from "react-native-svg";
 import {icons} from "../../assets/Icons";
 import NavigationButton from "../../components/NavigationButton";
+import TimerControls from "./TimerControls";
 
 const { height, width } = Dimensions.get('window');
 function Timer({ navigation }) {
@@ -56,11 +57,7 @@ function Timer({ navigation }) {
                 <Text style={styles.timer}>
                     {minutes > 9 ? minutes : "0" + minutes} : {seconds > 9 ? seconds : "0" + seconds}
                 </Text>
-                <View style={styles.controls}>
-                        <NavigationButton icon={rest} onPress={() => handlePress()} size={40} />
-                        <NavigationButton icon={svg} onPress={() => handlePress()} size={50} />
-                        <NavigationButton icon={reset} onPress={() => handleReset()} size={30} />
-                </View>
+                <TimerControls svg={svg} handleReset={handleReset} handlePress={handlePress}/>
             </Page>
         </View>
     );
