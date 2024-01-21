@@ -1,12 +1,14 @@
 import AnimatedWave from "./AnimatedWave";
 import {StyleSheet, View} from "react-native";
 import React from "react";
-
-const TimerAnimation = ({backWaveStyle, frontWaveStyle}) => {
+import Animated from "react-native-reanimated";
+const TimerAnimation = ({backWaveStyle, frontWaveStyle, riseAnimationStyle}) => {
     return (
         <View style={styles.animationContainer}>
-            <AnimatedWave animatedStyle={backWaveStyle} color={"#DF5454"} />
-            <AnimatedWave animatedStyle={frontWaveStyle} color={"#B83838"} />
+            <Animated.View style={riseAnimationStyle}>
+                <AnimatedWave animatedStyle={backWaveStyle} color={"#DF5454"} />
+                <AnimatedWave animatedStyle={frontWaveStyle} color={"#B83838"} />
+            </Animated.View>
         </View>
     )
 }

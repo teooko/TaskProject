@@ -5,23 +5,27 @@ import {StyleSheet} from "react-native";
 import UseTimer from "../../hooks/useTimer";
 import UseAnimatedWave from "../../hooks/useAnimatedWave";
 import TimerAnimation from "./TimerAnimation";
+import {Easing, useAnimatedProps, useSharedValue, withTiming} from "react-native-reanimated";
+import useAnimatedRise from "../../hooks/useAnimatedRise";
 
 const { height, width } = Dimensions.get('window');
 function Timer({ navigation }) {
-    const {started, minutes, seconds, controlTimer} = UseTimer(2, 0);
+    const {started, minutes, seconds, controlTimer} = UseTimer(0, 30);
     
     const [frontWaveStyle, startFrontAnimation, stopFrontAnimation] = UseAnimatedWave(0, 100, 1000);
     const [backWaveStyle, startBackAnimation, stopBackAnimation] = UseAnimatedWave(0, -100, 1700);
-    
+    const [riseAnimationStyle, startRise, stopRise] = useAnimatedRise(minutes * 60 * 1000 + seconds * 1000 );
     const handlePress = () => {
         if(!started) {
             controlTimer();
             startFrontAnimation();
             startBackAnimation();
+            startRise();
         }
         else {
             stopFrontAnimation();
             stopBackAnimation();
+            stopRise();
             controlTimer();
         }
     }
@@ -30,7 +34,7 @@ function Timer({ navigation }) {
         <View>
             <Page navigation={navigation}>
                 
-                <TimerAnimation backWaveStyle={backWaveStyle} frontWaveStyle={frontWaveStyle} />
+                <TimerAnimation backWaveStyle={backWaveStyle} frontWaveStyle={frontWaveStyle} riseAnimationStyle = {riseAnimationStyle}/>
                 <Text style={styles.timer}>
                     {minutes > 9 ? minutes : "0" + minutes} : {seconds > 9 ? seconds : "0" + seconds}
                 </Text>

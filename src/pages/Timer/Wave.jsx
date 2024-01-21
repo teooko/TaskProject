@@ -11,7 +11,7 @@ const Wave = ({color}) => {
                     d="M0,10 C50,30 50,-10 100,10 L100,0 L0,0 Z"
                     fill={color}
                 />
-                <View style={{width: 100, height: 15, backgroundColor: color, bottom: 10}}></View>
+                <View style={{width: 100, height: 20, backgroundColor: color, bottom: -1, position: "absolute"}}></View>
             </Svg>)
     )
     

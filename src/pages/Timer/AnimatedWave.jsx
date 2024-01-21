@@ -1,5 +1,4 @@
 ﻿import Animated from "react-native-reanimated";
-import Svg, {Path} from "react-native-svg";
 import {StyleSheet, View} from "react-native";
 import React from "react";
 import Wave from "./Wave";
@@ -17,7 +16,6 @@ const AnimatedWave = ({animatedStyle, color}) => {
 
 const styles = StyleSheet.create({
     wave: {
-        top: 150,
         width: 300,
         height: 300,
         position: "absolute"
