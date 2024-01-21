@@ -1,15 +1,18 @@
-﻿import {Button, View, Text, Dimensions} from "react-native";
+﻿import {Button, View, Text, Dimensions, Pressable} from "react-native";
 import Page from "../Page";
-import React from "react";
+import React, {useState} from "react";
 import {StyleSheet} from "react-native";
 import UseTimer from "../../hooks/useTimer";
 import UseAnimatedWave from "../../hooks/useAnimatedWave";
 import TimerAnimation from "./TimerAnimation";
-import {Easing, useAnimatedProps, useSharedValue, withTiming} from "react-native-reanimated";
 import useAnimatedRise from "../../hooks/useAnimatedRise";
+import {SvgXml} from "react-native-svg";
+import {icons} from "../../assets/Icons";
 
 const { height, width } = Dimensions.get('window');
 function Timer({ navigation }) {
+    const {start, pause} = icons;
+    const [svg, setSvg] = useState(start);
     const {started, minutes, seconds, controlTimer} = UseTimer(0, 30);
     
     const [frontWaveStyle, startFrontAnimation, stopFrontAnimation] = UseAnimatedWave(0, 100, 1000);
@@ -21,12 +24,14 @@ function Timer({ navigation }) {
             startFrontAnimation();
             startBackAnimation();
             startRise();
+            setSvg(pause);
         }
         else {
             stopFrontAnimation();
             stopBackAnimation();
             stopRise();
             controlTimer();
+            setSvg(start);
         }
     }
     
@@ -38,7 +43,9 @@ function Timer({ navigation }) {
                 <Text style={styles.timer}>
                     {minutes > 9 ? minutes : "0" + minutes} : {seconds > 9 ? seconds : "0" + seconds}
                 </Text>
-                <Button title={started ? "stop" : "start"}  onPress={() => handlePress()}/>
+                <Pressable style={styles.button} hitSlop={{top: 15, left: 15, bottom: 15, right: 15}} onPress={() => handlePress()}>
+                    <SvgXml xml={svg} width="40" height="40" style={styles.icon}/>
+                </Pressable>
             </Page>
         </View>
     );
@@ -53,6 +60,16 @@ const styles = StyleSheet.create({
         marginTop: height / 2 - 50,
         color: "white",
         width: 180
+    },
+    icon: {
+        fill: "white"
+    },
+    button: {
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginBottom: 30,
+        width: 20,
+        height: 20,
     }
 })
 export default Timer

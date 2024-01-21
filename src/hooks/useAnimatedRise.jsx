@@ -7,7 +7,7 @@
 } from "react-native-reanimated";
 
 const useAnimatedRise = (duration) => {
-    const offset = useSharedValue(300);
+    const offset = useSharedValue(310);
     let offsetPause;
     
     const riseAnimationStyle = useAnimatedProps(() => ({
