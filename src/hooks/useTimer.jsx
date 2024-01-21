@@ -30,10 +30,10 @@ const useTimer = (initialMinutes, initialSeconds) => {
             return () => clearInterval(timer);
         }, [started, minutes, seconds])
 
-    const controlTimer = () => setStarted(!started);
-        
+    const startTimer = () => setStarted(true);
+    const stopTimer = () => setStarted(false);
     
-    return {started, minutes, seconds, controlTimer}
+    return {started, minutes, seconds, startTimer, stopTimer, setMinutes, setSeconds}
 }
 
 export default useTimer;

@@ -14,28 +14,40 @@ const { height, width } = Dimensions.get('window');
 function Timer({ navigation }) {
     const {start, pause, reset, rest} = icons;
     const [svg, setSvg] = useState(start);
-    const {started, minutes, seconds, controlTimer} = UseTimer(5, 30);
+    const initialMinutes = 0;
+    const initialSeconds = 30;
+    
+    const {started, minutes, seconds, startTimer, stopTimer, setMinutes, setSeconds} = UseTimer(initialMinutes, initialSeconds);
     
     const [frontWaveStyle, startFrontAnimation, stopFrontAnimation] = UseAnimatedWave(0, 100, 1000);
     const [backWaveStyle, startBackAnimation, stopBackAnimation] = UseAnimatedWave(0, -100, 1700);
-    const [riseAnimationStyle, startRise, stopRise] = useAnimatedRise(minutes * 60 * 1000 + seconds * 1000 );
+    const [riseAnimationStyle, startRise, stopRise, resetRise] = useAnimatedRise(minutes * 60 * 1000 + seconds * 1000 );
     const handlePress = () => {
         if(!started) {
-            controlTimer();
+            startTimer();
             startFrontAnimation();
             startBackAnimation();
             startRise();
             setSvg(pause);
         }
         else {
+            stopRise();
             stopFrontAnimation();
             stopBackAnimation();
-            stopRise();
-            controlTimer();
+            stopTimer();
             setSvg(start);
         }
     }
     
+    const handleReset = () => {
+        stopFrontAnimation();
+        stopBackAnimation();
+        resetRise();
+        stopTimer();
+        setSvg(start);
+        setMinutes(initialMinutes);
+        setSeconds(initialSeconds);
+    }
     return (
         <View>
             <Page navigation={navigation}>
@@ -47,7 +59,7 @@ function Timer({ navigation }) {
                 <View style={styles.controls}>
                         <NavigationButton icon={rest} onPress={() => handlePress()} size={40} />
                         <NavigationButton icon={svg} onPress={() => handlePress()} size={50} />
-                        <NavigationButton icon={reset} onPress={() => handlePress()} size={30} />
+                        <NavigationButton icon={reset} onPress={() => handleReset()} size={30} />
                 </View>
             </Page>
         </View>

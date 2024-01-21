@@ -8,7 +8,6 @@
 
 const useAnimatedRise = (duration) => {
     const offset = useSharedValue(310);
-    let offsetPause;
     
     const riseAnimationStyle = useAnimatedProps(() => ({
         transform: [{translateY: offset.value}],
@@ -20,10 +19,12 @@ const useAnimatedRise = (duration) => {
 
     const stopAnimation = () => {
         cancelAnimation(offset);
-        
     }
     
-    return [riseAnimationStyle, startAnimation, stopAnimation]
+    const resetAnimation = () => {
+        offset.value = withTiming(310, {duration: 1000, easing: Easing.inOut(Easing.linear)})
+    }
+    return [riseAnimationStyle, startAnimation, stopAnimation, resetAnimation]
 }
 
 export default useAnimatedRise;
