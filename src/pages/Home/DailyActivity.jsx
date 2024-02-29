@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         color: "white",
         marginLeft: "auto",
         marginRight: "auto",
-        marginTop: 10
+        marginTop: 5
     },
     addTaskButton: {
         borderBottomRightRadius: 10,
