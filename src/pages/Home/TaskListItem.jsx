@@ -6,8 +6,9 @@ const TaskListItem = ({task}) => {
     {
         return ( 
             <View style={styles.taskListItem}>
-                <SvgXml xml={icons.circle} width={20} height={20} fill={task.color}/>
-                <Text style={styles.taskListItemName}>
+                {//<SvgXml xml={icons.circle} width={20} height={20} fill={task.color}/>
+                }
+                <Text style={{...styles.taskListItemName, backgroundColor: task.color}}>
                     {task.name}
                 </Text>
             </View>
@@ -22,8 +23,14 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     taskListItemName: {
+        padding: 5,
+        paddingLeft: 10,
+        paddingRight: 10,
+        borderTopRightRadius: 10,
+        borderBottomRightRadius: 10,
+        borderBottomLeftRadius: 10,
         fontSize: 18,
-        color: "#560D0D",
+        color: "white",
         marginLeft: 5,
     }
 })
