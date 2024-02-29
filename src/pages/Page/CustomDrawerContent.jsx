@@ -12,6 +12,7 @@ const CustomDrawerContent = (props) => {
         <DrawerContentScrollView {...props} style={styles.content}>
             <CustomDrawerButton page={'Home'} icon={icons.house} props={props}/>
             <CustomDrawerButton page={'Timer'} icon={icons.clock} props={props}/>
+            <CustomDrawerButton page={'Tasks'} icon={icons.check} props={props}/>
             {/*
             <DrawerItem
                 label="Close drawer"

@@ -3,6 +3,7 @@ import CustomDrawerContent from "./CustomDrawerContent";
 import Home from "../Home";
 import Timer from "../Timer";
 import * as React from "react";
+import Tasks from "../Tasks";
 
 const Drawer = createDrawerNavigator();
 
@@ -17,6 +18,7 @@ const CustomDrawer = () => {
         >
             <Drawer.Screen name="Home" component={Home} />
             <Drawer.Screen name="Timer" component={Timer} />
+            <Drawer.Screen name="Tasks" component={Tasks} />
         </Drawer.Navigator>
     );
 }
