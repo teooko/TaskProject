@@ -1,4 +1,4 @@
-import {ScrollView} from "react-native";
+import {Button, Pressable, ScrollView, StyleSheet, Text} from "react-native";
 import Page from "../Page";
 import React, {useEffect, useState} from "react";
 import Calendar from "./Calendar";
@@ -30,7 +30,9 @@ const Home = ({ navigation }) => {
                     <Calendar />
                     <DailyActivity tasks={tasks}/>
                 </ScrollView>
+                
             </Page>
     );
 }
+
 export default Home

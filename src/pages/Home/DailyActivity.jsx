@@ -1,4 +1,4 @@
-﻿import {Dimensions, StyleSheet, Text, View} from "react-native";
+﻿import {Button, Dimensions, Pressable, StyleSheet, Text, View} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import React from "react";
 import Piechart from "../../components/Piechart";
@@ -12,6 +12,11 @@ const DailyActivity = ({tasks}) => {
             </Text>
             <Piechart />
             <TaskList tasks={tasks} />
+            <Pressable style={styles.addTaskButton}>
+                <Text style={styles.taskButtonText}>
+                    Add Task
+                </Text>
+            </Pressable>
         </LinearGradient>
     )
 }
@@ -30,6 +35,23 @@ const styles = StyleSheet.create({
         marginLeft: "auto",
         marginRight: "auto",
         marginTop: 10
+    },
+    addTaskButton: {
+        borderBottomRightRadius: 10,
+        borderTopRightRadius: 10,
+        borderBottomLeftRadius: 10,
+        backgroundColor: "#DF5454",
+        position: "absolute",
+        bottom: 10,
+        alignSelf: "center"
+    },
+    taskButtonText: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
+        fontSize: 15,
+        color: "white",
     }
 })
 
