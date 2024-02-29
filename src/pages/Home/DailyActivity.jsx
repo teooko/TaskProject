@@ -2,6 +2,7 @@
 import LinearGradient from "react-native-linear-gradient";
 import React from "react";
 import Piechart from "../../components/Piechart";
+import TaskList from "./TaskList";
 
 const DailyActivity = ({tasks}) => {
     return (
@@ -10,11 +11,7 @@ const DailyActivity = ({tasks}) => {
                 Today's Activity
             </Text>
             <Piechart />
-            <View>
-                <Text>
-                    {tasks? tasks.map(task => <Text key={task.id ? task.id : task.$id}>{task.name}</Text>) : null}
-                </Text>
-            </View>
+            <TaskList tasks={tasks} />
         </LinearGradient>
     )
 }
@@ -23,7 +20,9 @@ const styles = StyleSheet.create({
     dailyActivity: {
         flexGrow: 1,
         borderTopLeftRadius: 30,
-        borderTopRightRadius: 30
+        borderTopRightRadius: 30,
+        paddingLeft: 10,
+        paddingRight: 10,
     },
     dailyActivityLabel: {
         fontSize: 20,
