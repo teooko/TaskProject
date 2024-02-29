@@ -10,7 +10,11 @@ const DailyActivity = ({tasks}) => {
             <Text style={styles.dailyActivityLabel}>
                 Today's Activity
             </Text>
+            <Text style={styles.timeLabel}>
+                X hours and Y minutes
+            </Text>
             <Piechart />
+            
             <TaskList tasks={tasks} />
             <Pressable style={styles.addTaskButton}>
                 <Text style={styles.taskButtonText}>
@@ -30,7 +34,14 @@ const styles = StyleSheet.create({
         paddingRight: 10,
     },
     dailyActivityLabel: {
-        fontSize: 20,
+        fontSize: 22,
+        color: "white",
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginTop: 10
+    },
+    timeLabel: {
+        fontSize: 18,
         color: "white",
         marginLeft: "auto",
         marginRight: "auto",
@@ -43,7 +54,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#DF5454",
         position: "absolute",
         bottom: 10,
-        alignSelf: "center"
+        marginTop: 20,
+        alignSelf: "center",
     },
     taskButtonText: {
         paddingTop: 10,

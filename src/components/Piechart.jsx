@@ -36,7 +36,7 @@ const Piechart = () => {
                     },
                 ]}
                 width={Dimensions.get('window').width - 16}
-                height={220}
+                height={250}
                 paddingLeft={(Dimensions.get('window').width/4).toString()}
                 chartConfig={{
                     color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
-        height: 220
+        height: 250
     }
 })
 export default Piechart;
