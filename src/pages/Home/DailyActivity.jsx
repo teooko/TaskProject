@@ -3,13 +3,18 @@ import LinearGradient from "react-native-linear-gradient";
 import React from "react";
 import Piechart from "../../components/Piechart";
 
-const DailyActivity = () => {
+const DailyActivity = ({tasks}) => {
     return (
         <LinearGradient colors={['#E97C6F', '#FFC165']} style={styles.dailyActivity}>
             <Text style={styles.dailyActivityLabel}>
                 Today's Activity
             </Text>
             <Piechart />
+            <View>
+                <Text>
+                    {tasks? tasks.map(task => <Text key={task.id ? task.id : task.$id}>{task.name}</Text>) : null}
+                </Text>
+            </View>
         </LinearGradient>
     )
 }
