@@ -1,7 +1,7 @@
 ﻿import Page from "../Page";
 import axios from "axios";
 import {useEffect, useState} from "react";
-import {Pressable, Text, TextInput, View} from "react-native";
+import {Pressable, ScrollView, Text, TextInput, View} from "react-native";
 import {StyleSheet} from "react-native";
 import ColorPicker, {HueSlider} from "reanimated-color-picker";
 const Tasks = ({navigation}) => {
@@ -26,6 +26,20 @@ const Tasks = ({navigation}) => {
         }
     };
 
+    const addNewTask = async () => {
+        try {
+            const response = await axios.post("http://192.168.100.8:5133/Task", {
+                name: newTaskName,
+                color: newTaskColor
+            });
+            console.log(response.data);
+            fetchData();
+
+        } catch (error) {
+            // Handle error
+            console.error(error);
+        }
+    }
     useEffect(() => {
         fetchData();
         console.log("merge?");
@@ -33,7 +47,7 @@ const Tasks = ({navigation}) => {
     
     return (
         <Page navigation={navigation}>
-            <View style={styles.taskList}>
+            <ScrollView style={styles.taskList}>
             {
                 tasks ? tasks.map(task => 
                     <View style={styles.task}>
@@ -60,7 +74,7 @@ const Tasks = ({navigation}) => {
                                 Choose Color
                             </Text>
                         </Pressable>
-                        <Pressable style={styles.deleteTask}>
+                        <Pressable style={styles.deleteTask} onPress={() => addNewTask()}>
                             <Text>
                                 Add Task
                             </Text>
@@ -68,12 +82,12 @@ const Tasks = ({navigation}) => {
                     </View>
                 </View>
                 { toggleColorPicker &&
-                    <ColorPicker style={{ width: '100%', height: 100, marginTop: 10 }} value='red' onChange={onSelectColor}>
+                    <ColorPicker style={{ width: '100%', height: 100, marginTop: 10 }} value={newTaskColor} onChange={onSelectColor}>
                         <HueSlider style={{ backgroundColor: "white", borderWidth: 3 }}/>
                     </ColorPicker>
                 }
             </View>
-            </View>
+            </ScrollView>
         </Page>
     )
 }
