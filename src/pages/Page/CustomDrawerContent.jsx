@@ -13,6 +13,7 @@ const CustomDrawerContent = (props) => {
             <CustomDrawerButton page={'Home'} icon={icons.house} props={props}/>
             <CustomDrawerButton page={'Timer'} icon={icons.clock} props={props}/>
             <CustomDrawerButton page={'Tasks'} icon={icons.check} props={props}/>
+            <CustomDrawerButton page={'Test'} icon={icons.check} props={props} />
             {/*
             <DrawerItem
                 label="Close drawer"

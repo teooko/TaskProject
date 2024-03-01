@@ -3,10 +3,17 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import {Pressable, Text, TextInput, View} from "react-native";
 import {StyleSheet} from "react-native";
+import ColorPicker, {HueSlider} from "reanimated-color-picker";
 const Tasks = ({navigation}) => {
     
     const [tasks, setTasks] = useState(null);
     const [newTaskName, setNewTaskName] = useState(null);
+    const [toggleColorPicker, setToggleColorPicker] = useState(false);
+    const [newTaskColor, setNewTaskColor] = useState("#B56464");
+    const onSelectColor = ({ hex }) => {
+        // do something with the selected color.
+        setNewTaskColor(hex);
+    };
     const fetchData = async () => {
         try {
             const response = await axios.get("http://192.168.100.8:5133/Task");
@@ -48,8 +55,8 @@ const Tasks = ({navigation}) => {
                     <TextInput onChangeText={(value) => setNewTaskName(value)} 
                                style={styles.taskName}>{newTaskName ? newTaskName : "Create New Task..."}</TextInput>
                     <View style={styles.taskButtons}>
-                        <Pressable style={{...styles.taskColor}}>
-                            <Text>
+                        <Pressable style={{...styles.taskColor, backgroundColor: newTaskColor, width: 100}} onPress={() => setToggleColorPicker(!toggleColorPicker)}>
+                            <Text style={{alignSelf: "center", paddingTop: 3}}>
                                 Choose Color
                             </Text>
                         </Pressable>
@@ -60,6 +67,11 @@ const Tasks = ({navigation}) => {
                         </Pressable>
                     </View>
                 </View>
+                { toggleColorPicker &&
+                    <ColorPicker style={{ width: '100%', height: 100, marginTop: 10 }} value='red' onChange={onSelectColor}>
+                        <HueSlider style={{ backgroundColor: "white", borderWidth: 3 }}/>
+                    </ColorPicker>
+                }
             </View>
             </View>
         </Page>
