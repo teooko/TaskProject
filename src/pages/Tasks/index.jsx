@@ -40,6 +40,19 @@ const Tasks = ({navigation}) => {
             console.error(error);
         }
     }
+    
+    const deleteTask = async (id) => {
+        try {
+            const response = await axios.delete(`http://192.168.100.8:5133/Task?id=${id}`);
+            console.log(response.data);
+            fetchData();
+        }
+        catch (error)
+        {
+            console.error(error);
+        }
+    }
+    
     useEffect(() => {
         fetchData();
         console.log("merge?");
@@ -55,7 +68,7 @@ const Tasks = ({navigation}) => {
                         <View style={styles.taskButtons}>
                             <Pressable style={{...styles.taskColor, backgroundColor: task.color}}>
                             </Pressable>
-                            <Pressable style={styles.deleteTask}>
+                            <Pressable style={styles.deleteTask} onPress={() => deleteTask(task.id ? task.id : task.$id)}>
                                 <Text>
                                 X
                                 </Text>

@@ -29,9 +29,10 @@ const styles = StyleSheet.create({
     dailyActivity: {
         flexGrow: 1,
         borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        paddingLeft: 30,
-        paddingRight: 30,
+        borderTopRightRadius: 20,
+        paddingLeft: 20,
+        paddingRight: 10,
+        paddingBottom: 60
     },
     dailyActivityLabel: {
         fontSize: 22,
