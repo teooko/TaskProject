@@ -92,7 +92,9 @@ const styles = StyleSheet.create({
     taskColor: {
         width: 60,
         height: 30,
-        borderRadius: 10,
+        borderColor: "#E97C6F",
+        borderRadius: 15,
+        borderWidth: 1,
     },
     taskButtons: {
         flexDirection: "row",
