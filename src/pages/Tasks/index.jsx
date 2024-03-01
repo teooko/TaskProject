@@ -1,13 +1,21 @@
 ﻿import Page from "../Page";
 import axios from "axios";
 import {useEffect, useState} from "react";
-import {Pressable, ScrollView, Text, TextInput, View} from "react-native";
+import {
+    KeyboardAvoidingView,
+    KeyboardAvoidingViewBase,
+    Pressable,
+    ScrollView,
+    Text,
+    TextInput,
+    View
+} from "react-native";
 import {StyleSheet} from "react-native";
 import ColorPicker, {HueSlider} from "reanimated-color-picker";
 const Tasks = ({navigation}) => {
     
     const [tasks, setTasks] = useState(null);
-    const [newTaskName, setNewTaskName] = useState(null);
+    const [newTaskName, setNewTaskName] = useState("Create new task...");
     const [toggleColorPicker, setToggleColorPicker] = useState(false);
     const [newTaskColor, setNewTaskColor] = useState("#B56464");
     const onSelectColor = ({ hex }) => {
@@ -60,10 +68,12 @@ const Tasks = ({navigation}) => {
     
     return (
         <Page navigation={navigation}>
-            <ScrollView style={styles.taskList}>
+            
+            
+                <ScrollView style={styles.taskList} showsVerticalScrollIndicator={false} overScrollMode={"never"} automaticallyAdjustContentInsets={true}>
             {
                 tasks ? tasks.map(task => 
-                    <View style={styles.task}>
+                    <View key={task.id ? task.id : task.$id} style={styles.task}>
                         <Text style={styles.taskName}>{task.name}</Text>
                         <View style={styles.taskButtons}>
                             <Pressable style={{...styles.taskColor, backgroundColor: task.color}}>
@@ -80,7 +90,7 @@ const Tasks = ({navigation}) => {
             <View>
                 <View style={styles.task}>
                     <TextInput onChangeText={(value) => setNewTaskName(value)} 
-                               style={styles.taskName}>{newTaskName ? newTaskName : "Create New Task..."}</TextInput>
+                               style={styles.taskName}>{newTaskName}</TextInput>
                     <View style={styles.taskButtons}>
                         <Pressable style={{...styles.taskColor, backgroundColor: newTaskColor, width: 100}} onPress={() => setToggleColorPicker(!toggleColorPicker)}>
                             <Text style={{alignSelf: "center", paddingTop: 3}}>
@@ -100,7 +110,9 @@ const Tasks = ({navigation}) => {
                     </ColorPicker>
                 }
             </View>
-            </ScrollView>
+                </ScrollView>
+           
+            
         </Page>
     )
 }
@@ -108,14 +120,13 @@ const Tasks = ({navigation}) => {
 const styles = StyleSheet.create({
     taskList: {
         display: "flex",
-        gap: 10,
         flexDirection: "column",
         marginLeft: 20,
         marginRight: 20,
-        marginTop: 30,
     },
     task: {
         padding: 10,
+        marginTop: 10,
         borderColor: "#E97C6F",
         borderRadius: 5,
         borderWidth: 1,
