@@ -1,11 +1,12 @@
 ﻿import Page from "../Page";
 import axios from "axios";
 import {useEffect, useState} from "react";
-import {Pressable, Text, View} from "react-native";
+import {Pressable, Text, TextInput, View} from "react-native";
 import {StyleSheet} from "react-native";
 const Tasks = ({navigation}) => {
     
     const [tasks, setTasks] = useState(null);
+    const [newTaskName, setNewTaskName] = useState(null);
     const fetchData = async () => {
         try {
             const response = await axios.get("http://192.168.100.8:5133/Task");
@@ -44,7 +45,8 @@ const Tasks = ({navigation}) => {
             }
             <View>
                 <View style={styles.task}>
-                    <Text style={styles.taskName}>Create New Task...</Text>
+                    <TextInput onChangeText={(value) => setNewTaskName(value)} 
+                               style={styles.taskName}>{newTaskName ? newTaskName : "Create New Task..."}</TextInput>
                     <View style={styles.taskButtons}>
                         <Pressable style={{...styles.taskColor}}>
                             <Text>
