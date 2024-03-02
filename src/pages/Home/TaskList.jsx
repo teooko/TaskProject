@@ -2,11 +2,11 @@
 import React from "react";
 import TaskListItem from "./TaskListItem";
 
-const TaskList = ({tasks}) => {
+const TaskList = ({tasks, isLoading}) => {
     
     return (
         <View style={styles.taskList}>
-            {tasks ? tasks.map(task => <TaskListItem key={task.id ? task.id : task.$id} task={task} />) : null}
+            {!isLoading ? tasks.map(task => <TaskListItem key={task.id ? task.id : task.$id} task={task} />) : null}
         </View>
     )
 }

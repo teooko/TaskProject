@@ -4,7 +4,7 @@ import React from "react";
 import Piechart from "../../components/Piechart";
 import TaskList from "./TaskList";
 
-const DailyActivity = ({tasks}) => {
+const DailyActivity = ({tasks, isLoading}) => {
     return (
         <LinearGradient colors={['#E97C6F', '#FFC165']} style={styles.dailyActivity}>
             <Text style={styles.dailyActivityLabel}>
@@ -15,7 +15,7 @@ const DailyActivity = ({tasks}) => {
             </Text>
             <Piechart />
             
-            <TaskList tasks={tasks} />
+            <TaskList tasks={tasks} isLoading={isLoading}/>
             <Pressable style={styles.addTaskButton}>
                 <Text style={styles.taskButtonText}>
                     Add Task

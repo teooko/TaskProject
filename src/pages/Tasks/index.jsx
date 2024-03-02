@@ -48,7 +48,11 @@ const Tasks = ({navigation}) => {
             console.error(error);
         }
     }
-    
+     const Thumb = ({positionStyle}) => {
+        return (
+            <View style={{backgroundColor: newTaskColor, borderColor: "white", borderRadius: 30, width: 24, height: 24, borderWidth: 1, position: positionStyle}}/>
+        )
+     }
     const deleteTask = async (id) => {
         try {
             const response = await axios.delete(`http://192.168.100.8:5133/Task?id=${id}`);
@@ -105,8 +109,10 @@ const Tasks = ({navigation}) => {
                     </View>
                 </View>
                 { toggleColorPicker &&
-                    <ColorPicker style={{ width: '100%', height: 100, marginTop: 10 }} value={newTaskColor} onChange={onSelectColor}>
-                        <HueSlider style={{ backgroundColor: "white", borderWidth: 3 }}/>
+                    <ColorPicker 
+                                 //renderThumb={(props) => <Thumb positionStyle={props.positionStyle />}
+                                  sliderThickness={25} style={{ width: '100%', height: 100, marginTop: 10 }} value={"red"} onChange={onSelectColor}>
+                        <HueSlider />
                     </ColorPicker>
                 }
             </View>
