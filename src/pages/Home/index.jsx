@@ -5,16 +5,18 @@ import Calendar from "./Calendar";
 import DailyActivity from "./DailyActivity";
 import axios from "axios";
 import useFetchData from "../../hooks/useFetchData";
+import {useSelector} from "react-redux";
 
 const Home = ({ navigation }) => {
-    const [tasks, setTasks] = useState(null);
-
-    const {data, isLoading} = useFetchData(`/Task`);
+    const { isLoading} = useFetchData(`/Task`);
+    const {tasks} = useSelector(state => state.tasksReducer);
+    
     return (
             <Page navigation={navigation}>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} overScrollMode={"never"} showsVerticalScrollIndicator={false}>
                     <Calendar />
-                    <DailyActivity tasks={data} isLoading={isLoading}/>
+                    <DailyActivity tasks={tasks} isLoading={isLoading}/>
+                    
                 </ScrollView>
                 
             </Page>

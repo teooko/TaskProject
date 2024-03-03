@@ -1,17 +1,19 @@
 ﻿import axios from "axios";
 import { useEffect, useState } from "react";
 import {API_DOMAIN} from "../../config";
+import {useDispatch} from "react-redux";
+import {loadTasks} from "../store/tasksSlice";
 
 const useFetchData = (route) => {
     const [data, setData] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const dispatch = useDispatch();
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${API_DOMAIN}${route}`);
-                setData(response.data.$values);
+                dispatch(loadTasks(response.data.$values));
             } catch (error) {
                 setError(error);
             }
@@ -20,7 +22,7 @@ const useFetchData = (route) => {
         fetchData();
     }, []);
 
-    return { data, isLoading, error };
+    return { data, setData, isLoading, error };
 };
 
 export default useFetchData;

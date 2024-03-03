@@ -12,9 +12,9 @@ import {
 } from "react-native";
 import {StyleSheet} from "react-native";
 import ColorPicker, {HueSlider} from "reanimated-color-picker";
+import useFetchData from "../../hooks/useFetchData";
+import useTaskPost from "../../hooks/useTaskPost";
 const Tasks = ({navigation}) => {
-    
-    const [tasks, setTasks] = useState(null);
     const [newTaskName, setNewTaskName] = useState("Create new task...");
     const [toggleColorPicker, setToggleColorPicker] = useState(false);
     const [newTaskColor, setNewTaskColor] = useState("#B56464");
@@ -22,31 +22,11 @@ const Tasks = ({navigation}) => {
         // do something with the selected color.
         setNewTaskColor(hex);
     };
-    const fetchData = async () => {
-        try {
-            const response = await axios.get("http://192.168.100.8:5133/Task");
-            setTasks(response.data.$values);
-            console.log(response.data.$values);
-
-        } catch (error) {
-            // Handle error
-            console.error(error);
-        }
-    };
-
-    const addNewTask = async () => {
-        try {
-            const response = await axios.post("http://192.168.100.8:5133/Task", {
-                name: newTaskName,
-                color: newTaskColor
-            });
-            console.log(response.data);
-            fetchData();
-
-        } catch (error) {
-            // Handle error
-            console.error(error);
-        }
+    let {data, setData,  isLoading} = useFetchData(`/Task`);
+    const {addNewTask, isTaskLoading} = useTaskPost();
+    const handleAddNewTask = (newTaskName, newTaskColor) => {
+        const newTask = addNewTask(newTaskName, newTaskColor);
+        setData({...data, newTask});
     }
      const Thumb = ({positionStyle}) => {
         return (
@@ -65,18 +45,13 @@ const Tasks = ({navigation}) => {
         }
     }
     
-    useEffect(() => {
-        fetchData();
-        console.log("merge?");
-    }, []);
-    
     return (
         <Page navigation={navigation}>
             
             
                 <ScrollView style={styles.taskList} showsVerticalScrollIndicator={false} overScrollMode={"never"} automaticallyAdjustContentInsets={true}>
             {
-                tasks ? tasks.map(task => 
+                !isLoading ? data.map(task => 
                     <View key={task.id ? task.id : task.$id} style={styles.task}>
                         <Text style={styles.taskName}>{task.name}</Text>
                         <View style={styles.taskButtons}>
@@ -101,7 +76,7 @@ const Tasks = ({navigation}) => {
                                 Choose Color
                             </Text>
                         </Pressable>
-                        <Pressable style={styles.deleteTask} onPress={() => addNewTask()}>
+                        <Pressable style={styles.deleteTask} onPress={() => handleAddNewTask(newTaskName, newTaskColor)}>
                             <Text>
                                 Add Task
                             </Text>
