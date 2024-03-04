@@ -1,9 +1,9 @@
 ﻿import axios from "axios";
 import {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
+import {setNewTask} from "../store/tasksSlice";
 
 const useTaskPost = () => {
-    const [newTask, setNewTask] = useState({});
     const [isTaskLoading, setIsTaskLoading] = useState(true);
     const [error, setError] = useState(null);
     const dispatch = useDispatch();
@@ -13,8 +13,8 @@ const useTaskPost = () => {
                 name: newTaskName,
                 color: newTaskColor
             });
-            await dispatch(setNewTask(response.data));
-            await dispatch(addNewTask());
+            dispatch(setNewTask(response.data));
+            dispatch(addNewTask());
             
         } catch (error) {
             setError(error);
@@ -23,7 +23,7 @@ const useTaskPost = () => {
         setIsTaskLoading(false);
     }
     
-    return {newTask, addNewTask, isTaskLoading, error}
+    return {addNewTask, isTaskLoading, error}
 }
 
 export default useTaskPost;

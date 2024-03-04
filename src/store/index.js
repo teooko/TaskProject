@@ -1,14 +1,15 @@
-﻿import {combineReducers, configureStore, createStore} from "@reduxjs/toolkit";
+﻿import {applyMiddleware, combineReducers, configureStore, createStore} from "@reduxjs/toolkit";
 import calendarReducer, { insertDays } from "./slice";
 import tasksReducer from "./tasksSlice";
 import {composeWithDevTools} from "@reduxjs/toolkit/src/devtoolsExtension";
+import {thunk} from "redux-thunk";
 
-const rootReducer = combineReducers({
-    calendarReducer: calendarReducer,
-    tasksReducer: tasksReducer
-        
-})
-const store = createStore(rootReducer, composeWithDevTools());
+const store = configureStore({
+    reducer: {
+        calendarReducer: calendarReducer,
+        tasksReducer: tasksReducer
+    }
+});
 store.dispatch(insertDays());
 
 export default store;

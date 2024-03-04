@@ -14,6 +14,7 @@ import {StyleSheet} from "react-native";
 import ColorPicker, {HueSlider} from "reanimated-color-picker";
 import useFetchData from "../../hooks/useFetchData";
 import useTaskPost from "../../hooks/useTaskPost";
+import {useSelector} from "react-redux";
 const Tasks = ({navigation}) => {
     const [newTaskName, setNewTaskName] = useState("Create new task...");
     const [toggleColorPicker, setToggleColorPicker] = useState(false);
@@ -24,6 +25,7 @@ const Tasks = ({navigation}) => {
     };
     let {data, setData,  isLoading} = useFetchData(`/Task`);
     const {addNewTask, isTaskLoading} = useTaskPost();
+    const {tasks} = useSelector(state => state.tasksReducer);
     const handleAddNewTask = (newTaskName, newTaskColor) => {
         const newTask = addNewTask(newTaskName, newTaskColor);
         setData({...data, newTask});
@@ -51,7 +53,7 @@ const Tasks = ({navigation}) => {
             
                 <ScrollView style={styles.taskList} showsVerticalScrollIndicator={false} overScrollMode={"never"} automaticallyAdjustContentInsets={true}>
             {
-                !isLoading ? data.map(task => 
+                !isLoading ? tasks.map(task => 
                     <View key={task.id ? task.id : task.$id} style={styles.task}>
                         <Text style={styles.taskName}>{task.name}</Text>
                         <View style={styles.taskButtons}>

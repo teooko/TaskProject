@@ -1,12 +1,14 @@
 ﻿import {StyleSheet, Text, View} from "react-native";
 import React from "react";
 import TaskListItem from "./TaskListItem";
+import {useSelector} from "react-redux";
 
-const TaskList = ({tasks, isLoading}) => {
-    
+const TaskList = ({tasks}) => {
+
+    const status = useSelector(state => state.tasksReducer.status)
     return (
         <View style={styles.taskList}>
-            {!isLoading ? tasks.map(task => <TaskListItem key={task.id ? task.id : task.$id} task={task} />) : null}
+            {status !== "loading" && status !== "failed" ? tasks.map(task => <TaskListItem key={task.id ? task.id : task.$id} task={task} />) : null}
         </View>
     )
 }
