@@ -1,8 +1,9 @@
 ﻿import {applyMiddleware, combineReducers, configureStore, createStore} from "@reduxjs/toolkit";
 import calendarReducer, { insertDays } from "./slice";
-import tasksReducer from "./tasksSlice";
+import tasksReducer, {fetchTasks} from "./tasksSlice";
 import {composeWithDevTools} from "@reduxjs/toolkit/src/devtoolsExtension";
 import {thunk} from "redux-thunk";
+
 
 const store = configureStore({
     reducer: {
@@ -11,5 +12,5 @@ const store = configureStore({
     }
 });
 store.dispatch(insertDays());
-
+store.dispatch(fetchTasks());
 export default store;

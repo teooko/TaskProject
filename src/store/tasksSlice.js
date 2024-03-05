@@ -1,6 +1,7 @@
 ﻿import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
 import {useDispatch} from "react-redux";
+import async from "async";
 
 const initialState = {
     tasks: [],
@@ -14,18 +15,15 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
     return response.data
 })
 
+export const addNewTask = createAsyncThunk('tasks/addNewTask', async (initialTask) => {
+    const response = await axios.post('http://192.168.100.8:5133/Task', initialTask);
+    return response.data;
+});
+
 const slice = createSlice({
     name: 'tasks',
     initialState,
     reducers: {
-        loadTasks(state, {payload})
-        {
-            state.tasks = payload;
-        },
-        addNewTask(state)
-        {
-            state.tasks = [...state.tasks, state.newTask];
-        },
         setNewTask(state, {payload})
         {
             state.newTask = payload;
@@ -44,8 +42,11 @@ const slice = createSlice({
                 state.status = 'failed'
                 state.error = action.error.message
             })
+            .addCase(addNewTask.fulfilled, (state, action) => {
+                state.tasks = [...state.tasks, action.payload];
+            })
     }
 })
 
-export const {loadTasks, addNewTask, setNewTask} = slice.actions;
+export const {loadTasks, setNewTask} = slice.actions;
 export default slice.reducer;

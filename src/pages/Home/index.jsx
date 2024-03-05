@@ -9,22 +9,12 @@ import {useDispatch, useSelector} from "react-redux";
 import { fetchTasks } from "../../store/tasksSlice";
 
 const Home = ({ navigation }) => {
-    const {tasks} = useSelector(state => state.tasksReducer);
-    const dispatch = useDispatch();
-    const status = useSelector(state => state.tasksReducer.status)
-    useEffect(() => {
-        if (status === 'idle') {
-            dispatch(fetchTasks())
-        }
-    }, [status, dispatch])
     return (
             <Page navigation={navigation}>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} overScrollMode={"never"} showsVerticalScrollIndicator={false}>
                     <Calendar />
-                    <DailyActivity tasks={tasks}/>
-                    
+                    <DailyActivity />
                 </ScrollView>
-                
             </Page>
     );
 }
