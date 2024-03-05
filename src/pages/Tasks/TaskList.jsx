@@ -20,7 +20,7 @@ const TaskList = () => {
 const styles = StyleSheet.create({
     taskList: {
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
     }
 })
 

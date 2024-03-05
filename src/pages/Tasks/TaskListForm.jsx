@@ -57,24 +57,21 @@ const styles = StyleSheet.create({
     task: {
         padding: 10,
         marginTop: 10,
-        borderColor: "#E97C6F",
         borderRadius: 5,
-        borderWidth: 1,
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
+        backgroundColor: "white"
     },
     taskName: {
         fontSize: 15,
-        color: "white"
+        color: "#560D0D"
     },
     taskColor: {
         width: 60,
         height: 30,
-        borderColor: "#E97C6F",
         borderRadius: 15,
-        borderWidth: 1,
     },
     taskButtons: {
         flexDirection: "row",
@@ -85,7 +82,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     },
     icon: {
-        fill: 'white',
+        fill: "#560D0D",
     }
 })
 export default TaskListForm;
