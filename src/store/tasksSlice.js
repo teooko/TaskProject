@@ -20,6 +20,11 @@ export const addNewTask = createAsyncThunk('tasks/addNewTask', async (initialTas
     return response.data;
 });
 
+export const deleteTask = createAsyncThunk('tasks/deleteTask', async(taskId) => {
+    const response = await axios.delete(`http://192.168.100.8:5133/Task?id=${taskId}`);
+    return response.data;
+})
+
 const slice = createSlice({
     name: 'tasks',
     initialState,
@@ -44,6 +49,9 @@ const slice = createSlice({
             })
             .addCase(addNewTask.fulfilled, (state, action) => {
                 state.tasks = [...state.tasks, action.payload];
+            })
+            .addCase(deleteTask.fulfilled, (state, action) => {
+                state.tasks = state.tasks.filter(task => task.id !== action.payload.id);
             })
     }
 })

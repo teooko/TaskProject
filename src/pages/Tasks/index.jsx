@@ -13,7 +13,7 @@ import {
 import {StyleSheet} from "react-native";
 import ColorPicker, {HueSlider} from "reanimated-color-picker";
 import {useDispatch, useSelector} from "react-redux";
-import {addNewTask} from "../../store/tasksSlice";
+import {addNewTask, deleteTask} from "../../store/tasksSlice";
 const Tasks = ({navigation}) => {
     const [newTaskName, setNewTaskName] = useState("Create new task...");
     const [toggleColorPicker, setToggleColorPicker] = useState(false);
@@ -33,11 +33,9 @@ const Tasks = ({navigation}) => {
             <View style={{backgroundColor: newTaskColor, borderColor: "white", borderRadius: 30, width: 24, height: 24, borderWidth: 1, position: positionStyle}}/>
         )
      }
-    const deleteTask = async (id) => {
+    const handleDeleteTask = async (id) => {
         try {
-            const response = await axios.delete(`http://192.168.100.8:5133/Task?id=${id}`);
-            console.log(response.data);
-            fetchData();
+            await dispatch(deleteTask(id));
         }
         catch (error)
         {
@@ -57,8 +55,8 @@ const Tasks = ({navigation}) => {
                         <View style={styles.taskButtons}>
                             <Pressable style={{...styles.taskColor, backgroundColor: task.color}}>
                             </Pressable>
-                            <Pressable style={styles.deleteTask} onPress={() => deleteTask(task.id ? task.id : task.$id)}>
-                                <Text>
+                            <Pressable style={styles.deleteTask} onPress={() => handleDeleteTask(task.id ? task.id : task.$id)}>
+                                <Text style={{width: 30, height: 30, backgroundColor: "black"}} >
                                 X
                                 </Text>
                             </Pressable>
