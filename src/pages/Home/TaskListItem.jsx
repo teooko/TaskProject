@@ -24,12 +24,10 @@ const styles = StyleSheet.create({
     },
     taskListItemName: {
         padding: 5,
-        paddingLeft: 10,
-        paddingRight: 10,
         borderTopRightRadius: 10,
         borderBottomRightRadius: 10,
         borderBottomLeftRadius: 10,
-        fontSize: 15,
+        fontSize: 13,
         color: "white",
         marginLeft: 5,
     }

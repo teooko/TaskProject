@@ -1,5 +1,5 @@
 ﻿import {Pressable, StyleSheet, Text, TextInput, View} from "react-native";
-import ColorPicker, {HueSlider} from "reanimated-color-picker";
+import ColorPicker, {HueSlider, SaturationSlider} from "reanimated-color-picker";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {addNewTask} from "../../store/tasksSlice";
@@ -33,7 +33,7 @@ const TaskListForm = () => {
                            style={styles.taskName}>{newTaskName}</TextInput>
                 <View style={styles.taskButtons}>
                     <Pressable style={{...styles.taskColor, backgroundColor: newTaskColor, width: 100}} onPress={() => setToggleColorPicker(!toggleColorPicker)}>
-                        <Text style={{alignSelf: "center", paddingTop: 3}}>
+                        <Text style={styles.changeColor}>
                             Choose Color
                         </Text>
                     </Pressable>
@@ -45,8 +45,9 @@ const TaskListForm = () => {
             { toggleColorPicker &&
                 <ColorPicker
                     //renderThumb={(props) => <Thumb positionStyle={props.positionStyle />}
-                    sliderThickness={25} style={{ width: '100%', height: 100, marginTop: 10 }} value={"red"} onChange={onSelectColor}>
+                    sliderThickness={25} style={{ width: '100%', height: 100, marginTop: 10 }} value={"#FF72E2"} onChange={onSelectColor}>
                     <HueSlider />
+                    <SaturationSlider/>
                 </ColorPicker>
             }
         </View>
@@ -55,14 +56,26 @@ const TaskListForm = () => {
 
 const styles = StyleSheet.create({
     task: {
-        padding: 10,
-        marginTop: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
+        margin: 20,
         borderRadius: 5,
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
         backgroundColor: "white"
+    },
+    changeColor: {
+        fontSize: 15,
+        color: "white",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: "white",
+        padding: 6
     },
     taskName: {
         fontSize: 15,

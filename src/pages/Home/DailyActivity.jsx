@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     dailyActivity: {
         flexGrow: 1,
         borderTopLeftRadius: 30,
-        borderTopRightRadius: 20,
+        borderTopRightRadius: 30,
         paddingLeft: 20,
         paddingRight: 10,
         paddingBottom: 60
