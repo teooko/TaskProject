@@ -1,4 +1,4 @@
-﻿import {Button, Dimensions, Pressable, StyleSheet, Text, View} from "react-native";
+﻿import {Pressable, StyleSheet, Text} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import React from "react";
 import Piechart from "../../components/Piechart";

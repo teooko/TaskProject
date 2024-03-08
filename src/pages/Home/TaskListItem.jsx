@@ -1,7 +1,5 @@
 ﻿import {StyleSheet, Text, View} from "react-native";
 import React from "react";
-import {SvgXml} from "react-native-svg";
-import {icons} from '../../assets/Icons';
 const TaskListItem = ({task}) => {
     {
         return ( 

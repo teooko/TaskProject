@@ -1,4 +1,4 @@
-﻿import {Button, View, Text, Dimensions, Pressable} from "react-native";
+﻿import {View, Text, Dimensions} from "react-native";
 import Page from "../Page";
 import React, {useState} from "react";
 import {StyleSheet} from "react-native";
@@ -6,9 +6,7 @@ import UseTimer from "../../hooks/useTimer";
 import UseAnimatedWave from "../../hooks/useAnimatedWave";
 import TimerAnimation from "./TimerAnimation";
 import useAnimatedRise from "../../hooks/useAnimatedRise";
-import {SvgXml} from "react-native-svg";
 import {icons} from "../../assets/Icons";
-import NavigationButton from "../../components/NavigationButton";
 import TimerControls from "./TimerControls";
 
 const { height, width } = Dimensions.get('window');

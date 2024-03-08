@@ -5,11 +5,11 @@ import Timer from "../Timer";
 import * as React from "react";
 import Tasks from "../Tasks";
 import Test from "../Test";
-const Drawer = createDrawerNavigator();
 
+const Drawer = createDrawerNavigator();
 const CustomDrawer = () => {
     return (
-        <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props}/>}
+        <Drawer.Navigator drawerContent={CustomDrawerContent}
                           screenOptions={{
                               headerShown: false,
                               swipeEdgeWidth: 5,
@@ -19,7 +19,7 @@ const CustomDrawer = () => {
             <Drawer.Screen name="Home" component={Home} />
             <Drawer.Screen name="Timer" component={Timer} />
             <Drawer.Screen name="Tasks" component={Tasks} />
-            <Drawer.Screen name={"Test"} component={Test} />
+            <Drawer.Screen name="Test" component={Test} />
         </Drawer.Navigator>
     );
 }

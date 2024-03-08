@@ -1,6 +1,4 @@
 ﻿import {DrawerContentScrollView} from "@react-navigation/drawer";
-import {Pressable, Text} from "react-native";
-import {SvgXml} from "react-native-svg";
 import {icons} from "../../assets/Icons";
 import * as React from "react";
 import CustomDrawerButton from "./CustomDrawerButton";

@@ -15,7 +15,7 @@ export default function App() {
 }
 
 const theme = {
-    dark: true,
+    dark: false,
     colors: {
         primary: 'white',
         background: 'white',

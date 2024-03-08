@@ -1,6 +1,5 @@
-﻿import {Pressable, StyleSheet, Text, View} from "react-native";
-import {useDispatch, useSelector} from "react-redux";
-import {deleteTask} from "../../store/tasksSlice";
+﻿import {StyleSheet, View} from "react-native";
+import {useSelector} from "react-redux";
 import TaskListItem from "./TaskListItem";
 
 const TaskList = () => {
@@ -25,8 +24,6 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         gap: 14,
         overflow: "hidden",
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
         paddingBottom: 14
     }
 })

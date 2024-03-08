@@ -1,5 +1,4 @@
 ﻿import {SvgXml} from "react-native-svg";
-import {icons} from "../../assets/Icons";
 import {Pressable, Text} from "react-native";
 import * as React from "react";
 import {StyleSheet} from "react-native";
@@ -28,6 +27,7 @@ const styles = StyleSheet.create({
         fill: 'white'
     },
     label: {
-        marginLeft: 10
+        marginLeft: 10,
+        color: "white"
     }
 })

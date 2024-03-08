@@ -1,11 +1,9 @@
 ﻿import {Pressable, StyleSheet, Text, View} from "react-native";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {deleteTask} from "../../store/tasksSlice";
 import {SvgXml} from "react-native-svg";
 import {icons} from "../../assets/Icons";
 import * as React from "react";
-import LinearGradient from "react-native-linear-gradient";
-
 const TaskListItem = ({name, id, color}) => {
     const dispatch = useDispatch();
     const handleDeleteTask = async (id) => {
