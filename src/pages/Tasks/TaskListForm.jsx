@@ -33,9 +33,7 @@ const TaskListForm = () => {
                            style={styles.taskName}>{newTaskName}</TextInput>
                 <View style={styles.taskButtons}>
                     <Pressable style={{...styles.taskColor, backgroundColor: newTaskColor, width: 100}} onPress={() => setToggleColorPicker(!toggleColorPicker)}>
-                        <Text style={styles.changeColor}>
-                            Choose Color
-                        </Text>
+                        <Text style={styles.changeColor}>Choose color</Text>
                     </Pressable>
                     <Pressable style={styles.addTask} onPress={() => handleAddNewTask(newTaskName, newTaskColor)}>
                         <SvgXml xml={icons.plus} width={'20'} height={'20'} style={styles.icon}/>
@@ -79,10 +77,10 @@ const styles = StyleSheet.create({
     },
     taskName: {
         fontSize: 15,
-        color: "#560D0D"
+        color: "#560D0D",
+        overflow: "scroll"
     },
     taskColor: {
-        width: 60,
         height: 30,
         borderRadius: 15,
     },
