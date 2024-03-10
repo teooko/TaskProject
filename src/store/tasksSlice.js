@@ -7,7 +7,9 @@ const initialState = {
     tasks: [],
     newTask: {},
     status: "idle",
-    error: null
+    error: null,
+    dailyStatus: "idle",
+    dailyTasks: []
 }
 
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
@@ -21,7 +23,13 @@ export const addNewTask = createAsyncThunk('tasks/addNewTask', async (initialTas
 });
 
 export const deleteTask = createAsyncThunk('tasks/deleteTask', async(taskId) => {
-    const response = await axios.delete(`http://192.168.100.8:5133/Task?id=${taskId}`);
+    const response = await axios.delete(`http://192.168.100.8:5133/Task/${taskId}`);
+    return response.data;
+})
+
+export const fetchDailyTasks = createAsyncThunk('/tasks/date/fetchDailyTasks', async(date) => {
+    const response = await axios.get(`http://192.168.100.8:5133/Task/date/${date}`);
+    
     return response.data;
 })
 
@@ -45,6 +53,17 @@ const slice = createSlice({
             })
             .addCase(fetchTasks.rejected, (state, action) => {
                 state.status = 'failed'
+                state.error = action.error.message
+            })
+            .addCase(fetchDailyTasks.pending, (state, action) => {
+                state.dailyStatus = 'loading'
+            })
+            .addCase(fetchDailyTasks.fulfilled, (state, action) => {
+                state.dailyStatus = 'succeeded'
+                state.dailyTasks = action.payload.$values;
+            })
+            .addCase(fetchDailyTasks.rejected, (state, action) => {
+                state.dailyStatus = 'failed'
                 state.error = action.error.message
             })
             .addCase(addNewTask.fulfilled, (state, action) => {

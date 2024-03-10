@@ -1,16 +1,17 @@
 ﻿import {StyleSheet, View} from "react-native";
 import React from "react";
 import TaskListItem from "./TaskListItem";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchDailyTasks} from "../../store/tasksSlice";
 
 
 const TaskList = () => {
 
     const status = useSelector(state => state.tasksReducer.status);
-    const {tasks} = useSelector(state => state.tasksReducer);
+    const {dailyTasks} = useSelector(state => state.tasksReducer);
     return (
         <View style={styles.taskList}>
-            {status !== "loading" && status !== "failed" ? tasks.map(task => <TaskListItem key={task.id ? task.id : task.$id} task={task} />) : null}
+            {dailyTasks ? dailyTasks.map(task => <TaskListItem key={task.id ? task.id : task.$id} task={task} />) : null}
         </View>
     )
 }
