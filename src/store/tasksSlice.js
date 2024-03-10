@@ -11,17 +11,17 @@ const initialState = {
 }
 
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-    const response = await axios.get('http://192.168.0.117:5133/Task')
+    const response = await axios.get('http://192.168.100.8:5133/Task')
     return response.data
 })
 
 export const addNewTask = createAsyncThunk('tasks/addNewTask', async (initialTask) => {
-    const response = await axios.post('http://192.168.0.117:5133/Task', initialTask);
+    const response = await axios.post('http://192.168.100.8:5133/Task', initialTask);
     return response.data;
 });
 
 export const deleteTask = createAsyncThunk('tasks/deleteTask', async(taskId) => {
-    const response = await axios.delete(`http://192.168.0.117:5133/Task?id=${taskId}`);
+    const response = await axios.delete(`http://192.168.100.8:5133/Task?id=${taskId}`);
     return response.data;
 })
 

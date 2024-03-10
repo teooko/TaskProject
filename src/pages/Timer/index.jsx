@@ -1,4 +1,4 @@
-﻿import {View, Text, Dimensions} from "react-native";
+﻿import {View, Text, Dimensions, SectionList} from "react-native";
 import Page from "../Page";
 import React, {useState} from "react";
 import {StyleSheet} from "react-native";
@@ -8,6 +8,9 @@ import TimerAnimation from "./TimerAnimation";
 import useAnimatedRise from "../../hooks/useAnimatedRise";
 import {icons} from "../../assets/Icons";
 import TimerControls from "./TimerControls";
+import {useDispatch, useSelector} from "react-redux";
+import {deleteTask} from "../../store/tasksSlice";
+import {patchStopTimer, postStartTimer} from "../../store/timerSlice";
 
 const { height, width } = Dimensions.get('window');
 function Timer({ navigation }) {
@@ -21,9 +24,32 @@ function Timer({ navigation }) {
     const [frontWaveStyle, startFrontAnimation, stopFrontAnimation] = UseAnimatedWave(0, 100, 1000);
     const [backWaveStyle, startBackAnimation, stopBackAnimation] = UseAnimatedWave(0, -100, 1700);
     const [riseAnimationStyle, startRise, stopRise, resetRise] = useAnimatedRise(minutes * 60 * 1000 + seconds * 1000 );
-    const handlePress = () => {
+    
+    const dispatch = useDispatch();
+    const currentTaskId = useSelector(state => state.timerReducer.currentTaskId);
+    const handleStartTimer = async (id) => {
+        try {
+            await dispatch(postStartTimer(id));
+        }
+        catch (error)
+        {
+            console.error(error);
+        }
+    }
+
+    const handleStopTimer = async (id) => {
+        try {
+            await dispatch(patchStopTimer(id));
+        }
+        catch (error)
+        {
+            console.error(error);
+        }
+    }
+    const handlePress = async () => {
         if(!started) {
             startTimer();
+            await handleStartTimer(534);
             startFrontAnimation();
             startBackAnimation();
             startRise();
@@ -34,6 +60,7 @@ function Timer({ navigation }) {
             stopFrontAnimation();
             stopBackAnimation();
             stopTimer();
+            await handleStopTimer(currentTaskId);
             setSvg(start);
         }
     }
@@ -50,7 +77,6 @@ function Timer({ navigation }) {
     return (
         <View>
             <Page navigation={navigation}>
-                
                 <TimerAnimation backWaveStyle={backWaveStyle} frontWaveStyle={frontWaveStyle} riseAnimationStyle = {riseAnimationStyle}/>
                 <Text style={styles.timer}>
                     {minutes > 9 ? minutes : "0" + minutes} : {seconds > 9 ? seconds : "0" + seconds}
