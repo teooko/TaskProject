@@ -2,11 +2,17 @@
 import {constants} from "./constants";
 import {useDispatch, useSelector} from "react-redux";
 import {selectDay} from "../../store/slice";
+import {fetchDailyTasks} from "../../store/tasksSlice";
 const DayCard = ({id}) => {
     const {days, selected} = useSelector(state => state.calendarReducer);
     const dispatch = useDispatch();
+    
+    const handlePress = () => {
+        dispatch(selectDay(id));
+        dispatch(fetchDailyTasks(`${days.daysById[id].year}-${days.daysById[id].month + 1}-${days.daysById[id].monthDay}`))
+    }
     return(
-        <Pressable style={styles.card} onPress={() => dispatch(selectDay(id))}>
+        <Pressable style={styles.card} onPress={handlePress}>
             <Text style={selected === id ? {...styles.weekDay, ...styles.cardSelected} : styles.weekDay}>
                 {constants.weekDays[days.daysById[id].weekDay]}
             </Text>
