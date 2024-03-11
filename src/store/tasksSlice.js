@@ -28,7 +28,6 @@ export const deleteTask = createAsyncThunk('tasks/deleteTask', async(taskId) => 
 })
 
 export const fetchDailyTasks = createAsyncThunk('/tasks/date/fetchDailyTasks', async(date) => {
-    console.log(`http://192.168.100.8:5133/Task/date/${date}`);
     const response = await axios.get(`http://192.168.100.8:5133/Task/date/${date}`);
     return response.data;
 })
@@ -57,12 +56,22 @@ const slice = createSlice({
             })
             .addCase(fetchDailyTasks.pending, (state, action) => {
                 state.dailyStatus = 'loading'
-                console.log("loading");
             })
             .addCase(fetchDailyTasks.fulfilled, (state, action) => {
                 state.dailyStatus = 'succeeded'
-                state.dailyTasks = action.payload.$values;
-                console.log(action.payload.$values);
+                const response = action.payload.$values;
+
+                state.dailyTasks = response.map(task => {
+                    const parts = task.time.split(':');
+                    const hours = parseInt(parts[0]);
+                    const minutes = parseInt(parts[1]);
+                    const seconds = parseInt(parts[2].split('.')[0]);
+
+                    const totalSeconds = seconds + minutes * 60 + hours * 60 * 60;
+                    return ({...task, time: totalSeconds});
+                });
+                
+                //console.log(state.dailyTasks);
             })
             .addCase(fetchDailyTasks.rejected, (state, action) => {
                 state.dailyStatus = 'failed'
