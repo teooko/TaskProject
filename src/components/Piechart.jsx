@@ -10,7 +10,6 @@ const Piechart = () => {
     
     const data = dailyTasks.map((task) => ({ name: task.name, seconds: task.time, color: task.color }));
     
-    console.log(data);
     return (
         <View style={styles.pieChart}>
             <PieChart

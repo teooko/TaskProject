@@ -3,15 +3,20 @@ import LinearGradient from "react-native-linear-gradient";
 import React from "react";
 import Piechart from "../../components/Piechart";
 import TaskList from "./TaskList";
+import {useSelector} from "react-redux";
+import {constants} from "../../components/ScrollingCalendar/constants";
 
 const DailyActivity = () => {
+    const {selected, days} = useSelector(state => state.calendarReducer); 
+    const {dailyTasks} = useSelector(state => state.tasksReducer);
+    const totalTime = dailyTasks ? dailyTasks.reduce((acc, task) => acc = acc + task.time, 0) : null;
     return (
         <LinearGradient colors={['#E97C6F', '#FFC165']} style={styles.dailyActivity}>
             <Text style={styles.dailyActivityLabel}>
-                Today's Activity
+                {selected === 0 ? "Today's Activity" : `Activity from ${days.daysById[selected].monthDay}th of ${constants.months[days.daysById[selected].month]}`}
             </Text>
             <Text style={styles.timeLabel}>
-                X hours and Y minutes
+                {totalTime ? `${(totalTime / 60).toFixed()} minutes` : "No activity"}
             </Text>
             <Piechart />
             <TaskList />

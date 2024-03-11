@@ -70,8 +70,6 @@ const slice = createSlice({
                     const totalSeconds = seconds + minutes * 60 + hours * 60 * 60;
                     return ({...task, time: totalSeconds});
                 });
-                
-                //console.log(state.dailyTasks);
             })
             .addCase(fetchDailyTasks.rejected, (state, action) => {
                 state.dailyStatus = 'failed'

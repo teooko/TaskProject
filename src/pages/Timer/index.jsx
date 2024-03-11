@@ -49,7 +49,7 @@ function Timer({ navigation }) {
     const handlePress = async () => {
         if(!started) {
             startTimer();
-            await handleStartTimer(535);
+            await handleStartTimer(537);
             startFrontAnimation();
             startBackAnimation();
             startRise();
