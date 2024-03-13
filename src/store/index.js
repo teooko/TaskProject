@@ -1,15 +1,15 @@
-﻿import {configureStore} from "@reduxjs/toolkit";
-import calendarReducer, { insertDays } from "./slice";
-import tasksReducer, {fetchDailyTasks, fetchTasks} from "./tasksSlice";
-import timerReducer from "./timerSlice"
-import {useDispatch} from "react-redux";
+﻿import {configureStore} from '@reduxjs/toolkit';
+import calendarReducer, {insertDays} from './slice';
+import tasksReducer, {fetchDailyTasks, fetchTasks} from './tasksSlice';
+import timerReducer from './timerSlice';
+import {useDispatch} from 'react-redux';
 
 const store = configureStore({
     reducer: {
         calendarReducer: calendarReducer,
         tasksReducer: tasksReducer,
-        timerReducer: timerReducer
-    }
+        timerReducer: timerReducer,
+    },
 });
 const currentDate = new Date();
 const year = currentDate.getFullYear();
