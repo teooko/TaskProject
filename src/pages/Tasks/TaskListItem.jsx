@@ -1,8 +1,4 @@
 ﻿import {Pressable, StyleSheet, Text, View} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {deleteTask} from '../../store/tasksSlice';
-import {SvgXml} from 'react-native-svg';
-import {icons} from '../../assets/Icons';
 import * as React from 'react';
 import TaskTitle from './TaskTitle';
 import TaskButtons from './TaskButtons';

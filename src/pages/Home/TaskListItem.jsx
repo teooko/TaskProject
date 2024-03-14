@@ -4,9 +4,6 @@ const TaskListItem = ({task}) => {
     {
         return (
             <View style={styles.taskListItem}>
-                {
-                    //<SvgXml xml={icons.circle} width={20} height={20} fill={task.color}/>
-                }
                 <Text
                     style={{
                         ...styles.taskListItemName,

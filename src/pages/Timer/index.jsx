@@ -38,7 +38,7 @@ function Timer({navigation}) {
 
     const dispatch = useDispatch();
     const currentTaskId = useSelector(
-        state => state.timerReducer.currentTaskId,
+        state => state.timer.currentTaskId,
     );
     const handleStartTimer = async id => {
         try {

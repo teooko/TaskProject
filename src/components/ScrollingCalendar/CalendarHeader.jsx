@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux';
 import {StyleSheet} from 'react-native';
 
 const CalendarHeader = () => {
-    const calendar = useSelector(state => state.calendarReducer);
+    const calendar = useSelector(state => state.calendar);
     const {month, year} = calendar;
     return (
         <View>

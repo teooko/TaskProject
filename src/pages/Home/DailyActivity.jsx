@@ -7,8 +7,8 @@ import {useSelector} from 'react-redux';
 import {constants} from '../../components/ScrollingCalendar/constants';
 
 const DailyActivity = () => {
-    const {selected, days} = useSelector(state => state.calendarReducer);
-    const {dailyTasks} = useSelector(state => state.tasksReducer);
+    const {selected, days} = useSelector(state => state.calendar);
+    const {dailyTasks} = useSelector(state => state.tasks);
     const totalTime = dailyTasks
         ? dailyTasks.reduce((acc, task) => (acc = acc + task.time), 0)
         : null;

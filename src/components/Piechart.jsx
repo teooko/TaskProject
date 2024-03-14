@@ -5,8 +5,8 @@ import {StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 
 const Piechart = () => {
-    const {dailyTasks} = useSelector(state => state.tasksReducer);
-    const dailyStatus = useSelector(state => state.tasksReducer.dailyStatus);
+    const {dailyTasks} = useSelector(state => state.tasks);
+    const dailyStatus = useSelector(state => state.tasks.dailyStatus);
 
     const data = dailyTasks.map(task => ({
         name: task.name,

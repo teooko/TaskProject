@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectDay} from '../../store/slice';
 import {fetchDailyTasks} from '../../store/tasksSlice';
 const DayCard = ({id}) => {
-    const {days, selected} = useSelector(state => state.calendarReducer);
+    const {days, selected} = useSelector(state => state.calendar);
     const dispatch = useDispatch();
 
     const handlePress = () => {

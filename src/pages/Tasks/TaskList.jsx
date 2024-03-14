@@ -3,8 +3,8 @@ import {useSelector} from 'react-redux';
 import TaskListItem from './TaskListItem';
 
 const TaskList = () => {
-    const {tasks} = useSelector(state => state.tasksReducer);
-    const status = useSelector(state => state.tasksReducer.status);
+    const {tasks} = useSelector(state => state.tasks);
+    const status = useSelector(state => state.tasks.status);
     return (
         <View style={styles.taskList}>
             {status !== 'loading' && status !== 'failed'

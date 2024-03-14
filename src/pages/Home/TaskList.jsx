@@ -5,8 +5,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {fetchDailyTasks} from '../../store/tasksSlice';
 
 const TaskList = () => {
-    const status = useSelector(state => state.tasksReducer.status);
-    const {dailyTasks} = useSelector(state => state.tasksReducer);
+    const status = useSelector(state => state.tasks.status);
+    const {dailyTasks} = useSelector(state => state.tasks);
     return (
         <View style={styles.taskList}>
             {dailyTasks

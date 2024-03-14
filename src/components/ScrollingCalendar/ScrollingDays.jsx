@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {changeHeader, insertDays} from '../../store/slice';
 import {FlashList} from '@shopify/flash-list';
 const ScrollingDays = () => {
-    const {data} = useSelector(state => state.calendarReducer);
+    const {data} = useSelector(state => state.calendar);
     const dispatch = useDispatch();
     const renderItem = useCallback(({item}) => <DayCard id={item} />, [data]);
     const onViewableItemsChanged = useCallback(viewableItems =>

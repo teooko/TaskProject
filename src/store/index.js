@@ -6,9 +6,9 @@ import {useDispatch} from 'react-redux';
 
 const store = configureStore({
     reducer: {
-        calendarReducer: calendarReducer,
-        tasksReducer: tasksReducer,
-        timerReducer: timerReducer,
+        calendar: calendarReducer,
+        tasks: tasksReducer,
+        timer: timerReducer,
     },
 });
 const currentDate = new Date();
