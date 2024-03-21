@@ -2,7 +2,7 @@
 import {StyleSheet, View} from 'react-native';
 import DayCard from './DayCard';
 import {useDispatch, useSelector} from 'react-redux';
-import {changeHeader, insertDays} from '../../store/slice';
+import {changeHeader, fetchWeeklyTasks, insertDays} from '../../store/slice';
 import {FlashList} from '@shopify/flash-list';
 const ScrollingDays = () => {
     const {data} = useSelector(state => state.calendar);
@@ -11,7 +11,7 @@ const ScrollingDays = () => {
     const onViewableItemsChanged = useCallback(viewableItems =>
         dispatch(changeHeader(viewableItems)),
     );
-
+    const lastLoaded = useSelector(state => state.calendar.lastLoaded);
     // @ts-ignore
     return (
         <View style={styles.calendar}>
@@ -23,7 +23,10 @@ const ScrollingDays = () => {
                 overScrollMode={'never'}
                 onViewableItemsChanged={onViewableItemsChanged}
                 viewabilityConfig={{viewAreaCoveragePercentThreshold: 100}}
-                onEndReached={() => dispatch(insertDays())}
+                onEndReached={() => {
+                    dispatch(insertDays());
+                    dispatch(fetchWeeklyTasks(lastLoaded));
+                }}
                 onEndReachedThreshold={0.3}
                 inverted={true}
                 estimatedItemSize={90}

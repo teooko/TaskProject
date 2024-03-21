@@ -1,5 +1,5 @@
 ﻿import {configureStore} from '@reduxjs/toolkit';
-import calendarReducer, {insertDays} from './slice';
+import calendarReducer, {fetchWeeklyTasks, insertDays} from './slice';
 import tasksReducer, {fetchDailyTasks, fetchTasks} from './tasksSlice';
 import timerReducer from './timerSlice';
 import {useDispatch} from 'react-redux';
@@ -21,4 +21,5 @@ const formattedDate = `${year}-${month}-${day}`;
 store.dispatch(fetchDailyTasks(formattedDate));
 store.dispatch(insertDays());
 store.dispatch(fetchTasks());
+store.dispatch(fetchWeeklyTasks(0));
 export default store;

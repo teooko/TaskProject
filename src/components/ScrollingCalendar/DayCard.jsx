@@ -1,8 +1,10 @@
-﻿import {Pressable, StyleSheet, Text} from 'react-native';
+﻿import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {constants} from './constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectDay} from '../../store/slice';
 import {fetchDailyTasks} from '../../store/tasksSlice';
+import {SvgXml} from "react-native-svg";
+import {icons} from "../../assets/Icons";
 const DayCard = ({id}) => {
     const {days, selected} = useSelector(state => state.calendar);
     const dispatch = useDispatch();
@@ -35,6 +37,17 @@ const DayCard = ({id}) => {
                 }>
                 {days.daysById[id].monthDay}
             </Text>
+            <View style={styles.taskCircles}>
+                {days.daysById[id].colors?.map((color, index) => (
+                    <SvgXml
+                        xml={icons.circle}
+                        width={13}
+                        height={13}
+                        fill={color}
+                        key={index}
+                    />
+                ))}
+            </View>
         </Pressable>
     );
 };
@@ -62,6 +75,16 @@ const styles = StyleSheet.create({
         marginLeft: 'auto',
         marginRight: 'auto',
         paddingTop: 10,
+        justifyContent: "center"
+    },
+    taskCircles: {
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 5,
+        display: "flex",
+        flexDirection: "row",
+        gap: 5,
+        justifyContent: "center"
     },
 });
 

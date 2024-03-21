@@ -1,4 +1,6 @@
-﻿import {createSlice} from '@reduxjs/toolkit';
+﻿import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import axios from 'axios';
+import {patchStopTimer, postStartTimer} from './timerSlice';
 
 const today = new Date(Date.now());
 
@@ -15,11 +17,22 @@ const initialState = {
     year: today.getFullYear(),
 };
 
+export const fetchWeeklyTasks = createAsyncThunk(
+    'tasks/fetchWeeklyTasks',
+    async fromDate => {
+        const response = await axios.get(
+            `http://192.168.100.8:5133/Task/weekly/${fromDate}`,
+        );
+        return response.data;
+    },
+);
+
 const slice = createSlice({
     name: 'calendar',
     initialState,
     reducers: {
         insertDays(state) {
+            //fetchWeeklyTasks(state.lastLoaded);
             if (state.lastLoaded >= state.max) {
                 return;
             }
@@ -56,6 +69,29 @@ const slice = createSlice({
                 }
             }
         },
+    },
+    extraReducers(builder) {
+        builder
+            .addCase(fetchWeeklyTasks.fulfilled, (state, action) => {
+                const today = Date.now();
+
+                action.payload.$values.map(weekDay => {
+                    const newTimestamp = new Date(weekDay.day);
+
+                    const difference = today - newTimestamp;
+                    const millisecondsPerDay = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
+                    const daysPassed = Math.floor(
+                        difference / millisecondsPerDay,
+                    );
+
+                    state.days.daysById[daysPassed].colors =
+                        weekDay.colors.$values;
+                    console.log(state.days.daysById);
+                });
+            })
+            .addCase(fetchWeeklyTasks.rejected, (state, action) => {
+                console.log(action.error);
+            });
     },
 });
 
