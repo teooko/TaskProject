@@ -7,12 +7,8 @@ import {deleteTask} from '../../store/tasksSlice';
 
 const TaskButtons = ({id}) => {
     const dispatch = useDispatch();
-    const handleDeleteTask = async id => {
-        try {
-            await dispatch(deleteTask(id));
-        } catch (error) {
-            console.error(error);
-        }
+    const handleDeleteTask = id => {
+        dispatch(deleteTask(id));
     };
 
     return (
