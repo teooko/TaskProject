@@ -11,6 +11,7 @@ import TimerControls from './TimerControls';
 import {useDispatch, useSelector} from 'react-redux';
 import {deleteTask} from '../../store/tasksSlice';
 import {patchStopTimer, postStartTimer} from '../../store/timerSlice';
+import {SelectList} from "react-native-dropdown-select-list/index";
 
 const {height, width} = Dimensions.get('window');
 function Timer({navigation}) {
@@ -37,9 +38,7 @@ function Timer({navigation}) {
         useAnimatedRise(minutes * 60 * 1000 + seconds * 1000);
 
     const dispatch = useDispatch();
-    const currentTaskId = useSelector(
-        state => state.timer.currentTaskId,
-    );
+    const currentTaskId = useSelector(state => state.timer.currentTaskId);
     const handleStartTimer = async id => {
         try {
             await dispatch(postStartTimer(id));
@@ -82,9 +81,16 @@ function Timer({navigation}) {
         setMinutes(initialMinutes);
         setSeconds(initialSeconds);
     };
+    
+    const {tasks} = useSelector(state => state.tasks);
+    
     return (
         <View>
+            
             <Page navigation={navigation}>
+                <View style={{position: "absolute", top: 40, left: 30, width: 300, zIndex: 1}}>
+                    <SelectList dropdownItemStyles={{backgroundColor: "black"}}data={tasks.map(task => task.name)} />
+                </View>
                 <TimerAnimation
                     backWaveStyle={backWaveStyle}
                     frontWaveStyle={frontWaveStyle}
@@ -99,6 +105,7 @@ function Timer({navigation}) {
                     handleReset={handleReset}
                     handlePress={handlePress}
                 />
+                
             </Page>
         </View>
     );
