@@ -2,7 +2,8 @@
 import axios from 'axios';
 
 const initialState = {
-    currentTaskId: 0,
+    currentWorkSessionId: 0,
+    currentTaskId: 0
 };
 
 export const postStartTimer = createAsyncThunk(
@@ -28,11 +29,15 @@ export const patchStopTimer = createAsyncThunk(
 const slice = createSlice({
     name: 'timer',
     initialState,
-    reducers: {},
+    reducers: {
+        setCurrentTaskId (state, {payload}) {
+            state.currentTaskId = payload;
+        }
+    },
     extraReducers(builder) {
         builder
             .addCase(postStartTimer.fulfilled, (state, action) => {
-                state.currentTaskId = action.payload.id;
+                state.currentWorkSessionId = action.payload.id;
             })
             .addCase(patchStopTimer.fulfilled, (state, action) => {
                 console.log(action.payload);
@@ -40,4 +45,5 @@ const slice = createSlice({
     },
 });
 
+export const {setCurrentTaskId} = slice.actions
 export default slice.reducer;

@@ -8,7 +8,7 @@ import useAnimatedRise from '../../hooks/useAnimatedRise';
 import {icons} from '../../assets/Icons';
 import TimerControls from './TimerControls';
 import {useDispatch, useSelector} from 'react-redux';
-import {patchStopTimer, postStartTimer} from '../../store/timerSlice';
+import {patchStopTimer, postStartTimer, setCurrentTaskId} from '../../store/timerSlice';
 import {SelectList} from "react-native-dropdown-select-list/index";
 import TimerBubble from "./TimerBubble";
 
@@ -33,13 +33,15 @@ function Timer({navigation}) {
         UseAnimatedWave(0, 100, 1000);
     const [backWaveStyle, startBackAnimation, stopBackAnimation] =
         UseAnimatedWave(0, -100, 1700);
-    const [riseAnimationStyle, startRise, stopRise, resetRise] =
+    const [riseAnimationStyle, startRise, stopRise, resetRisse] =
         useAnimatedRise(minutes * 60 * 1000 + seconds * 1000);
 
     const dispatch = useDispatch();
-    const currentTaskId = useSelector(state => state.timer.currentTaskId);
+    const currentWorkSessionId = useSelector(state => state.timer.currentWorkSessionId);
+    const {currentTaskId} = useSelector(state => state.timer);
     const handleStartTimer = async id => {
         try {
+            console.log(id + " ceEEEEEEEEEE?");
             await dispatch(postStartTimer(id));
         } catch (error) {
             console.error(error);
@@ -56,7 +58,8 @@ function Timer({navigation}) {
     const handlePress = async () => {
         if (!started) {
             startTimer();
-            await handleStartTimer(537);
+            await handleStartTimer(currentTaskId);
+            
             startFrontAnimation();
             startBackAnimation();
             startRise();
@@ -66,7 +69,7 @@ function Timer({navigation}) {
             stopFrontAnimation();
             stopBackAnimation();
             stopTimer();
-            await handleStopTimer(currentTaskId);
+            await handleStopTimer(currentWorkSessionId);
             setSvg(start);
         }
     };
@@ -88,14 +91,11 @@ function Timer({navigation}) {
             
             <Page navigation={navigation}>
                 <View style={{position: "absolute", top: 40, left: 30, width: 300, zIndex: 1}}>
-                    <SelectList dropdownItemStyles={{backgroundColor: "black"}}
+                    <SelectList dropdownItemStyles={{backgroundColor: "#B83838"}}
                                 boxStyles={{backgroundColor: "#B83838", borderWidth: 0}}
-                                //inputStyles={{backgroundColor: "black"}}
-                                //dropdownStyles={{backgroundColor: "black"}}
-                                //dropdownTextStyles={{backgroundColor: "black"}}
-                                //disabledItemStyles={{backgroundColor: "black"}}
-                                //disabledTextStyles={{backgroundColor: "black"}}
-                                data={tasks.map(task => task.name)} />
+                                dropdownStyles={{backgroundColor: "#B83838", borderColor: "#560D0D"}}
+                                data={tasks.map(task => ({ key: task.id, value: task.name }))}
+                                setSelected={(val) => dispatch(setCurrentTaskId(val))}/>
                 </View>
                 <TimerBubble
                     backWaveStyle={backWaveStyle}
