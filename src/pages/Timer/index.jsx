@@ -4,16 +4,13 @@ import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
 import UseTimer from '../../hooks/useTimer';
 import UseAnimatedWave from '../../hooks/useAnimatedWave';
-import TimerAnimation from './TimerAnimation';
 import useAnimatedRise from '../../hooks/useAnimatedRise';
 import {icons} from '../../assets/Icons';
 import TimerControls from './TimerControls';
 import {useDispatch, useSelector} from 'react-redux';
-import {deleteTask} from '../../store/tasksSlice';
 import {patchStopTimer, postStartTimer} from '../../store/timerSlice';
 import {SelectList} from "react-native-dropdown-select-list/index";
-import CountDown from "react-native-countdown-component";
-import {TimerPickerModal} from "react-native-timer-picker";
+import TimerBubble from "./TimerBubble";
 
 const {height, width} = Dimensions.get('window');
 function Timer({navigation}) {
@@ -91,20 +88,25 @@ function Timer({navigation}) {
             
             <Page navigation={navigation}>
                 <View style={{position: "absolute", top: 40, left: 30, width: 300, zIndex: 1}}>
-                    <SelectList dropdownItemStyles={{backgroundColor: "black"}}data={tasks.map(task => task.name)} />
+                    <SelectList dropdownItemStyles={{backgroundColor: "black"}}
+                                boxStyles={{backgroundColor: "#B83838", borderWidth: 0}}
+                                //inputStyles={{backgroundColor: "black"}}
+                                //dropdownStyles={{backgroundColor: "black"}}
+                                //dropdownTextStyles={{backgroundColor: "black"}}
+                                //disabledItemStyles={{backgroundColor: "black"}}
+                                //disabledTextStyles={{backgroundColor: "black"}}
+                                data={tasks.map(task => task.name)} />
                 </View>
-                <TimerAnimation
+                <TimerBubble
                     backWaveStyle={backWaveStyle}
                     frontWaveStyle={frontWaveStyle}
                     riseAnimationStyle={riseAnimationStyle}
                 />
-                
                 <TimerControls
                     svg={svg}
                     handleReset={handleReset}
                     handlePress={handlePress}
                 />
-                
             </Page>
         </View>
     );
