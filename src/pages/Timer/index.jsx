@@ -12,6 +12,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {deleteTask} from '../../store/tasksSlice';
 import {patchStopTimer, postStartTimer} from '../../store/timerSlice';
 import {SelectList} from "react-native-dropdown-select-list/index";
+import CountDown from "react-native-countdown-component";
+import {TimerPickerModal} from "react-native-timer-picker";
 
 const {height, width} = Dimensions.get('window');
 function Timer({navigation}) {
@@ -96,16 +98,39 @@ function Timer({navigation}) {
                     frontWaveStyle={frontWaveStyle}
                     riseAnimationStyle={riseAnimationStyle}
                 />
-                <Text style={styles.timer}>
-                    {minutes > 9 ? minutes : '0' + minutes} :{' '}
-                    {seconds > 9 ? seconds : '0' + seconds}
-                </Text>
+                <CountDown
+                    size={40}
+                    until={100}
+                    style={styles.timer}
+                    onFinish={() => alert('Finished')}
+                    digitStyle={{width: 50}}
+                    digitTxtStyle={{color: 'white'}}
+                    separatorStyle={{color: "white"}}
+                    timeToShow={['H', 'M', 'S']}
+                    timeLabels={{m: null, s: null}}
+                    showSeparator
+                    running={false}
+                />
                 <TimerControls
                     svg={svg}
                     handleReset={handleReset}
                     handlePress={handlePress}
                 />
-                
+                <TimerPickerModal
+                    visible={true}
+                    setIsVisible={() => {}}
+                    onConfirm={() => {}}
+                    modalTitle="Set Time"
+                    onCancel={() => {}}
+                    closeOnOverlayPress
+                    //LinearGradient={LinearGradient}
+                    styles={{
+                        theme: "dark",
+                    }}
+                    modalProps={{
+                        overlayOpacity: 0.2,
+                    }}
+                />
             </Page>
         </View>
     );
