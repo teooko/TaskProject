@@ -57,6 +57,7 @@ const slice = createSlice({
         },
         setReset(state) {
             state.reset = !state.reset;
+            state.currentTime = state.time;
         },
         setCurrentTime(state, {payload}) {
             state.currentTime =  payload - 1;
