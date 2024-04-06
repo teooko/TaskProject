@@ -8,7 +8,15 @@ import useAnimatedRise from '../../hooks/useAnimatedRise';
 import {icons} from '../../assets/Icons';
 import TimerControls from './TimerControls';
 import {useDispatch, useSelector} from 'react-redux';
-import {patchStopTimer, postStartTimer, setCurrentTaskId, startTimer, stopTimer} from '../../store/timerSlice';
+import {
+    patchStopTimer,
+    postStartTimer,
+    setCurrentTaskId,
+    setReset,
+    setTime,
+    startTimer,
+    stopTimer
+} from '../../store/timerSlice';
 import {SelectList} from "react-native-dropdown-select-list/index";
 import TimerBubble from "./TimerBubble";
 import Picker from "./Picker";
@@ -61,7 +69,6 @@ function Timer({navigation}) {
         if (!timerRunning) {
             dispatch(startTimer());
             await handleStartTimer(currentTaskId);
-            
             startFrontAnimation();
             startBackAnimation();
             startRise();
@@ -80,7 +87,8 @@ function Timer({navigation}) {
         stopFrontAnimation();
         stopBackAnimation();
         resetRise();
-        stopTimer();
+        dispatch(setReset());
+        dispatch(stopTimer());
         setSvg(start);
     };
     

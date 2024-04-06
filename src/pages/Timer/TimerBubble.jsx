@@ -11,13 +11,13 @@ const TimerBubble = ({
                          frontWaveStyle,
                          riseAnimationStyle,
                      }) => {
-    const {timerRunning, time} = useSelector(state => state.timer);
+    const {timerRunning, time, reset} = useSelector(state => state.timer);
     const [countDownId, setCountDownId] = useState(null);
 
     useEffect(() => {
         const id = new Date().getTime().toString()
         setCountDownId(id)
-    }, [time])
+    }, [time, reset])
     
    const dispatch = useDispatch(); 
     return (

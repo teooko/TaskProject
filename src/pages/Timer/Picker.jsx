@@ -6,7 +6,7 @@ import {closePicker, openPicker, setTime} from "../../store/timerSlice";
 
 
 const Picker = () => {
-    const {pickerVisible} = useSelector(state => state.timer);
+    const {pickerVisible, timerRunning} = useSelector(state => state.timer);
     const dispatch = useDispatch();
     
     const setTheTime = (pickedDuration) => {
@@ -15,7 +15,7 @@ const Picker = () => {
     return (
         <View>
             <TimerPickerModal
-                visible={pickerVisible}
+                visible={pickerVisible && !timerRunning}
                 setIsVisible={() => dispatch(openPicker())}
                 onConfirm={(pickedDuration) => {
                     console.log(pickedDuration.hours * 60 * 60 + pickedDuration.minutes * 60 + pickedDuration.seconds);

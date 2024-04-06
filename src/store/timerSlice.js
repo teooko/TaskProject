@@ -7,6 +7,7 @@ const initialState = {
     timerRunning: false,
     time: 3000,
     pickerVisible: false,
+    reset: false
 };
 
 export const postStartTimer = createAsyncThunk(
@@ -52,6 +53,9 @@ const slice = createSlice({
         closePicker(state) {
             state.pickerVisible = false;
         },
+        setReset(state) {
+            state.reset = !state.reset;
+        }
     },
     extraReducers(builder) {
         builder
@@ -64,5 +68,5 @@ const slice = createSlice({
     },
 });
 
-export const {setCurrentTaskId, startTimer, stopTimer, openPicker, closePicker, setTime} = slice.actions
+export const {setCurrentTaskId, startTimer, stopTimer, openPicker, closePicker, setTime, setReset} = slice.actions
 export default slice.reducer;
