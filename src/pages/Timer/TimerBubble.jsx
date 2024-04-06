@@ -1,6 +1,6 @@
-import React from 'react';
-import {Dimensions, StyleSheet, View} from "react-native";
-import CountDown from "react-native-countdown-component";
+import React, {useEffect, useState} from 'react';
+import {Dimensions, StyleSheet, View, Text} from "react-native";
+import CountDown from "react-native-countdown-fixed";
 import TimerAnimation from "./TimerAnimation";
 import {useDispatch, useSelector} from "react-redux";
 import {openPicker} from "../../store/timerSlice";
@@ -11,14 +11,21 @@ const TimerBubble = ({
                          frontWaveStyle,
                          riseAnimationStyle,
                      }) => {
+    const {timerRunning, time} = useSelector(state => state.timer);
+    const [countDownId, setCountDownId] = useState(null);
+
+    useEffect(() => {
+        const id = new Date().getTime().toString()
+        setCountDownId(id)
+    }, [time])
     
-    const {timerRunning} = useSelector(state => state.timer);
    const dispatch = useDispatch(); 
     return (
-        <View style={styles.timerBubbleContainer}>
+        <View style={styles.timerBubbleContainer} >
             <CountDown
+                id={countDownId}
                 size={40}
-                until={100}
+                until={time}
                 style={styles.timer}
                 onFinish={() => alert('Finished')}
                 digitStyle={{width: 50}}

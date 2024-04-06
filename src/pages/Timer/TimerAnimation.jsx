@@ -2,7 +2,6 @@ import AnimatedWave from './AnimatedWave';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import React from 'react';
 import Animated from 'react-native-reanimated';
-import CountDown from "react-native-countdown-component";
 
 
 const TimerAnimation = ({

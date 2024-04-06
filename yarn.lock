@@ -5807,10 +5807,10 @@ react-native-chart-kit@^6.12.0:
     paths-js "^0.4.10"
     point-in-polygon "^1.0.1"
 
-react-native-countdown-component@^2.7.1:
+react-native-countdown-fixed@^2.7.1:
   version "2.7.1"
-  resolved "https://registry.npmjs.org/react-native-countdown-component/-/react-native-countdown-component-2.7.1.tgz"
-  integrity sha512-H7D/YvMjY1hCJf9xFrNh5CsIwkcel/Suno2gYR6ulWwoa2xnUgmltFWoMyEIODsUy7lIK1KCPm+Zn26QajbRaw==
+  resolved "https://registry.npmjs.org/react-native-countdown-fixed/-/react-native-countdown-fixed-2.7.1.tgz"
+  integrity sha512-OIQce9PfbtIkUw47KQ+7hqRF3T/nq+mhQ6HeR+9K7PnveMaAonh9UEHjMC+5xfdSvC3kwHv2dg/cRHSRqbAByA==
   dependencies:
     lodash "^4.17.13"
     prop-types "^15.5.8"

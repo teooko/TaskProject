@@ -5,7 +5,7 @@ const initialState = {
     currentWorkSessionId: 0,
     currentTaskId: 0,
     timerRunning: false,
-    time: 3600,
+    time: 3000,
     pickerVisible: false,
 };
 
@@ -43,6 +43,7 @@ const slice = createSlice({
             state.timerRunning = false;
         },
         setTime(state, {payload}) {
+            console.log(payload);
             state.time = payload;
         },
         openPicker(state) {

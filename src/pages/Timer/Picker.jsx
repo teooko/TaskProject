@@ -2,21 +2,30 @@
 import {Button, View} from "react-native";
 import {TimerPickerModal} from "react-native-timer-picker";
 import {useDispatch, useSelector} from "react-redux";
-import {closePicker, openPicker} from "../../store/timerSlice";
+import {closePicker, openPicker, setTime} from "../../store/timerSlice";
 
 
 const Picker = () => {
     const {pickerVisible} = useSelector(state => state.timer);
     const dispatch = useDispatch();
+    
+    const setTheTime = (pickedDuration) => {
+        dispatch(setTime(pickedDuration.hours * 60 * 60 + pickedDuration.minutes * 60 + pickedDuration.seconds))
+    }
     return (
         <View>
             <TimerPickerModal
                 visible={pickerVisible}
                 setIsVisible={() => dispatch(openPicker())}
-                onConfirm={() => {dispatch(closePicker())}}
+                onConfirm={(pickedDuration) => {
+                    console.log(pickedDuration.hours * 60 * 60 + pickedDuration.minutes * 60 + pickedDuration.seconds);
+                    setTheTime(pickedDuration);
+                    dispatch(closePicker());
+                }}
                 modalTitle="Set Time"
                 onCancel={() => {dispatch(closePicker())}}
                 closeOnOverlayPress
+                initialMinutes = {50}
                 styles={{
                     theme: "light",
                     pickerItem: {

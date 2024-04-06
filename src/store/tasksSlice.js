@@ -32,11 +32,9 @@ export const deleteTask = createAsyncThunk(
     'tasks/deleteTask',
     async (taskId, {rejectWithValue}) => {
         try {
-            console.log(`http://192.168.100.8:5133/Task/${taskId}`);
             const response = await axios.delete(
                 `http://192.168.100.8:5133/Task?id=${taskId}`,
             );
-            console.log(response.data);
             return response.data;
         } catch (error) {
             console.error('Error deleting task:', error);

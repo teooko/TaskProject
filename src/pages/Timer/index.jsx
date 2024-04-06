@@ -8,7 +8,7 @@ import useAnimatedRise from '../../hooks/useAnimatedRise';
 import {icons} from '../../assets/Icons';
 import TimerControls from './TimerControls';
 import {useDispatch, useSelector} from 'react-redux';
-import {patchStopTimer, postStartTimer, setCurrentTaskId} from '../../store/timerSlice';
+import {patchStopTimer, postStartTimer, setCurrentTaskId, startTimer, stopTimer} from '../../store/timerSlice';
 import {SelectList} from "react-native-dropdown-select-list/index";
 import TimerBubble from "./TimerBubble";
 import Picker from "./Picker";
@@ -20,6 +20,7 @@ function Timer({navigation}) {
     const initialMinutes = 0;
     const initialSeconds = 30;
 
+    /*
     const {
         started,
         minutes,
@@ -29,13 +30,14 @@ function Timer({navigation}) {
         setMinutes,
         setSeconds,
     } = UseTimer(initialMinutes, initialSeconds);
-
+*/
+    const {time, timerRunning} = useSelector(state => state.timer);
     const [frontWaveStyle, startFrontAnimation, stopFrontAnimation] =
         UseAnimatedWave(0, 100, 1000);
     const [backWaveStyle, startBackAnimation, stopBackAnimation] =
         UseAnimatedWave(0, -100, 1700);
     const [riseAnimationStyle, startRise, stopRise, resetRise] =
-        useAnimatedRise(minutes * 60 * 1000 + seconds * 1000);
+        useAnimatedRise(time * 1000);
 
     const dispatch = useDispatch();
     const currentWorkSessionId = useSelector(state => state.timer.currentWorkSessionId);
@@ -56,8 +58,8 @@ function Timer({navigation}) {
         }
     };
     const handlePress = async () => {
-        if (!started) {
-            startTimer();
+        if (!timerRunning) {
+            dispatch(startTimer());
             await handleStartTimer(currentTaskId);
             
             startFrontAnimation();
@@ -68,7 +70,7 @@ function Timer({navigation}) {
             stopRise();
             stopFrontAnimation();
             stopBackAnimation();
-            stopTimer();
+            dispatch(stopTimer());
             await handleStopTimer(currentWorkSessionId);
             setSvg(start);
         }
@@ -80,8 +82,6 @@ function Timer({navigation}) {
         resetRise();
         stopTimer();
         setSvg(start);
-        setMinutes(initialMinutes);
-        setSeconds(initialSeconds);
     };
     
     const {tasks} = useSelector(state => state.tasks);
