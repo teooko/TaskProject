@@ -33,7 +33,7 @@ function Timer({navigation}) {
         UseAnimatedWave(0, 100, 1000);
     const [backWaveStyle, startBackAnimation, stopBackAnimation] =
         UseAnimatedWave(0, -100, 1700);
-    const [riseAnimationStyle, startRise, stopRise, resetRisse] =
+    const [riseAnimationStyle, startRise, stopRise, resetRise] =
         useAnimatedRise(minutes * 60 * 1000 + seconds * 1000);
 
     const dispatch = useDispatch();
@@ -41,7 +41,6 @@ function Timer({navigation}) {
     const {currentTaskId} = useSelector(state => state.timer);
     const handleStartTimer = async id => {
         try {
-            console.log(id + " ceEEEEEEEEEE?");
             await dispatch(postStartTimer(id));
         } catch (error) {
             console.error(error);
@@ -97,6 +96,9 @@ function Timer({navigation}) {
                                 data={tasks.map(task => ({ key: task.id, value: task.name }))}
                                 setSelected={(val) => dispatch(setCurrentTaskId(val))}/>
                 </View>
+                <Text style={{fontSize: 30, color: "white", marginTop: 70, marginLeft: "auto", marginRight: "auto"}}>
+                    Time to work
+                </Text>
                 <TimerBubble
                     backWaveStyle={backWaveStyle}
                     frontWaveStyle={frontWaveStyle}
