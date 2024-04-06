@@ -6,6 +6,7 @@ const initialState = {
     currentTaskId: 0,
     timerRunning: false,
     time: 3000,
+    currentTime: 3000,
     pickerVisible: false,
     reset: false
 };
@@ -46,6 +47,7 @@ const slice = createSlice({
         setTime(state, {payload}) {
             console.log(payload);
             state.time = payload;
+            state.currentTime =  payload;
         },
         openPicker(state) {
             state.pickerVisible = true;
@@ -55,6 +57,9 @@ const slice = createSlice({
         },
         setReset(state) {
             state.reset = !state.reset;
+        },
+        setCurrentTime(state, {payload}) {
+            state.currentTime =  payload - 1;
         }
     },
     extraReducers(builder) {
@@ -68,5 +73,5 @@ const slice = createSlice({
     },
 });
 
-export const {setCurrentTaskId, startTimer, stopTimer, openPicker, closePicker, setTime, setReset} = slice.actions
+export const {setCurrentTaskId, startTimer, stopTimer, openPicker, closePicker, setTime, setReset, setCurrentTime} = slice.actions
 export default slice.reducer;

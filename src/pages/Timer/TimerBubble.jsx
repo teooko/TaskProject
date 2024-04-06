@@ -3,7 +3,7 @@ import {Dimensions, StyleSheet, View, Text} from "react-native";
 import CountDown from "react-native-countdown-fixed";
 import TimerAnimation from "./TimerAnimation";
 import {useDispatch, useSelector} from "react-redux";
-import {openPicker} from "../../store/timerSlice";
+import {openPicker, setCurrentTime} from "../../store/timerSlice";
 
 const {height, width} = Dimensions.get('window');
 const TimerBubble = ({
@@ -36,6 +36,7 @@ const TimerBubble = ({
                 showSeparator
                 running={timerRunning}
                 onPress={() => dispatch(openPicker())}
+                onChange={(value) => dispatch(setCurrentTime(value))}
             />
             <TimerAnimation
                 backWaveStyle={backWaveStyle}
