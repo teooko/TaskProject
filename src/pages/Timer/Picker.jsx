@@ -16,7 +16,7 @@ const Picker = () => {
         <View>
             <TimerPickerModal
                 visible={pickerVisible && !timerRunning}
-                setIsVisible={() => dispatch(openPicker())}
+                setIsVisible={() => dispatch(closePicker())}
                 onConfirm={(pickedDuration) => {
                     console.log(pickedDuration.hours * 60 * 60 + pickedDuration.minutes * 60 + pickedDuration.seconds);
                     setTheTime(pickedDuration);
