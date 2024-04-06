@@ -25,20 +25,7 @@ const {height, width} = Dimensions.get('window');
 function Timer({navigation}) {
     const {start, pause, reset, rest} = icons;
     const [svg, setSvg] = useState(start);
-    const initialMinutes = 0;
-    const initialSeconds = 30;
-
-    /*
-    const {
-        started,
-        minutes,
-        seconds,
-        startTimer,
-        stopTimer,
-        setMinutes,
-        setSeconds,
-    } = UseTimer(initialMinutes, initialSeconds);
-*/
+    
     const {time, timerRunning} = useSelector(state => state.timer);
     const [frontWaveStyle, startFrontAnimation, stopFrontAnimation] =
         UseAnimatedWave(0, 100, 1000);
