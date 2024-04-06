@@ -3,7 +3,10 @@ import axios from 'axios';
 
 const initialState = {
     currentWorkSessionId: 0,
-    currentTaskId: 0
+    currentTaskId: 0,
+    timerRunning: false,
+    time: 3600,
+    pickerVisible: false,
 };
 
 export const postStartTimer = createAsyncThunk(
@@ -32,7 +35,22 @@ const slice = createSlice({
     reducers: {
         setCurrentTaskId (state, {payload}) {
             state.currentTaskId = payload;
-        }
+        },
+        startTimer(state) {
+            state.timerRunning = true;
+        },
+        stopTimer(state) {
+            state.timerRunning = false;
+        },
+        setTime(state, {payload}) {
+            state.time = payload;
+        },
+        openPicker(state) {
+            state.pickerVisible = true;
+        },
+        closePicker(state) {
+            state.pickerVisible = false;
+        },
     },
     extraReducers(builder) {
         builder
@@ -45,5 +63,5 @@ const slice = createSlice({
     },
 });
 
-export const {setCurrentTaskId} = slice.actions
+export const {setCurrentTaskId, startTimer, stopTimer, openPicker, closePicker, setTime} = slice.actions
 export default slice.reducer;

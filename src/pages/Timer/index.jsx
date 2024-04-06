@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {patchStopTimer, postStartTimer, setCurrentTaskId} from '../../store/timerSlice';
 import {SelectList} from "react-native-dropdown-select-list/index";
 import TimerBubble from "./TimerBubble";
+import Picker from "./Picker";
 
 const {height, width} = Dimensions.get('window');
 function Timer({navigation}) {
@@ -89,6 +90,7 @@ function Timer({navigation}) {
         <View>
             
             <Page navigation={navigation}>
+                <Picker />
                 <View style={{position: "absolute", top: 40, left: 30, width: 300, zIndex: 1}}>
                     <SelectList dropdownItemStyles={{backgroundColor: "#B83838"}}
                                 boxStyles={{backgroundColor: "#B83838", borderWidth: 0}}
