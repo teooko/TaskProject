@@ -5,6 +5,7 @@ import Timer from '../Timer';
 import * as React from 'react';
 import Tasks from '../Tasks';
 import Test from '../Test';
+import Statistics from "../Statistics";
 
 const Drawer = createDrawerNavigator();
 const CustomDrawer = () => {
@@ -20,6 +21,7 @@ const CustomDrawer = () => {
             <Drawer.Screen name="Timer" component={Timer} />
             <Drawer.Screen name="Tasks" component={Tasks} />
             <Drawer.Screen name="Test" component={Test} />
+            <Drawer.Screen name="Statistics" component={Statistics} />
         </Drawer.Navigator>
     );
 };

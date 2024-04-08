@@ -23,6 +23,11 @@ const CustomDrawerContent = props => {
                 props={props}
             />
             <CustomDrawerButton
+                page={'Statistics'}
+                icon={icons.chartLine}
+                props={props}
+            />
+            <CustomDrawerButton
                 page={'Test'}
                 icon={icons.check}
                 props={props}
