@@ -4,9 +4,25 @@ import {Dimensions, View, Text} from "react-native";
 import {LineChart} from "react-native-chart-kit";
 import {SelectList} from "react-native-dropdown-select-list/index";
 import {useSelector} from "react-redux";
+import {constants} from "../../components/ScrollingCalendar/constants";
 
 const Statistics = ({navigation}) => {
     const {tasks} = useSelector(state => state.tasks);
+    const {month} = useSelector(state => state.calendar);
+    
+    let lastMonths = [];
+    for(let i = 5; i >= 0; i--)
+    {
+        if(month - i < 0)
+        {
+            lastMonths.push(constants.months[12 + (month - i)])
+        }
+        else
+        {
+            lastMonths.push(constants.months[month - i])
+        }
+        
+    }
     return (
         <Page navigation={navigation}>
             <View style={{position: "absolute", top: 40, left: 30, width: 300, zIndex: 1}}>
@@ -20,7 +36,7 @@ const Statistics = ({navigation}) => {
                 <Text>Bezier Line Chart</Text>
                 <LineChart
                     data={{
-                        labels: ["January", "February", "March", "April", "May", "June"],
+                        labels: lastMonths,
                         datasets: [
                             {
                                 data: [
