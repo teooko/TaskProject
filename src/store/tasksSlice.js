@@ -10,7 +10,8 @@ const initialState = {
     error: null,
     dailyStatus: 'idle',
     dailyTasks: [],
-    halfYearTime: []
+    halfYearTime: [],
+    totalTasksTime: []
 };
 
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
@@ -34,6 +35,16 @@ export const fetchHalfYearTime = createAsyncThunk(
     async () => {
         const response = await axios.get(
             'http://192.168.100.8:5133/Task/monthly'
+        );
+        return response.data;
+    },
+);
+
+export const fetchTotalTasksTime = createAsyncThunk(
+    'tasks/total',
+    async () => {
+        const response = await axios.get(
+            'http://192.168.100.8:5133/Task/total'
         );
         return response.data;
     },
@@ -118,6 +129,9 @@ const slice = createSlice({
             })
             .addCase(fetchHalfYearTime.fulfilled, (state, action) => {
                 state.halfYearTime = action.payload.$values;
+            })
+            .addCase(fetchTotalTasksTime.fulfilled, (state, action) => {
+                state.totalTasksTime = action.payload.$values;
             });
     },
 });
