@@ -1,6 +1,6 @@
 ﻿import {View, Text, Dimensions, SectionList} from 'react-native';
 import Page from '../Page';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import UseTimer from '../../hooks/useTimer';
 import UseAnimatedWave from '../../hooks/useAnimatedWave';
@@ -20,6 +20,8 @@ import {
 import {SelectList} from "react-native-dropdown-select-list/index";
 import TimerBubble from "./TimerBubble";
 import Picker from "./Picker";
+import useOrientation from "../../helpers/useOrientation";
+import {State} from "react-native-gesture-handler";
 
 const {height, width} = Dimensions.get('window');
 function Timer({navigation}) {
@@ -80,7 +82,9 @@ function Timer({navigation}) {
     };
     
     const {tasks} = useSelector(state => state.tasks);
-    
+    const {orientation} = useSelector(state => state.deviceInfo);
+    useOrientation();
+    useEffect(() => console.log("orientation changed"), [orientation]);
     return (
         <View>
             

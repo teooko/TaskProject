@@ -1,14 +1,15 @@
 ﻿import {configureStore} from '@reduxjs/toolkit';
 import calendarReducer, {fetchWeeklyTasks, insertDays} from './slice';
 import tasksReducer, {fetchDailyTasks, fetchTasks} from './tasksSlice';
+import deviceInfoReducer from './deviceInfoSlice'
 import timerReducer from './timerSlice';
-import {useDispatch} from 'react-redux';
 
 const store = configureStore({
     reducer: {
         calendar: calendarReducer,
         tasks: tasksReducer,
         timer: timerReducer,
+        deviceInfo: deviceInfoReducer
     },
 });
 const currentDate = new Date();
