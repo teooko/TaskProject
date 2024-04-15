@@ -26,10 +26,10 @@ import CountDown from "react-native-countdown-fixed";
 
 const {height, width} = Dimensions.get('window');
 function Timer({navigation}) {
-    const {start, pause, reset, rest} = icons;
+    const {start, pause} = icons;
     const [svg, setSvg] = useState(start);
     
-    const {time, timerRunning} = useSelector(state => state.timer);
+    const {time, timerRunning, reset} = useSelector(state => state.timer);
     const [frontWaveStyle, startFrontAnimation, stopFrontAnimation] =
         UseAnimatedWave(0, 100, 1000);
     const [backWaveStyle, startBackAnimation, stopBackAnimation] =
@@ -64,10 +64,10 @@ function Timer({navigation}) {
             startRise();
             setSvg(pause);
         } else {
+            dispatch(stopTimer());
             stopRise();
             stopFrontAnimation();
             stopBackAnimation();
-            dispatch(stopTimer());
             await handleStopTimer(currentWorkSessionId);
             setSvg(start);
         }
