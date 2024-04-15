@@ -21,7 +21,6 @@ import {SelectList} from "react-native-dropdown-select-list/index";
 import TimerBubble from "./TimerBubble";
 import Picker from "./Picker";
 import useOrientation from "../../helpers/useOrientation";
-import {State} from "react-native-gesture-handler";
 import CountDown from "react-native-countdown-fixed";
 
 const {height, width} = Dimensions.get('window');
@@ -97,19 +96,18 @@ function Timer({navigation}) {
     return (
         <View>
             <View style={{display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "black", height: "100%", width: "100%", position: "absolute", zIndex: orientation === "PORTRAIT" ? -2 : 3}}>
-                <StatusBar />
+                <StatusBar hidden={orientation !== "PORTRAIT"}/>
                 <CountDown
                     id={countDownId}
-                    size={40}
+                    size={100}
                     until={time}
                     style={styles.timer}
                     onFinish={() => handleStopTimer(currentWorkSessionId)}
-                    digitStyle={{width: 50}}
+                    digitStyle={{width: 200, borderRadius: 20, backgroundColor: '#0F0F0F'}}
                     digitTxtStyle={{color: 'white'}}
                     separatorStyle={{color: "white"}}
                     timeToShow={['H', 'M', 'S']}
                     timeLabels={{m: null, s: null}}
-                    showSeparator
                     running={timerRunning}
                     onPress={() => dispatch(openPicker())}
                     onChange={(value) => dispatch(setCurrentTime(value))}
@@ -149,7 +147,6 @@ const styles = StyleSheet.create({
         marginLeft: "auto",
         marginRight: "auto",
         alignSelf: "center",
-        width: 180,
     },
     icon: {
         fill: 'white',
