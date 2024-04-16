@@ -1,6 +1,7 @@
 ﻿import {ScrollView, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import NavigationBar from './NavigationBar';
+// TODO: Move this in a folder called 'core'
 const Page = ({children, navigation}) => {
     return (
         <LinearGradient colors={['#DF5454', '#B83838']} style={styles.page}>

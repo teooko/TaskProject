@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchHalfYearTime} from "../../store/tasksSlice";
 import {constants} from "../../components/ScrollingCalendar/constants";
 
-//extract this function to its own file
+// TODO: extract this function to its own file
 function convertTimeStringToHours(timeString) {
     // Split the time string into components
     const [hours, minutes, seconds] = timeString.split(':');

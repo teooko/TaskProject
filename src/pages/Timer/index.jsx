@@ -22,23 +22,17 @@ import TimerBubble from "./TimerBubble";
 import Picker from "./Picker";
 import useOrientation from "../../helpers/useOrientation";
 import CountDown from "react-native-countdown-fixed";
+import useTimerAnimation from "../../hooks/useTimerAnimation";
 
-const {height, width} = Dimensions.get('window');
 function Timer({navigation}) {
     const {start, pause} = icons;
     const [svg, setSvg] = useState(start);
-    
-    const {time, timerRunning, reset} = useSelector(state => state.timer);
-    const [frontWaveStyle, startFrontAnimation, stopFrontAnimation] =
-        UseAnimatedWave(0, 100, 1000);
-    const [backWaveStyle, startBackAnimation, stopBackAnimation] =
-        UseAnimatedWave(0, -100, 1700);
-    const [riseAnimationStyle, startRise, stopRise, resetRise] =
-        useAnimatedRise(time * 1000);
 
     const dispatch = useDispatch();
     const currentWorkSessionId = useSelector(state => state.timer.currentWorkSessionId);
-    const {currentTaskId} = useSelector(state => state.timer);
+    const {currentTaskId, time, reset, timerRunning} = useSelector(state => state.timer);
+    
+    const {startTimerAnimation, stopTimerAnimation, resetTimerAnimation, frontWaveStyle, backWaveStyle, riseAnimationStyle} = useTimerAnimation();
     const handleStartTimer = async id => {
         try {
             await dispatch(postStartTimer(id));
@@ -56,26 +50,21 @@ function Timer({navigation}) {
     };
     const handlePress = async () => {
         if (!timerRunning) {
+            // TODO: get rid of 'dispatch' as we use it everywhere
             dispatch(startTimer());
             await handleStartTimer(currentTaskId);
-            startFrontAnimation();
-            startBackAnimation();
-            startRise();
+            startTimerAnimation();
             setSvg(pause);
         } else {
             dispatch(stopTimer());
-            stopRise();
-            stopFrontAnimation();
-            stopBackAnimation();
+            stopTimerAnimation();
             await handleStopTimer(currentWorkSessionId);
             setSvg(start);
         }
     };
 
     const handleReset = () => {
-        stopFrontAnimation();
-        stopBackAnimation();
-        resetRise();
+        resetTimerAnimation();
         dispatch(setReset());
         dispatch(stopTimer());
         setSvg(start);
@@ -113,29 +102,29 @@ function Timer({navigation}) {
                     onChange={(value) => dispatch(setCurrentTime(value))}
                 />
             </View>
-    <Page navigation={navigation}>
-        <Picker/>
-        <View style={{position: "absolute", top: 40, left: 30, width: 300, zIndex: 1}}>
-            <SelectList dropdownItemStyles={{backgroundColor: "#B83838"}}
-                        boxStyles={{backgroundColor: "#B83838", borderWidth: 0}}
-                        dropdownStyles={{backgroundColor: "#B83838", borderColor: "#560D0D"}}
-                        data={tasks.map(task => ({key: task.id, value: task.name}))}
-                        setSelected={(val) => dispatch(setCurrentTaskId(val))}/>
-        </View>
-        <Text style={{fontSize: 30, color: "white", marginTop: 70, marginLeft: "auto", marginRight: "auto"}}>
-            Time to work
-        </Text>
-        <TimerBubble
-            backWaveStyle={backWaveStyle}
-            frontWaveStyle={frontWaveStyle}
-            riseAnimationStyle={riseAnimationStyle}
-        />
-        <TimerControls
-            svg={svg}
-            handleReset={handleReset}
-            handlePress={handlePress}
-        />
-    </Page>
+                <Page navigation={navigation}>
+                    <Picker/>
+                    <View style={{position: "absolute", top: 40, left: 30, width: 300, zIndex: 1}}>
+                        <SelectList dropdownItemStyles={{backgroundColor: "#B83838"}}
+                                    boxStyles={{backgroundColor: "#B83838", borderWidth: 0}}
+                                    dropdownStyles={{backgroundColor: "#B83838", borderColor: "#560D0D"}}
+                                    data={tasks.map(task => ({key: task.id, value: task.name}))}
+                                    setSelected={(val) => dispatch(setCurrentTaskId(val))}/>
+                    </View>
+                    <Text style={{fontSize: 30, color: "white", marginTop: 70, marginLeft: "auto", marginRight: "auto"}}>
+                        Time to work
+                    </Text>
+                    <TimerBubble
+                        backWaveStyle={backWaveStyle}
+                        frontWaveStyle={frontWaveStyle}
+                        riseAnimationStyle={riseAnimationStyle}
+                    />
+                    <TimerControls
+                        svg={svg}
+                        handleReset={handleReset}
+                        handlePress={handlePress}
+                    />
+                </Page>
         </View>
 );
 }

@@ -15,7 +15,6 @@ const TaskListForm = () => {
     const [toggleColorPicker, setToggleColorPicker] = useState(false);
     const [newTaskColor, setNewTaskColor] = useState('#B56464');
     const onSelectColor = ({hex}) => {
-        // do something with the selected color.
         setNewTaskColor(hex);
     };
 
@@ -23,6 +22,7 @@ const TaskListForm = () => {
     const handleAddNewTask = async (newTaskName, newTaskColor) => {
         await dispatch(addNewTask({name: newTaskName, color: newTaskColor}));
     };
+    /*
     const Thumb = ({positionStyle}) => {
         return (
             <View
@@ -38,6 +38,9 @@ const TaskListForm = () => {
             />
         );
     };
+     */
+    // TODO? Extract this Pressable stuff
+    
     return (
         <View>
             <View style={styles.task}>

@@ -9,6 +9,7 @@ import Statistics from "../Statistics";
 
 const Drawer = createDrawerNavigator();
 const CustomDrawer = () => {
+    // TODO? Make a list consisting of name and component
     return (
         <Drawer.Navigator
             drawerContent={CustomDrawerContent}

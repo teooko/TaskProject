@@ -7,6 +7,7 @@ import {useSelector} from 'react-redux';
 import {constants} from '../../components/ScrollingCalendar/constants';
 
 const DailyActivity = () => {
+    // TODO: Maybe get rid of useSelector?
     const {selected, days} = useSelector(state => state.calendar);
     const {dailyTasks} = useSelector(state => state.tasks);
     const totalTime = dailyTasks

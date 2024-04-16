@@ -7,7 +7,6 @@ import MonthlyChart from "./MonthlyChart";
 import TotalTaskTimeChart from "./TotalTaskTimeChart";
 
 const Statistics = ({navigation}) => {
-    
     const {tasks} = useSelector(state => state.tasks);
     
     return (

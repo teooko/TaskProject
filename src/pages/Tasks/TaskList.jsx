@@ -11,6 +11,7 @@ const TaskList = () => {
                 ? tasks
                       .map(task => (
                           <TaskListItem
+                              // TODO: Solve this .id and dollar sign .id
                               key={task.id ? task.id : task.$id}
                               name={task.name}
                               id={task.id ? task.id : task.$id}

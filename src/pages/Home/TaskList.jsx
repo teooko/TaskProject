@@ -1,11 +1,10 @@
 ﻿import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import TaskListItem from './TaskListItem';
-import {useDispatch, useSelector} from 'react-redux';
-import {fetchDailyTasks} from '../../store/tasksSlice';
+import {useSelector} from 'react-redux';
 
 const TaskList = () => {
-    const status = useSelector(state => state.tasks.status);
+    // TODO: Add loading mechanism
     const {dailyTasks} = useSelector(state => state.tasks);
     return (
         <View style={styles.taskList}>
