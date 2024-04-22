@@ -4,7 +4,6 @@ import useAnimatedRise from "./useAnimatedRise";
 
 const UseTimerAnimation = () => {
     const {time} = useSelector(state => state.timer);
-    // TODO: extract this and then use a single animation for both waves
     const [frontWaveStyle, startFrontAnimation, stopFrontAnimation] =
         UseAnimatedWave(0, 100, 1000);
     const [backWaveStyle, startBackAnimation, stopBackAnimation] =

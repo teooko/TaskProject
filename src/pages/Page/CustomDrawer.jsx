@@ -6,6 +6,7 @@ import * as React from 'react';
 import Tasks from '../Tasks';
 import Test from '../Test';
 import Statistics from "../Statistics";
+import LogIn from "../LogIn";
 
 const Drawer = createDrawerNavigator();
 const CustomDrawer = () => {
@@ -18,6 +19,7 @@ const CustomDrawer = () => {
                 swipeEdgeWidth: 5,
                 swipeMinDistance: 50,
             }}>
+            <Drawer.Screen name="LogIn" component={LogIn} />
             <Drawer.Screen name="Home" component={Home} />
             <Drawer.Screen name="Timer" component={Timer} />
             <Drawer.Screen name="Tasks" component={Tasks} />

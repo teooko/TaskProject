@@ -1,10 +1,7 @@
-﻿import {View, Text, Dimensions, SectionList, StatusBar} from 'react-native';
+﻿import {View, Text, StatusBar} from 'react-native';
 import Page from '../Page';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
-import UseTimer from '../../hooks/useTimer';
-import UseAnimatedWave from '../../hooks/useAnimatedWave';
-import useAnimatedRise from '../../hooks/useAnimatedRise';
 import {icons} from '../../assets/Icons';
 import TimerControls from './TimerControls';
 import {useDispatch, useSelector} from 'react-redux';
@@ -29,8 +26,7 @@ function Timer({navigation}) {
     const [svg, setSvg] = useState(start);
 
     const dispatch = useDispatch();
-    const currentWorkSessionId = useSelector(state => state.timer.currentWorkSessionId);
-    const {currentTaskId, time, reset, timerRunning} = useSelector(state => state.timer);
+    const {currentTaskId, time, reset, timerRunning, currentWorkSessionId} = useSelector(state => state.timer);
     
     const {startTimerAnimation, stopTimerAnimation, resetTimerAnimation, frontWaveStyle, backWaveStyle, riseAnimationStyle} = useTimerAnimation();
     const handleStartTimer = async id => {
