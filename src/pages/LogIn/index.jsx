@@ -6,7 +6,7 @@ import {postLogInDefault, postLogInOtherAcc} from "../../store/accountSlice";
 import {useNavigation} from "@react-navigation/native";
 import Home from "../Home";
 import {fetchDailyTasks, fetchTasks} from "../../store/tasksSlice";
-import {fetchWeeklyTasks, insertDays} from "../../store/slice";
+import {fetchWeeklyTasks, insertDays, selectDay} from "../../store/slice";
 
 const LogIn = () => {
     const dispatch = useDispatch();
@@ -22,6 +22,7 @@ const LogIn = () => {
 
             const formattedDate = `${year}-${month}-${day}`;
 
+            dispatch(selectDay(0));
             dispatch(fetchDailyTasks({bearerToken, date: formattedDate}));
             dispatch(insertDays());
             dispatch(fetchTasks(bearerToken));
