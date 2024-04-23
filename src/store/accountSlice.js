@@ -14,8 +14,8 @@ export const postLogInDefault = createAsyncThunk(
             const requestData = {
                 email: 'string@mail.com',
                 password: 'S!1string',
-                twoFactorCode: 'string',  // Optional: Include two-factor code if needed
-                twoFactorRecoveryCode: 'string',  // Optional: Include recovery code if needed
+                twoFactorCode: 'string',
+                twoFactorRecoveryCode: 'string', 
             };
 
             // Make POST request to the login endpoint with the data payload
@@ -47,7 +47,7 @@ const slice = createSlice({
         builder
             .addCase(postLogInDefault.fulfilled, (state, action) => {
                 state.bearerToken = action.payload.accessToken;
-                console.log(action.payload.accessToken);
+                //console.log(action.payload);
             })
     }
 })

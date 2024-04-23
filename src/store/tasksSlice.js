@@ -1,6 +1,6 @@
 ﻿import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import async from 'async';
 
 const initialState = {
@@ -14,8 +14,13 @@ const initialState = {
     totalTasksTime: []
 };
 
-export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-    const response = await axios.get('http://192.168.100.8:5133/Task');
+export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (bearerToken) => {
+    const response = await axios.get('http://192.168.100.8:5133/Task', {
+        headers: {
+            Authorization: `Bearer ${bearerToken}`,
+        }
+    });
+    //console.log(response.data);
     return response.data;
 });
 

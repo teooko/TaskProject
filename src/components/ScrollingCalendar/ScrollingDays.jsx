@@ -24,8 +24,8 @@ const ScrollingDays = () => {
                 onViewableItemsChanged={onViewableItemsChanged}
                 viewabilityConfig={{viewAreaCoveragePercentThreshold: 100}}
                 onEndReached={() => {
-                    dispatch(insertDays());
-                    dispatch(fetchWeeklyTasks(lastLoaded));
+                    //dispatch(insertDays());
+                    //dispatch(fetchWeeklyTasks(lastLoaded));
                 }}
                 onEndReachedThreshold={0.3}
                 inverted={true}
