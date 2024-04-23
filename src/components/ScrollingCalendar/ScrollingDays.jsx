@@ -12,6 +12,7 @@ const ScrollingDays = () => {
         dispatch(changeHeader(viewableItems)),
     );
     const lastLoaded = useSelector(state => state.calendar.lastLoaded);
+    const {bearerToken} = useSelector(state => state.account);
     // @ts-ignore
     return (
         <View style={styles.calendar}>
@@ -24,8 +25,8 @@ const ScrollingDays = () => {
                 onViewableItemsChanged={onViewableItemsChanged}
                 viewabilityConfig={{viewAreaCoveragePercentThreshold: 100}}
                 onEndReached={() => {
-                    //dispatch(insertDays());
-                    //dispatch(fetchWeeklyTasks(lastLoaded));
+                    dispatch(insertDays());
+                    dispatch(fetchWeeklyTasks({bearerToken, fromDate: lastLoaded}));
                 }}
                 onEndReachedThreshold={0.3}
                 inverted={true}

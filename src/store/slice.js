@@ -19,9 +19,13 @@ const initialState = {
 
 export const fetchWeeklyTasks = createAsyncThunk(
     'tasks/fetchWeeklyTasks',
-    async fromDate => {
+    async ({bearerToken, fromDate}) => {
         const response = await axios.get(
-            `http://192.168.100.8:5133/Task/weekly/${fromDate}`,
+            `http://192.168.100.8:5133/Task/weekly/${fromDate}`, {
+                headers: {
+                    Authorization: `Bearer ${bearerToken}`,
+                }
+            }
         );
         return response.data;
     },
