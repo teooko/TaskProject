@@ -47,7 +47,6 @@ const slice = createSlice({
         builder
             .addCase(postLogInDefault.fulfilled, (state, action) => {
                 state.bearerToken = action.payload.accessToken;
-                //console.log(action.payload);
             })
     }
 })

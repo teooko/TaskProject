@@ -20,16 +20,19 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (bearerToke
             Authorization: `Bearer ${bearerToken}`,
         }
     });
-    //console.log(response.data);
     return response.data;
 });
 
 export const addNewTask = createAsyncThunk(
     'tasks/addNewTask',
-    async initialTask => {
+    async ({bearerToken, initialTask}) => {
         const response = await axios.post(
             'http://192.168.100.8:5133/Task',
-            initialTask,
+            initialTask, {
+                headers: {
+                    Authorization: `Bearer ${bearerToken}`,
+                }
+            }
         );
         return response.data;
     },

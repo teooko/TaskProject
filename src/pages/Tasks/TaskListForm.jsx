@@ -4,7 +4,7 @@ import ColorPicker, {
     SaturationSlider,
 } from 'reanimated-color-picker';
 import {useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {addNewTask} from '../../store/tasksSlice';
 import {icons} from '../../assets/Icons';
 import {SvgXml} from 'react-native-svg';
@@ -14,13 +14,14 @@ const TaskListForm = () => {
     const [newTaskName, setNewTaskName] = useState('Create new task...');
     const [toggleColorPicker, setToggleColorPicker] = useState(false);
     const [newTaskColor, setNewTaskColor] = useState('#B56464');
+    const {bearerToken} = useSelector(state => state.account);
     const onSelectColor = ({hex}) => {
         setNewTaskColor(hex);
     };
 
     const dispatch = useDispatch();
     const handleAddNewTask = async (newTaskName, newTaskColor) => {
-        await dispatch(addNewTask({name: newTaskName, color: newTaskColor}));
+        await dispatch(addNewTask({bearerToken, initialTask: {name: newTaskName, color: newTaskColor}}));
     };
     /*
     const Thumb = ({positionStyle}) => {
