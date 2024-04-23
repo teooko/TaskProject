@@ -75,9 +75,14 @@ export const deleteTask = createAsyncThunk(
 
 export const fetchDailyTasks = createAsyncThunk(
     '/tasks/date/fetchDailyTasks',
-    async date => {
+    async ({bearerToken, date}) => {
         const response = await axios.get(
             `http://192.168.100.8:5133/Task/date/${date}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${bearerToken}`,
+                }
+            }
         );
         return response.data;
     },

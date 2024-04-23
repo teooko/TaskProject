@@ -8,14 +8,15 @@ import {icons} from '../../assets/Icons';
 const DayCard = ({id}) => {
     const {days, selected} = useSelector(state => state.calendar);
     const dispatch = useDispatch();
-
+    const {bearerToken} = useSelector(state => state.account);
     const handlePress = () => {
         dispatch(selectDay(id));
         dispatch(
             fetchDailyTasks(
-                `${days.daysById[id].year}-${days.daysById[id].month + 1}-${
-                    days.daysById[id].monthDay
-                }`,
+                {bearerToken,
+                    date: `${days.daysById[id].year}-${days.daysById[id].month + 1}-${
+                    days.daysById[id].monthDay}`
+                }
             ),
         );
     };

@@ -22,7 +22,7 @@ const LogIn = () => {
 
             const formattedDate = `${year}-${month}-${day}`;
 
-            dispatch(fetchDailyTasks(formattedDate));
+            dispatch(fetchDailyTasks({bearerToken, date: formattedDate}));
             dispatch(insertDays());
             dispatch(fetchTasks(bearerToken));
             dispatch(fetchWeeklyTasks({bearerToken, fromDate: 0}));
