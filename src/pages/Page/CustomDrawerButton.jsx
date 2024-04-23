@@ -3,10 +3,16 @@ import {Pressable, Text} from 'react-native';
 import * as React from 'react';
 import {StyleSheet} from 'react-native';
 
-const CustomDrawerButton = ({page, icon, props}) => {
+const CustomDrawerButton = ({doExtra, page, icon, props}) => {
+    
+    const handlePress = () => {
+        if(doExtra)
+            doExtra();
+        props.navigation.navigate(page);
+    }
     return (
         <Pressable
-            onPress={() => props.navigation.navigate(page)}
+            onPress={handlePress}
             style={styles.button}>
             <SvgXml xml={icon} width="20" height="20" style={styles.icon} />
             <Text style={styles.label}>{page}</Text>

@@ -6,7 +6,7 @@ import {postLogInDefault} from "../../store/accountSlice";
 import {useNavigation} from "@react-navigation/native";
 import Home from "../Home";
 
-const LogIn = ({nav}) => {
+const LogIn = () => {
     const dispatch = useDispatch();
     const {bearerToken} = useSelector(state => state.account);
     const navigation = useNavigation();
@@ -17,7 +17,6 @@ const LogIn = ({nav}) => {
     
     return (
         <View>
-            <NavigationBar navigation={nav} />
             <Button title={"Log in"} onPress={() => dispatch(postLogInDefault())}></Button>
         </View>
     );

@@ -3,8 +3,11 @@ import {icons} from '../../assets/Icons';
 import * as React from 'react';
 import CustomDrawerButton from './CustomDrawerButton';
 import {StyleSheet} from 'react-native';
+import {useDispatch} from "react-redux";
+import {resetBearerToken} from "../../store/accountSlice";
 
 const CustomDrawerContent = props => {
+    const dispatch = useDispatch();
     return (
         <DrawerContentScrollView {...props} style={styles.content}>
             <CustomDrawerButton
@@ -30,6 +33,12 @@ const CustomDrawerContent = props => {
             <CustomDrawerButton
                 page={'Test'}
                 icon={icons.check}
+                props={props}
+            />
+            <CustomDrawerButton
+                doExtra={() => dispatch(resetBearerToken())}
+                page={'Log in'}
+                icon={icons.rightFromBracket}
                 props={props}
             />
             {/*

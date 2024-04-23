@@ -42,7 +42,11 @@ export const postLogInDefault = createAsyncThunk(
 const slice = createSlice({
     name: 'account',
     initialState,
-    reducers: {},
+    reducers: {
+        resetBearerToken(state) {
+            state.bearerToken = null;
+        }
+    },
     extraReducers(builder){
         builder
             .addCase(postLogInDefault.fulfilled, (state, action) => {
@@ -51,4 +55,5 @@ const slice = createSlice({
     }
 })
 
+export const {resetBearerToken} = slice.actions;
 export default slice.reducer;
