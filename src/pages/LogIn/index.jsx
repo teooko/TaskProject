@@ -10,6 +10,7 @@ import {fetchWeeklyTasks, insertDays, selectDay} from "../../store/slice";
 import Svg, {SvgUri, SvgXml} from "react-native-svg";
 import {icons} from "../../assets/Icons";
 import LinearGradient from "react-native-linear-gradient";
+import AuthenticationButtons from "./AuthenticationButtons";
 const LogIn = () => {
     const dispatch = useDispatch();
     const {bearerToken} = useSelector(state => state.account);
@@ -47,30 +48,7 @@ const LogIn = () => {
                     height={350}
                     style={styles.logo}
                 />
-                <View style={styles.buttons}>
-                    <Pressable style={styles.button} onPress={() => dispatch(postLogInDefault())}>
-                        <SvgXml
-                            xml={icons.profile}
-                            width={20}
-                            height={20}
-                            fill={"white"}
-                        />
-                        <Text style={styles.text}>
-                            Log in
-                        </Text>
-                    </Pressable>
-                    <Pressable style={styles.button} onPress={() => dispatch(postLogInOtherAcc())}>
-                            <SvgXml
-                                xml={icons.check}
-                                width={20}
-                                height={20}
-                                fill={"white"}
-                            />
-                            <Text style={styles.text}>
-                                Sign up
-                            </Text>
-                    </Pressable>
-                </View>
+                <AuthenticationButtons />
             </LinearGradient>
         </View>
     );
@@ -81,23 +59,6 @@ const styles = StyleSheet.create({
         marginLeft: "auto",
         marginRight: "auto",
         marginTop: 70
-    },
-    buttons: {
-        display: "flex",
-        gap: 20,
-        alignItems: "center"
-    },
-    button: {
-        width: 200,
-        height: 50,
-        borderRadius: 20,
-        borderWidth: 1,
-        flexDirection: "row",
-        borderColor: "white",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 10
     },
     text: {
         color: "white",
