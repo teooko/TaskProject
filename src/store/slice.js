@@ -1,6 +1,7 @@
 ﻿import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
 import {patchStopTimer, postStartTimer} from './timerSlice';
+import {API_DOMAIN} from "../../config";
 
 const today = new Date(Date.now());
 
@@ -21,7 +22,7 @@ export const fetchWeeklyTasks = createAsyncThunk(
     'tasks/fetchWeeklyTasks',
     async ({bearerToken, fromDate}) => {
         const response = await axios.get(
-            `http://192.168.100.8:5133/Task/weekly/${fromDate}`, {
+            `${API_DOMAIN}/Task/weekly/${fromDate}`, {
                 headers: {
                     Authorization: `Bearer ${bearerToken}`,
                 }

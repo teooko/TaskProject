@@ -1,6 +1,8 @@
 ﻿import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
 import {act} from "react-test-renderer";
+import {localIp} from "../launchSettings";
+import {API_DOMAIN} from "../../config";
 
 const initialState = {
     bearerToken: null,
@@ -10,7 +12,6 @@ export const postLogInDefault = createAsyncThunk(
     'account/logInDefault',
     async (requestData, thunkAPI) => {
         try {
-            // Define the data payload to be sent in the request body
             const requestData = {
                 email: 'string@asd.com',
                 password: 'S!1string',
@@ -20,7 +21,7 @@ export const postLogInDefault = createAsyncThunk(
 
             // Make POST request to the login endpoint with the data payload
             const response = await axios.post(
-                'http://192.168.100.8:5133/login',
+                `${API_DOMAIN}/login`,
                 requestData,  // Pass the data payload as the second argument
                 {
                     headers: {
@@ -53,7 +54,7 @@ export const postLogInOtherAcc = createAsyncThunk(
 
             // Make POST request to the login endpoint with the data payload
             const response = await axios.post(
-                'http://192.168.100.8:5133/login',
+                `${API_DOMAIN}/login`,
                 requestData,  // Pass the data payload as the second argument
                 {
                     headers: {

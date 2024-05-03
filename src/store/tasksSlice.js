@@ -2,6 +2,7 @@
 import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
 import async from 'async';
+import {API_DOMAIN} from "../../config";
 
 const initialState = {
     tasks: [],
@@ -15,7 +16,7 @@ const initialState = {
 };
 
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (bearerToken) => {
-    const response = await axios.get('http://192.168.100.8:5133/Task', {
+    const response = await axios.get(`${API_DOMAIN}/Task`, {
         headers: {
             Authorization: `Bearer ${bearerToken}`,
         }
@@ -27,7 +28,7 @@ export const addNewTask = createAsyncThunk(
     'tasks/addNewTask',
     async ({bearerToken, initialTask}) => {
         const response = await axios.post(
-            'http://192.168.100.8:5133/Task',
+            `${API_DOMAIN}/Task`,
             initialTask, {
                 headers: {
                     Authorization: `Bearer ${bearerToken}`,
@@ -42,7 +43,7 @@ export const fetchHalfYearTime = createAsyncThunk(
     'tasks/monthly',
     async () => {
         const response = await axios.get(
-            'http://192.168.100.8:5133/Task/monthly'
+            `${API_DOMAIN}/Task/monthly`
         );
         return response.data;
     },
@@ -52,7 +53,7 @@ export const fetchTotalTasksTime = createAsyncThunk(
     'tasks/total',
     async () => {
         const response = await axios.get(
-            'http://192.168.100.8:5133/Task/total'
+            `${API_DOMAIN}/Task/total`
         );
         return response.data;
     },
@@ -63,7 +64,7 @@ export const deleteTask = createAsyncThunk(
     async (taskId, {rejectWithValue}) => {
         try {
             const response = await axios.delete(
-                `http://192.168.100.8:5133/Task?id=${taskId}`,
+                `${API_DOMAIN}/Task?id=${taskId}`,
             );
             return response.data;
         } catch (error) {
@@ -77,7 +78,7 @@ export const fetchDailyTasks = createAsyncThunk(
     '/tasks/date/fetchDailyTasks',
     async ({bearerToken, date}) => {
         const response = await axios.get(
-            `http://192.168.100.8:5133/Task/date/${date}`,
+            `${API_DOMAIN}/Task/date/${date}`,
             {
                 headers: {
                     Authorization: `Bearer ${bearerToken}`,
