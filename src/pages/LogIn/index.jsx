@@ -9,6 +9,7 @@ import {fetchDailyTasks, fetchTasks} from "../../store/tasksSlice";
 import {fetchWeeklyTasks, insertDays, selectDay} from "../../store/slice";
 import Svg, {SvgUri, SvgXml} from "react-native-svg";
 import {icons} from "../../assets/Icons";
+import LinearGradient from "react-native-linear-gradient";
 const LogIn = () => {
     const dispatch = useDispatch();
     const {bearerToken} = useSelector(state => state.account);
@@ -34,24 +35,43 @@ const LogIn = () => {
     
     return (
         <View>
-            <SvgXml
-                xml={icons.logo}
-                width={350}
-                height={350}
-                style={styles.logo}
-            />
-            <View style={styles.buttons}>
-                <Pressable style={styles.button} onPress={() => dispatch(postLogInDefault())}>
-                    <Text style={styles.text}>
-                        Log in
+            <LinearGradient colors={['#E97C6F', '#FFC165']} style={styles.gradient}>
+                <View>
+                    <Text style={{...styles.text, marginLeft: 10, marginTop: 10}}>
+                        Skip
                     </Text>
-                </Pressable>
-                <Pressable style={styles.button} onPress={() => dispatch(postLogInOtherAcc())}>
-                    <Text style={styles.text}>
-                        Register
-                    </Text>
-                </Pressable>
-            </View>
+                </View>
+                <SvgXml
+                    xml={icons.logo}
+                    width={350}
+                    height={350}
+                    style={styles.logo}
+                />
+                <View style={styles.buttons}>
+                    <Pressable style={styles.button} onPress={() => dispatch(postLogInDefault())}>
+                        <SvgXml
+                            xml={icons.profile}
+                            width={20}
+                            height={20}
+                            fill={"white"}
+                        />
+                        <Text style={styles.text}>
+                            Log in
+                        </Text>
+                    </Pressable>
+                    <Pressable style={styles.button} onPress={() => dispatch(postLogInOtherAcc())}>
+                            <SvgXml
+                                xml={icons.check}
+                                width={20}
+                                height={20}
+                                fill={"white"}
+                            />
+                            <Text style={styles.text}>
+                                Sign up
+                            </Text>
+                    </Pressable>
+                </View>
+            </LinearGradient>
         </View>
     );
 };
@@ -72,15 +92,19 @@ const styles = StyleSheet.create({
         height: 50,
         borderRadius: 20,
         borderWidth: 1,
-        borderColor: "#B53535",
-        borderStyle: "dashed",
+        flexDirection: "row",
+        borderColor: "white",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        gap: 10
     },
     text: {
-        color: "#B53535",
+        color: "white",
         fontSize: 18,
+    },
+    gradient: {
+        height: "100%"
     }
 })
 export default LogIn;
