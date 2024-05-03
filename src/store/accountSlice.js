@@ -12,7 +12,7 @@ export const postLogInDefault = createAsyncThunk(
         try {
             // Define the data payload to be sent in the request body
             const requestData = {
-                email: 'string@mail.com',
+                email: 'string@asd.com',
                 password: 'S!1string',
                 twoFactorCode: 'string',
                 twoFactorRecoveryCode: 'string', 

@@ -90,7 +90,6 @@ const slice = createSlice({
 
                     state.days.daysById[daysPassed].colors =
                         weekDay.colors.$values;
-                    console.log(state.days.daysById);
                 });
             })
             .addCase(fetchWeeklyTasks.rejected, (state, action) => {

@@ -37,7 +37,7 @@ const CustomDrawerContent = props => {
             />
             <CustomDrawerButton
                 doExtra={() => dispatch(resetBearerToken())}
-                page={'Log in'}
+                page={'Log out'}
                 icon={icons.rightFromBracket}
                 props={props}
             />
