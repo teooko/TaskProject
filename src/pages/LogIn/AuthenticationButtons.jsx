@@ -6,12 +6,12 @@ import {icons} from "../../assets/Icons";
 import AuthenticationButton from "./AuthenticationButton";
 import {useDispatch} from "react-redux";
 
-const AuthenticationButtons = () => {
+const AuthenticationButtons = ({menus, setMenu}) => {
     const dispatch = useDispatch();
     return (
         <View style={styles.buttons}>
             <AuthenticationButton title={"Log in"} icon={icons.profile} handlePress={() => dispatch(postLogInDefault())} />
-            <AuthenticationButton title={"Sign up"} icon={icons.profile} handlePress={() => dispatch(postLogInOtherAcc())} />
+            <AuthenticationButton title={"Sign up"} icon={icons.profile} handlePress={() => setMenu(menus.signUp)} />
         </View>
     );
 };
