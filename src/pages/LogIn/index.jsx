@@ -1,5 +1,5 @@
 ﻿import React, {useEffect} from 'react';
-import {StyleSheet, Button, View, Pressable, Text} from "react-native";
+import {StyleSheet, Button, View, Pressable, Text, TextInput, KeyboardAvoidingView, Dimensions} from "react-native";
 import NavigationBar from "../Page/NavigationBar";
 import {useDispatch, useSelector} from "react-redux";
 import {postLogInDefault, postLogInOtherAcc} from "../../store/accountSlice";
@@ -11,6 +11,7 @@ import Svg, {SvgUri, SvgXml} from "react-native-svg";
 import {icons} from "../../assets/Icons";
 import LinearGradient from "react-native-linear-gradient";
 import AuthenticationButtons from "./AuthenticationButtons";
+import AuthenticationButton from "./AuthenticationButton";
 const LogIn = () => {
     const dispatch = useDispatch();
     const {bearerToken} = useSelector(state => state.account);
@@ -35,22 +36,34 @@ const LogIn = () => {
     }, [bearerToken]);
     
     return (
-        <View>
             <LinearGradient colors={['#E97C6F', '#FFC165']} style={styles.gradient}>
+                <KeyboardAvoidingView behavior={"position"}>
                 <View>
                     <Text style={{...styles.text, marginLeft: 10, marginTop: 10}}>
                         Skip
                     </Text>
                 </View>
-                <SvgXml
-                    xml={icons.logo}
-                    width={350}
-                    height={350}
-                    style={styles.logo}
-                />
-                <AuthenticationButtons />
+                    <View style={{width: "100%", height: "40%", marginTop: 70}}>
+                        <SvgXml
+                            xml={icons.logo}
+                            width={"90%"}
+                            height={Dimensions.get('window').width / 2}
+                            style={styles.logo}
+                        />
+                    </View>
+                <View style={styles.signUpForm}>
+                    <Text style={styles.title}>
+                        Sign up
+                    </Text>
+                    <TextInput placeholder={"email"} style={styles.textInput} placeholderTextColor={"#E97C6F"} />
+                    <TextInput placeholder={"password"} style={styles.textInput} placeholderTextColor={"#E97C6F"}/>
+                    <AuthenticationButton title={"submit"} />
+                </View>
+                {
+                    //<AuthenticationButtons />
+                }
+                </KeyboardAvoidingView>
             </LinearGradient>
-        </View>
     );
 };
 
@@ -58,7 +71,6 @@ const styles = StyleSheet.create({
     logo: {
         marginLeft: "auto",
         marginRight: "auto",
-        marginTop: 70
     },
     text: {
         color: "white",
@@ -66,6 +78,25 @@ const styles = StyleSheet.create({
     },
     gradient: {
         height: "100%"
+    },
+    signUpForm: {
+        display: "flex",
+        gap: 20,
+        marginLeft: "auto",
+        marginRight: "auto"
+    },
+    textInput: {
+        backgroundColor: "white",
+        borderColor: "#E97C6F",
+        borderWidth: 1,
+        borderRadius: 10,
+        color: "gray",
+        width: 200,
+        height: 50,
+    },
+    title: {
+        fontSize: 18,
+        color: "white"
     }
 })
 export default LogIn;

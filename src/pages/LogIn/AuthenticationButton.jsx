@@ -7,12 +7,12 @@ import {Pressable, StyleSheet, Text} from "react-native";
 const AuthenticationButton = ({title, handlePress, icon}) => {
     return (
         <Pressable style={styles.button} onPress={handlePress}>
-            <SvgXml
+            {icon && <SvgXml
                 xml={icon}
                 width={20}
                 height={20}
                 fill={"white"}
-            />
+            />}
             <Text style={styles.text}>
                 {title}
             </Text>
