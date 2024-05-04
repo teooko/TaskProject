@@ -10,7 +10,7 @@ const AuthenticationButtons = ({menus, setMenu}) => {
     const dispatch = useDispatch();
     return (
         <View style={styles.buttons}>
-            <AuthenticationButton title={"Log in"} icon={icons.profile} handlePress={() => dispatch(postLogInDefault())} />
+            <AuthenticationButton title={"Log in"} icon={icons.profile} handlePress={() => setMenu(menus.logIn)} />
             <AuthenticationButton title={"Sign up"} icon={icons.profile} handlePress={() => setMenu(menus.signUp)} />
         </View>
     );

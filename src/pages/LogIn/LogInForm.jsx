@@ -13,22 +13,17 @@ const SignUpForm = ({menus, setMenu}) => {
             initialValues={{ email: '', password: '' }}
             onSubmit={(values) => {
                 console.log(values);
-                dispatch(postRegister(values));
                 setMenu(menus.authenticate);
             }}
             validationSchema={yup.object().shape({
                 email: yup.string().email('Invalid email').required('Email is required'),
-                password: yup.string().min(6, 'Password must be at least 6 characters')
-                    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
-                    .matches(/[0-9]/, 'Password must contain at least one digit')
-                    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one symbol')
-                    .required('Password is required'),
+                password: yup.string().required('Password is required'),
             })}
         >
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                 <View style={styles.signUpForm}>
                     <View style={styles.signUpFormInput}>
-                        <Text style={styles.title}>Sign up</Text>
+                        <Text style={styles.title}>Log in</Text>
                         <View style={styles.textInputWrapper}>
                             <Text style={styles.textInputLabel}>Email</Text>
                             <TextInput
@@ -103,7 +98,7 @@ const styles = StyleSheet.create({
         height: 35,
         color: "red",
         flexWrap: "wrap",
-        
+
     }
 })
 export default SignUpForm;

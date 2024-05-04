@@ -73,6 +73,27 @@ export const postLogInOtherAcc = createAsyncThunk(
     }
 );
 
+export const postRegister = createAsyncThunk(
+    'account/register',
+    async ({values}) => { // Correct payload structure
+        try {
+            const response = await axios.post(
+                `${API_DOMAIN}/register`,
+                values,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json', // 'accept' should be 'Accept'
+                    },
+                }
+            );
+            return response.data;
+        } catch (error) {
+            // Handle error if needed
+            throw error;
+        }
+    }
+);
 const slice = createSlice({
     name: 'account',
     initialState,

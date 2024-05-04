@@ -13,6 +13,7 @@ import LinearGradient from "react-native-linear-gradient";
 import AuthenticationButtons from "./AuthenticationButtons";
 import AuthenticationButton from "./AuthenticationButton";
 import SignUpForm from "./SignUpForm";
+import LogInForm from "./LogInForm";
 const LogIn = () => {
     const menus = {
         authenticate: "authenticate",
@@ -59,7 +60,8 @@ const LogIn = () => {
                         />
                     </View>
                     {menu === menus.authenticate && <AuthenticationButtons menus={menus} setMenu={setMenu}/>}
-                    {menu === menus.signUp && <SignUpForm />}
+                    {menu === menus.signUp && <SignUpForm menus={menus} setMenu={setMenu}/>}
+                    {menu === menus.logIn && <LogInForm menus={menus} setMenu={setMenu}/>}
                 </KeyboardAvoidingView>
             </LinearGradient>
     );
