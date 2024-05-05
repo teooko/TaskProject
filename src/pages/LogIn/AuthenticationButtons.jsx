@@ -11,7 +11,7 @@ const AuthenticationButtons = ({menus, setMenu}) => {
     return (
         <View style={styles.buttons}>
             <AuthenticationButton title={"Log in"} icon={icons.profile} handlePress={() => setMenu(menus.logIn)} />
-            <AuthenticationButton title={"Sign up"} icon={icons.profile} handlePress={() => setMenu(menus.signUp)} />
+            <AuthenticationButton title={"Sign up"} icon={icons.userPlus} handlePress={() => setMenu(menus.signUp)} />
         </View>
     );
 };

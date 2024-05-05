@@ -75,10 +75,32 @@ export const postLogInOtherAcc = createAsyncThunk(
 
 export const postRegister = createAsyncThunk(
     'account/register',
-    async ({values}) => { // Correct payload structure
+    async (values) => {
+        console.log(values);
         try {
             const response = await axios.post(
                 `${API_DOMAIN}/register`,
+                values,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                }
+            );
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+);
+
+export const postLogIn = createAsyncThunk(
+    'account/login',
+    async (values) => { 
+        try {
+            const response = await axios.post(
+                `${API_DOMAIN}/login`,
                 values,
                 {
                     headers: {
@@ -94,6 +116,7 @@ export const postRegister = createAsyncThunk(
         }
     }
 );
+
 const slice = createSlice({
     name: 'account',
     initialState,
@@ -108,6 +131,9 @@ const slice = createSlice({
                 state.bearerToken = action.payload.accessToken;
             })
             .addCase(postLogInOtherAcc.fulfilled, (state, action) => {
+                state.bearerToken = action.payload.accessToken;
+            })
+            .addCase(postLogIn.fulfilled, (state, action) => {
                 state.bearerToken = action.payload.accessToken;
             })
     }
