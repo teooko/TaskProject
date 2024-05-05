@@ -14,6 +14,7 @@ import AuthenticationButtons from "./AuthenticationButtons";
 import AuthenticationButton from "./AuthenticationButton";
 import SignUpForm from "./SignUpForm";
 import LogInForm from "./LogInForm";
+import Loading from "../Loading";
 const LogIn = () => {
     const menus = {
         authenticate: "authenticate",
@@ -27,19 +28,7 @@ const LogIn = () => {
     
     useEffect(() => {
         if(bearerToken !== null) {
-            const currentDate = new Date();
-            const year = currentDate.getFullYear();
-            const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Adding 1 because months are zero-indexed
-            const day = String(currentDate.getDate()).padStart(2, '0');
-
-            const formattedDate = `${year}-${month}-${day}`;
-
-            dispatch(selectDay(0));
-            dispatch(fetchDailyTasks({bearerToken, date: formattedDate}));
-            dispatch(insertDays());
-            dispatch(fetchTasks(bearerToken));
-            dispatch(fetchWeeklyTasks({bearerToken, fromDate: 0}));
-            navigation.navigate(Home);
+            navigation.navigate(Loading);
         }
     }, [bearerToken]);
     
