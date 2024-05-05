@@ -96,6 +96,9 @@ const slice = createSlice({
         setNewTask(state, {payload}) {
             state.newTask = payload;
         },
+        resetTaskState(state) {
+            state = initialState;
+        }
     },
     extraReducers(builder) {
         builder
@@ -150,5 +153,5 @@ const slice = createSlice({
     },
 });
 
-export const {loadTasks, setNewTask} = slice.actions;
+export const {loadTasks, setNewTask, resetTaskState} = slice.actions;
 export default slice.reducer;

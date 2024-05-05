@@ -27,6 +27,7 @@ const LogIn = () => {
     const [menu, setMenu] = useState(menus.authenticate);
     
     useEffect(() => {
+        //console.log(bearerToken);
         if(bearerToken !== null) {
             navigation.navigate(Loading);
         }
@@ -35,10 +36,17 @@ const LogIn = () => {
     return (
             <LinearGradient colors={['#E97C6F', '#FFC165']} style={styles.gradient}>
                 <KeyboardAvoidingView behavior={"position"} >
-                <View>
-                    <Text style={{...styles.text, marginLeft: 10, marginTop: 10}}>
+                <View style={styles.navigation}>
+                    <Text style={styles.text}>
                         Skip
                     </Text>
+                    {   (menu === menus.logIn ||
+                        menu === menus.signUp) &&
+                        <Pressable onPress={() => setMenu(menus.authenticate)}>
+                        <Text style={styles.text}>
+                            Back
+                        </Text>
+                    </Pressable>}
                 </View>
                     <View style={styles.logoWrapper}>
                         <SvgXml
@@ -72,6 +80,14 @@ const styles = StyleSheet.create({
     },
     gradient: {
         height: "100%"
+    },
+    navigation: {
+        width: "100%",
+        display: "flex",
+        flexDirection: "row",
+        alignContent: "space-between",
+        justifyContent: "space-between",
+        padding: 10
     }
 })
 export default LogIn;

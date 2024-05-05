@@ -3,11 +3,20 @@ import {icons} from '../../assets/Icons';
 import * as React from 'react';
 import CustomDrawerButton from './CustomDrawerButton';
 import {StyleSheet} from 'react-native';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {resetBearerToken} from "../../store/accountSlice";
+import {resetTaskState} from "../../store/tasksSlice";
+import {resetCalendarState} from "../../store/slice";
 
 const CustomDrawerContent = props => {
     const dispatch = useDispatch();
+    const {bearerToken} = useSelector(state => state.account);
+    const handleDoExtra = () => {
+        dispatch(resetBearerToken());
+        dispatch(resetTaskState());
+        dispatch(resetCalendarState());
+        console.log("AFTER DO EXTRA " + bearerToken);
+    }
     return (
         <DrawerContentScrollView {...props} style={styles.content}>
             <CustomDrawerButton
@@ -36,7 +45,7 @@ const CustomDrawerContent = props => {
                 props={props}
             />
             <CustomDrawerButton
-                doExtra={() => dispatch(resetBearerToken())}
+                doExtra={handleDoExtra}
                 page={'Log out'}
                 icon={icons.rightFromBracket}
                 props={props}

@@ -74,6 +74,9 @@ const slice = createSlice({
                 }
             }
         },
+        resetCalendarState(state) {
+            state = initialState;
+        }
     },
     extraReducers(builder) {
         builder
@@ -99,5 +102,5 @@ const slice = createSlice({
     },
 });
 
-export const {insertDays, selectDay, changeHeader} = slice.actions;
+export const {insertDays, selectDay, changeHeader, resetCalendarState} = slice.actions;
 export default slice.reducer;

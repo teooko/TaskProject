@@ -14,15 +14,19 @@ import Animated, {
     withRepeat,
     withTiming
 } from "react-native-reanimated";
-import {fetchWeeklyTasks, insertDays, selectDay} from "../../store/slice";
+import {fetchWeeklyTasks, insertDays, resetCalendarState, selectDay} from "../../store/slice";
 import {fetchDailyTasks, fetchTasks} from "../../store/tasksSlice";
 import {useDispatch, useSelector} from "react-redux";
 import Home from "../Home";
+import {resetBearerToken} from "../../store/accountSlice";
+import {useIsFocused} from "@react-navigation/native";
 
 const Loading = ({navigation}) => {
 
     const rotation = useSharedValue(0);
     const dispatch = useDispatch();
+    const isFocused = useIsFocused();
+    
     const {bearerToken} = useSelector(state => state.account);
     const animatedStyle = useAnimatedStyle(() => {
         return {
@@ -40,22 +44,23 @@ const Loading = ({navigation}) => {
             0,
         );
     }, []);
-
+    
     useEffect(() => {
+        if(isFocused) {
+            dispatch(resetCalendarState());
             const currentDate = new Date();
             const year = currentDate.getFullYear();
-            const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Adding 1 because months are zero-indexed
+            const month = String(currentDate.getMonth() + 1).padStart(2, '0');
             const day = String(currentDate.getDate()).padStart(2, '0');
-
             const formattedDate = `${year}-${month}-${day}`;
-
             dispatch(selectDay(0));
             dispatch(fetchDailyTasks({bearerToken, date: formattedDate}));
             dispatch(insertDays());
             dispatch(fetchWeeklyTasks({bearerToken, fromDate: 0}));
-            console.log(bearerToken);
             navigation.navigate(Home);
-    }, []);
+        }
+    }, [isFocused]);
+    
     return (
         <LinearGradient colors={['#E97C6F', '#FFC165']} style={styles.gradient}>
                 <View style={styles.logoWrapper}>
