@@ -58,7 +58,6 @@ function Timer({navigation}) {
             dispatch(startTimer());
             await handleStartTimer(currentTaskId);
             startTimerAnimation();
-            console.log("starting");
             setSvg(pause);
         } else {
             dispatch(stopTimer());
@@ -97,13 +96,27 @@ function Timer({navigation}) {
             ws.onerror = (e) => {
                 console.log(e.message);
             };
-            ws.onmessage = (e) => {
+            ws.onmessage = async (e) => {
                 if(e.data === "press timer") {
+                    if (!timerRunning) {
+                        // TODO: get rid of 'dispatch' as we use it everywhere
+                        dispatch(startTimer());
+                        await handleStartTimer(currentTaskId);
+                        startTimerAnimation();
+                        console.log("starting");
+                        setSvg(pause);
+                    } else {
+                        dispatch(stopTimer());
+                        stopTimerAnimation();
+                        await handleStopTimer(currentWorkSessionId);
+                        setSvg(start);
+                        console.log("stopping");
+                    }
                 }
                 console.log(e.data);
             };
         }
-    }, [ws])
+    }, [ws, timerRunning])
     return (
         <View>
             <View style={{display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "black", height: "100%", width: "100%", position: "absolute", zIndex: orientation === "PORTRAIT" ? -2 : 3}}>

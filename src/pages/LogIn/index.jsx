@@ -27,7 +27,6 @@ const LogIn = () => {
     const [menu, setMenu] = useState(menus.authenticate);
     const [forceUpdate, setForceUpdate] = useState(false);
     useEffect(() => {
-        console.log(bearerToken);
         if(bearerToken !== null) {
             setTimeout(() => {
                 navigation.navigate(Loading);
