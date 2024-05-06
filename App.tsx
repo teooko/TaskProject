@@ -2,13 +2,16 @@ import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import CustomDrawer from './src/pages/Page/CustomDrawer';
 import {Provider} from 'react-redux';
-import Store from './src/store';
+import Store, {persistor} from './src/store';
+import {PersistGate} from "redux-persist/integration/react";
 
 export default function App() {
     return (
         <NavigationContainer theme={theme}>
             <Provider store={Store}>
-                <CustomDrawer />
+                <PersistGate loading={null} persistor={persistor}>
+                    <CustomDrawer />
+                </PersistGate>
             </Provider>
         </NavigationContainer>
     );

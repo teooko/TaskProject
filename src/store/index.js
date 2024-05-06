@@ -4,6 +4,15 @@ import tasksReducer, {fetchDailyTasks, fetchTasks} from './tasksSlice';
 import deviceInfoReducer from './deviceInfoSlice'
 import timerReducer from './timerSlice';
 import accountReducer from './accountSlice';
+import {persistReducer, persistStore} from "redux-persist";
+import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from "redux-persist/es/constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const accountPersistConfig = {
+    key: 'account',
+    storage: AsyncStorage,
+};
+const persistedAccountReducer = persistReducer(accountPersistConfig, accountReducer);
 
 const store = configureStore({
     reducer: {
@@ -11,8 +20,15 @@ const store = configureStore({
         tasks: tasksReducer,
         timer: timerReducer,
         deviceInfo: deviceInfoReducer,
-        account: accountReducer
+        account: persistedAccountReducer,
     },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+            },
+        })
 });
 
+export const persistor = persistStore(store);
 export default store;

@@ -25,11 +25,13 @@ const LogIn = () => {
     const {bearerToken} = useSelector(state => state.account);
     const navigation = useNavigation();
     const [menu, setMenu] = useState(menus.authenticate);
-    
+    const [forceUpdate, setForceUpdate] = useState(false);
     useEffect(() => {
-        //console.log(bearerToken);
+        console.log(bearerToken);
         if(bearerToken !== null) {
-            navigation.navigate(Loading);
+            setTimeout(() => {
+                navigation.navigate(Loading);
+            }, 100);
         }
     }, [bearerToken]);
     

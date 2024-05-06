@@ -1,6 +1,6 @@
 ﻿import {View, Text, StatusBar, Button} from 'react-native';
 import Page from '../Page';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {icons} from '../../assets/Icons';
 import TimerControls from './TimerControls';
@@ -31,28 +31,6 @@ function Timer({navigation}) {
     const addFriend = () => {
         setWs(new WebSocket('ws://192.168.1.103:8080'));
     }
-    useEffect(() => {
-        if(ws !== null) {
-            const serverMessagesList = [];
-            ws.onopen = () => {
-                ws.send('something');
-            };
-            ws.onclose = (e) => {
-            };
-            ws.onerror = (e) => {
-                console.log(e.message);
-            };
-            ws.onmessage = (e) => {
-                if(e.data === "stop timer")
-                    dispatch(stopTimer());
-                if(e.data === "start timer") {
-                    dispatch(startTimer());
-                    handlePress();
-                }
-                console.log(e.data);
-            };
-        }
-    }, [ws])
 
     const sendMsg = () => {
         ws.send("mesaj");
@@ -80,6 +58,7 @@ function Timer({navigation}) {
             dispatch(startTimer());
             await handleStartTimer(currentTaskId);
             startTimerAnimation();
+            console.log("starting");
             setSvg(pause);
         } else {
             dispatch(stopTimer());
@@ -107,7 +86,24 @@ function Timer({navigation}) {
         const id = new Date().getTime().toString()
         setCountDownId(id)
     }, [time, reset])
-
+    useEffect(() => {
+        if(ws !== null) {
+            const serverMessagesList = [];
+            ws.onopen = () => {
+                ws.send('something');
+            };
+            ws.onclose = (e) => {
+            };
+            ws.onerror = (e) => {
+                console.log(e.message);
+            };
+            ws.onmessage = (e) => {
+                if(e.data === "press timer") {
+                }
+                console.log(e.data);
+            };
+        }
+    }, [ws])
     return (
         <View>
             <View style={{display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "black", height: "100%", width: "100%", position: "absolute", zIndex: orientation === "PORTRAIT" ? -2 : 3}}>

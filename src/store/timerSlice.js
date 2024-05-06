@@ -40,9 +40,11 @@ const slice = createSlice({
             state.currentTaskId = payload;
         },
         startTimer(state) {
+            console.log("Start from slice");
             state.timerRunning = true;
         },
         stopTimer(state) {
+            console.log("Stop from slice");
             state.timerRunning = false;
         },
         setTime(state, {payload}) {
