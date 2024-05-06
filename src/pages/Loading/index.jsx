@@ -47,8 +47,7 @@ const Loading = ({navigation}) => {
     
     useEffect(() => {
         if(isFocused) {
-            dispatch(resetBearerToken());
-            dispatch(resetTaskState());
+            //dispatch(resetTaskState());
             dispatch(resetCalendarState());
             
             const currentDate = new Date();

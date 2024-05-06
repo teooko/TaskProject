@@ -14,7 +14,7 @@ const CustomDrawerContent = props => {
     const handleDoExtra = () => {
         dispatch(resetBearerToken());
         dispatch(resetTaskState());
-        dispatch(resetCalendarState());
+        //dispatch(resetCalendarState());
         console.log("AFTER DO EXTRA " + bearerToken);
     }
     return (

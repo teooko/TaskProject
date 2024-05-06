@@ -75,7 +75,18 @@ const slice = createSlice({
             }
         },
         resetCalendarState(state) {
-            state = initialState;
+            console.log("state reset");
+            state.data = [];
+            state.days = {
+                daysById: {},
+            };
+            state.selected = 0;
+            state.lastLoaded = 0;
+            state.max = 65;
+            state.loading = 6;
+            state.month = today.getMonth();
+            state.year = today.getFullYear();
+            //state = initialState;
         }
     },
     extraReducers(builder) {
