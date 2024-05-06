@@ -1,4 +1,4 @@
-﻿import {View, Text, StatusBar} from 'react-native';
+﻿import {View, Text, StatusBar, Button} from 'react-native';
 import Page from '../Page';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
@@ -27,6 +27,36 @@ function Timer({navigation}) {
 
     const dispatch = useDispatch();
     const {currentTaskId, time, reset, timerRunning, currentWorkSessionId} = useSelector(state => state.timer);
+    const [ws, setWs] = useState(null);
+    const addFriend = () => {
+        setWs(new WebSocket('ws://192.168.1.103:8080'));
+    }
+    useEffect(() => {
+        if(ws !== null) {
+            const serverMessagesList = [];
+            ws.onopen = () => {
+                ws.send('something');
+            };
+            ws.onclose = (e) => {
+            };
+            ws.onerror = (e) => {
+                console.log(e.message);
+            };
+            ws.onmessage = (e) => {
+                if(e.data === "stop timer")
+                    dispatch(stopTimer());
+                if(e.data === "start timer") {
+                    dispatch(startTimer());
+                    handlePress();
+                }
+                console.log(e.data);
+            };
+        }
+    }, [ws])
+
+    const sendMsg = () => {
+        ws.send("mesaj");
+    }
     
     const {startTimerAnimation, stopTimerAnimation, resetTimerAnimation, frontWaveStyle, backWaveStyle, riseAnimationStyle} = useTimerAnimation();
     const handleStartTimer = async id => {
@@ -115,6 +145,8 @@ function Timer({navigation}) {
                         frontWaveStyle={frontWaveStyle}
                         riseAnimationStyle={riseAnimationStyle}
                     />
+                    <Button title={"send msg"}  onPress={() => sendMsg()} />
+                    <Button title={"ADD FRIEND"} onPress={() => addFriend()}/>
                     <TimerControls
                         svg={svg}
                         handleReset={handleReset}
