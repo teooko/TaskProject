@@ -4,7 +4,7 @@ import * as React from 'react';
 import CustomDrawerButton from './CustomDrawerButton';
 import {StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from "react-redux";
-import {resetBearerToken} from "../../store/accountSlice";
+import {resetBearerToken, resetUserData} from "../../store/accountSlice";
 import {resetTaskState} from "../../store/tasksSlice";
 import {resetCalendarState} from "../../store/slice";
 
@@ -15,6 +15,7 @@ const CustomDrawerContent = props => {
         dispatch(resetBearerToken());
         dispatch(resetTaskState());
         //dispatch(resetCalendarState());
+        dispatch(resetUserData());
         console.log("AFTER DO EXTRA " + bearerToken);
     }
     return (

@@ -2,7 +2,7 @@
 import {StyleSheet, Button, View, Pressable, Text, TextInput, KeyboardAvoidingView, Dimensions} from "react-native";
 import NavigationBar from "../Page/NavigationBar";
 import {useDispatch, useSelector} from "react-redux";
-import {postLogInDefault, postLogInOtherAcc} from "../../store/accountSlice";
+import {getUserClaims, postLogInDefault, postLogInOtherAcc} from "../../store/accountSlice";
 import {useNavigation} from "@react-navigation/native";
 import Home from "../Home";
 import {fetchDailyTasks, fetchTasks} from "../../store/tasksSlice";
@@ -19,16 +19,18 @@ const LogIn = () => {
     const menus = {
         authenticate: "authenticate",
         logIn: "logIn",
-        signUp: "signUp"
+        signUp: "signUp",
+        extraUserData: "extraUserData"
     }
     const dispatch = useDispatch();
     const {bearerToken} = useSelector(state => state.account);
     const navigation = useNavigation();
     const [menu, setMenu] = useState(menus.authenticate);
-    const [forceUpdate, setForceUpdate] = useState(false);
+    
     useEffect(() => {
         if(bearerToken !== null) {
             setTimeout(() => {
+                dispatch(getUserClaims(bearerToken));
                 navigation.navigate(Loading);
             }, 100);
         }

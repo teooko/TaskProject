@@ -8,6 +8,7 @@ import Test from '../Test';
 import Statistics from "../Statistics";
 import LogIn from "../LogIn";
 import Loading from "../Loading";
+import ExtraUserDataForm from "../LogIn/ExtraUserDataForm";
 
 const Drawer = createDrawerNavigator();
 const CustomDrawer = () => {
@@ -27,6 +28,7 @@ const CustomDrawer = () => {
             <Drawer.Screen name="Test" component={Test} />
             <Drawer.Screen name="Statistics" component={Statistics} />
             <Drawer.Screen name="Loading" component={Loading} />
+            <Drawer.Screen name="ExtraUserDataForm" component={ExtraUserDataForm} />
         </Drawer.Navigator>
     );
 };

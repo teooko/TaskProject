@@ -18,8 +18,9 @@ import {fetchWeeklyTasks, insertDays, resetCalendarState, selectDay} from "../..
 import {fetchDailyTasks, fetchTasks, resetTaskState} from "../../store/tasksSlice";
 import {useDispatch, useSelector} from "react-redux";
 import Home from "../Home";
-import {resetBearerToken} from "../../store/accountSlice";
+import {getUserClaims, resetBearerToken} from "../../store/accountSlice";
 import {useIsFocused} from "@react-navigation/native";
+import ExtraUserDataForm from "../LogIn/ExtraUserDataForm";
 
 const Loading = ({navigation}) => {
 
@@ -27,14 +28,15 @@ const Loading = ({navigation}) => {
     const dispatch = useDispatch();
     const isFocused = useIsFocused();
     
-    const {bearerToken} = useSelector(state => state.account);
+    const {bearerToken, userName, profilePicturePath} = useSelector(state => state.account);
     const animatedStyle = useAnimatedStyle(() => {
         return {
             transform: [{ rotate: `${rotation.value}deg` }],
             width: 30, height: 30
         };
     });
-
+    
+    
     useEffect(() => {
         rotation.value = withRepeat(
             withTiming(360, {
@@ -47,20 +49,23 @@ const Loading = ({navigation}) => {
     
     useEffect(() => {
         if(isFocused) {
-            //dispatch(resetTaskState());
-            dispatch(resetCalendarState());
-            
-            const currentDate = new Date();
-            const year = currentDate.getFullYear();
-            const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-            const day = String(currentDate.getDate()).padStart(2, '0');
-            const formattedDate = `${year}-${month}-${day}`;
-            dispatch(fetchTasks(bearerToken));
-            dispatch(selectDay(0));
-            dispatch(fetchDailyTasks({bearerToken, date: formattedDate}));
-            dispatch(insertDays());
-            dispatch(fetchWeeklyTasks({bearerToken, fromDate: 0}));
-            navigation.navigate(Home);
+            if(userName === null)
+                navigation.navigate(ExtraUserDataForm);
+            else {
+                //dispatch(resetTaskState());
+                dispatch(resetCalendarState());
+                const currentDate = new Date();
+                const year = currentDate.getFullYear();
+                const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+                const day = String(currentDate.getDate()).padStart(2, '0');
+                const formattedDate = `${year}-${month}-${day}`;
+                dispatch(fetchTasks(bearerToken));
+                dispatch(selectDay(0));
+                dispatch(fetchDailyTasks({bearerToken, date: formattedDate}));
+                dispatch(insertDays());
+                dispatch(fetchWeeklyTasks({bearerToken, fromDate: 0}));
+                navigation.navigate(Home);
+            }
         }
     }, [isFocused]);
     

@@ -6,6 +6,8 @@ import {API_DOMAIN} from "../../config";
 
 const initialState = {
     bearerToken: null,
+    userName: null,
+    profilePicturePath: null,
 };
 
 export const postRegister = createAsyncThunk(
@@ -52,12 +54,36 @@ export const postLogIn = createAsyncThunk(
     }
 );
 
+export const getUserClaims = createAsyncThunk(
+    'account/userClaims',
+    async (bearerToken) => {
+        try {
+            const response = await axios.get(
+                `${API_DOMAIN}/Account`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${bearerToken}`,
+                    }
+                }
+            );
+            return response.data;
+        } catch (error) {
+            // Handle error if needed
+            throw error;
+        }
+    }
+);
+
 const slice = createSlice({
     name: 'account',
     initialState,
     reducers: {
         resetBearerToken(state) {
             state.bearerToken = null;
+        },
+        resetUserData(state) {
+            state.userName = null;
+            state.profilePicturePath = null;
         }
     },
     extraReducers(builder){
@@ -65,8 +91,16 @@ const slice = createSlice({
             .addCase(postLogIn.fulfilled, (state, action) => {
                 state.bearerToken = action.payload.accessToken;
             })
+            .addCase(getUserClaims.fulfilled, (state, action) => {
+                const claims = action.payload.$values?.reduce((acc, claim) => {
+                    acc[claim.type] = claim.value;
+                    return acc;
+                }, {});
+                state.userName = claims?.Username ?? state.userName;
+                state.profilePicturePath = claims?.ProfilePicturePath ?? state.profilePicturePath;
+            })
     }
 })
 
-export const {resetBearerToken} = slice.actions;
+export const {resetBearerToken, resetUserData} = slice.actions;
 export default slice.reducer;

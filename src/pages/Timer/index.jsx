@@ -98,21 +98,8 @@ function Timer({navigation}) {
             };
             ws.onmessage = async (e) => {
                 if(e.data === "press timer") {
-                    if (!timerRunning) {
-                        // TODO: get rid of 'dispatch' as we use it everywhere
-                        dispatch(startTimer());
-                        await handleStartTimer(currentTaskId);
-                        startTimerAnimation();
-                        console.log("starting");
-                        setSvg(pause);
-                    } else {
-                        dispatch(stopTimer());
-                        stopTimerAnimation();
-                        await handleStopTimer(currentWorkSessionId);
-                        setSvg(start);
-                        console.log("stopping");
-                    }
-                }
+                    await handlePress();
+                };
                 console.log(e.data);
             };
         }
