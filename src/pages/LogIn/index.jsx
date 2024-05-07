@@ -29,6 +29,7 @@ const LogIn = () => {
     
     useEffect(() => {
         if(bearerToken !== null) {
+            dispatch(getUserClaims(bearerToken));
             setTimeout(() => {
                 dispatch(getUserClaims(bearerToken));
                 navigation.navigate(Loading);

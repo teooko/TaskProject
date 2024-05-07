@@ -49,9 +49,12 @@ const Loading = ({navigation}) => {
     
     useEffect(() => {
         if(isFocused) {
-            if(userName === null)
+            if(userName === null) {
+                console.log(userName + " if");
                 navigation.navigate(ExtraUserDataForm);
+            }
             else {
+                console.log(userName + " else");
                 //dispatch(resetTaskState());
                 dispatch(resetCalendarState());
                 const currentDate = new Date();
