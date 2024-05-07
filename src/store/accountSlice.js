@@ -84,6 +84,9 @@ const slice = createSlice({
         resetUserData(state) {
             state.userName = null;
             state.profilePicturePath = null;
+        },
+        setProfilePicturePath(state, {payload}) {
+            state.profilePicturePath = payload;
         }
     },
     extraReducers(builder){
@@ -102,5 +105,5 @@ const slice = createSlice({
     }
 })
 
-export const {resetBearerToken, resetUserData} = slice.actions;
+export const {resetBearerToken, resetUserData, setProfilePicturePath} = slice.actions;
 export default slice.reducer;
