@@ -1,24 +1,19 @@
 ﻿import React, {useEffect} from 'react';
-import {Dimensions, KeyboardAvoidingView, StyleSheet, Text, View} from "react-native";
+import {Dimensions, StyleSheet, View} from "react-native";
 import {SvgXml} from "react-native-svg";
 import {icons} from "../../assets/Icons";
-import AuthenticationButtons from "../LogIn/AuthenticationButtons";
-import SignUpForm from "../LogIn/SignUpForm";
-import LogInForm from "../LogIn/LogInForm";
 import LinearGradient from "react-native-linear-gradient";
 import Animated, {
     Easing,
-    useAnimatedProps,
     useAnimatedStyle,
     useSharedValue,
     withRepeat,
     withTiming
 } from "react-native-reanimated";
 import {fetchWeeklyTasks, insertDays, resetCalendarState, selectDay} from "../../store/slice";
-import {fetchDailyTasks, fetchTasks, resetTaskState} from "../../store/tasksSlice";
+import {fetchDailyTasks, fetchTasks} from "../../store/tasksSlice";
 import {useDispatch, useSelector} from "react-redux";
 import Home from "../Home";
-import {getUserClaims, resetBearerToken} from "../../store/accountSlice";
 import {useIsFocused} from "@react-navigation/native";
 import ExtraUserDataForm from "../LogIn/ExtraUserDataForm";
 

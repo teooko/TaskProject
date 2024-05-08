@@ -75,7 +75,6 @@ const slice = createSlice({
             }
         },
         resetCalendarState(state) {
-            console.log("state reset");
             state.data = [];
             state.days = {
                 daysById: {},

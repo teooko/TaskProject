@@ -1,4 +1,4 @@
-﻿import React, {useEffect} from 'react';
+﻿import React, {useEffect, useState} from 'react';
 import {Dimensions, KeyboardAvoidingView, Text, TextInput, View} from "react-native";
 import {StyleSheet} from "react-native";
 import SelectProfilePicture from "../LogIn/SelectProfilePicture";
@@ -11,11 +11,12 @@ import {useDispatch, useSelector} from "react-redux";
 const RightDrawerContent = () => {
     const dispatch = useDispatch();
     const {bearerToken, userName, profilePicturePath} = useSelector(state => state.account);
+    
     return (
         <View style={styles.contentWrapper}>
             <KeyboardAvoidingView behavior={"position"} >
                 <Formik
-                    initialValues={{profilePicturePath: profilePicturePath, username: userName }}
+                    initialValues={{username: userName, profilePicturePath: profilePicturePath}}
                     onSubmit={(values, {setSubmitting}) => {
                         setSubmitting(false);
                         dispatch(postUserClaims({bearerToken, values}));
@@ -23,6 +24,7 @@ const RightDrawerContent = () => {
                     validationSchema={yup.object().shape({
                         username: yup.string().required('User name is required'),
                     })}
+                    enableReinitialize={true}
                 >
                     {({ isSubmitting, setFieldValue, handleChange, handleBlur, handleSubmit, values, errors }) =>
                         (

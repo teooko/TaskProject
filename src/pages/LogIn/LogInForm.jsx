@@ -15,7 +15,6 @@ const LogInForm = ({menus, setMenu}) => {
             onSubmit={(values) => {
                 console.log(values);
                 dispatch(postLogIn(values));
-                console.log(bearerToken);
                 //setMenu(menus.authenticate);
             }}
             validationSchema={yup.object().shape({
