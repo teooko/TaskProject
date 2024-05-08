@@ -19,7 +19,10 @@ const styles = StyleSheet.create({
     buttons: {
         display: "flex",
         gap: 20,
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent: "flex-end",
+        height: "50%",
+        
     }
 })
 export default AuthenticationButtons;
