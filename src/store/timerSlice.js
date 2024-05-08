@@ -6,8 +6,8 @@ const initialState = {
     currentWorkSessionId: 0,
     currentTaskId: 0,
     timerRunning: false,
-    time: 3000,
-    currentTime: 3000,
+    time: null,
+    currentTime: 60,
     pickerVisible: false,
     reset: false
 };
@@ -40,11 +40,9 @@ const slice = createSlice({
             state.currentTaskId = payload;
         },
         startTimer(state) {
-            console.log("Start from slice");
             state.timerRunning = true;
         },
         stopTimer(state) {
-            console.log("Stop from slice");
             state.timerRunning = false;
         },
         setTime(state, {payload}) {

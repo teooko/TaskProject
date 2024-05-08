@@ -84,7 +84,8 @@ function Timer({navigation}) {
     useEffect(() => {
         const id = new Date().getTime().toString()
         setCountDownId(id)
-    }, [time, reset])
+    }, [time, reset]);
+    
     useEffect(() => {
         if(ws !== null) {
             const serverMessagesList = [];
@@ -103,7 +104,8 @@ function Timer({navigation}) {
                 console.log(e.data);
             };
         }
-    }, [ws, timerRunning])
+    }, [ws, timerRunning]);
+    
     return (
         <View>
             <View style={{display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "black", height: "100%", width: "100%", position: "absolute", zIndex: orientation === "PORTRAIT" ? -2 : 3}}>

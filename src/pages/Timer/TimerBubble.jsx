@@ -3,7 +3,7 @@ import {Dimensions, StyleSheet, View, Text} from "react-native";
 import CountDown from "react-native-countdown-fixed";
 import TimerAnimation from "./TimerAnimation";
 import {useDispatch, useSelector} from "react-redux";
-import {openPicker, patchStopTimer, setCurrentTime} from "../../store/timerSlice";
+import {openPicker, patchStopTimer, setCurrentTime, setTime} from "../../store/timerSlice";
 
 const {height, width} = Dimensions.get('window');
 const TimerBubble = ({
@@ -13,13 +13,15 @@ const TimerBubble = ({
                      }) => {
     const {timerRunning, time, reset, currentWorkSessionId} = useSelector(state => state.timer);
     const [countDownId, setCountDownId] = useState(null);
-
-    useEffect(() => {
-        const id = new Date().getTime().toString()
-        setCountDownId(id)
-    }, [time, reset])
+    
     
    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const id = new Date().getTime().toString();
+        setCountDownId(id);
+        
+    }, [time, reset]);
 
     const handleStopTimer = async id => {
         try {
@@ -28,9 +30,10 @@ const TimerBubble = ({
             console.error(error);
         }
     };
+    
     return (
         <View style={styles.timerBubbleContainer} >
-            <CountDown
+             <CountDown
                 id={countDownId}
                 size={40}
                 until={time}
