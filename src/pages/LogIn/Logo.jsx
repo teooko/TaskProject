@@ -9,7 +9,7 @@ const Logo = () => {
             <SvgXml
                 xml={icons.logo}
                 width={"90%"}
-                height={Dimensions.get('window').width / 3}
+                height={Dimensions.get('window').width / 4}
                 style={styles.logo}
             />
         </View>
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     },
     logoWrapper: {
         width: "100%",
-        height: Dimensions.get('window').width / 2,
+        height: Dimensions.get('window').width / 3,
         marginTop: 70
     }
 })

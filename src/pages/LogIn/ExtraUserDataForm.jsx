@@ -13,6 +13,7 @@ import {Formik} from "formik";
 import LogIn from "./index";
 import SelectProfilePicture from "./SelectProfilePicture";
 import Navigation from "./Navigation";
+import Logo from "./Logo";
 
 const ExtraUserDataForm = ({navigation}) => {
     const dispatch = useDispatch();
@@ -25,14 +26,7 @@ const ExtraUserDataForm = ({navigation}) => {
             <LinearGradient colors={['#E97C6F', '#FFC165']} style={styles.gradient}>
                 <KeyboardAvoidingView behavior={"position"} >
                     <Navigation skipButtonVisible={false} backButtonVisible={true} handleNavigation={handleNavigation} />
-                    <View style={styles.logoWrapper}>
-                        <SvgXml
-                            xml={icons.logo}
-                            width={"90%"}
-                            height={Dimensions.get('window').width / 4}
-                            style={styles.logo}
-                        />
-                    </View>
+                    <Logo />
                     <SelectProfilePicture />
                     <Formik
                         initialValues={{ username: '' }}
@@ -69,69 +63,12 @@ const ExtraUserDataForm = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-    logo: {
-        marginLeft: "auto",
-        marginRight: "auto"
-    },
-    logoWrapper: {
-        width: "100%",
-        height: Dimensions.get('window').width / 3,
-        marginTop: 70
-    },
-    text: {
-        color: "white",
-        fontSize: 18,
-    },
-    imageText: {
-        color: "white",
-        fontSize: 18,
-        marginLeft: "auto",
-        marginRight: "auto"
-    },
     gradient: {
         height: "100%",
-    },
-    navigation: {
-        width: "100%",
-        display: "flex",
-        flexDirection: "row",
-        alignContent: "space-between",
-        justifyContent: "space-between",
-        padding: 10
-    },
-    selectProfilePicture: {
-        backgroundColor: "#E97C6F",
-        width: 180,
-        height: 180,
-        borderRadius: 100,
-        marginLeft: "auto",
-        marginRight: "auto",
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center",
-        overflow: "hidden"
-    },
-    selectProfilePictureWrapper: {
-        width: 180,
-        height: 180,
-        borderRadius: 100,
-        marginLeft: "auto",
-        marginRight: "auto",
-        backgroundColor: "blue"
-    },
-    image: {
-        width: 180,
-        height: 180
     },
     signUpForm: {
         display: "flex",
         alignItems: "center",
-        gap: 20,
-        marginLeft: "auto",
-        marginRight: "auto"
-    },
-    signUpFormInput: {
-        display: "flex",
         gap: 20,
         marginLeft: "auto",
         marginRight: "auto"
@@ -145,10 +82,6 @@ const styles = StyleSheet.create({
         width: 300,
         height: 50,
         marginTop: 5,
-    },
-    title: {
-        fontSize: 18,
-        color: "white"
     },
     textInputWrapper: {
         display: "flex",
@@ -164,22 +97,6 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
 
     },
-    removeImageButton: {
-        
-    },
-    removeImageButtonWrapper: {
-        position: "absolute",
-        backgroundColor: "#E97C6F",
-        margin: 12,
-        zIndex: 2,
-        borderRadius: 20,
-        width: 35,
-        height: 35,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        transform: [{ scaleX: -1 }]
-    }
 })
 
 export default ExtraUserDataForm;

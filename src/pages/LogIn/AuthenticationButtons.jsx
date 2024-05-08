@@ -7,7 +7,6 @@ import AuthenticationButton from "./AuthenticationButton";
 import {useDispatch} from "react-redux";
 
 const AuthenticationButtons = ({menus, setMenu}) => {
-    const dispatch = useDispatch();
     return (
         <View style={styles.buttons}>
             <AuthenticationButton title={"Log in"} icon={icons.profile} handlePress={() => setMenu(menus.logIn)} />
