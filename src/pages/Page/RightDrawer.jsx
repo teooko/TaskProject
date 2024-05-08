@@ -3,10 +3,11 @@ import {Drawer} from "react-native-drawer-layout";
 import CustomDrawer from "./CustomDrawer";
 import CustomDrawerContent from "./CustomDrawerContent";
 
-const RightDrawerContext = createContext();
+export const RightDrawerContext = createContext();
 const RightDrawer = () => {
     const [rightDrawerOpen, setRightDrawerOpen] = useState(false);
     const [activeOffsetX, setActiveOffsetX] = useState(-5);
+    
     const value = useMemo(
         () => ({
             openRightDrawer: () => setRightDrawerOpen(true),
@@ -35,7 +36,7 @@ const RightDrawer = () => {
             swipeEdgeWidth={5}
             swipeMinDistance={50}
             gestureHandlerProps={{
-                activeOffsetX: activeOffsetX, // Adjust the value as needed
+                activeOffsetX: activeOffsetX, 
             }}
         >
             <RightDrawerContext.Provider value={value}>

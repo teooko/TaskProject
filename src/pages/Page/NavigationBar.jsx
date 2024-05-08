@@ -3,19 +3,26 @@ import {icons} from '../../assets/Icons';
 import * as React from 'react';
 import NavigationButton from '../../components/NavigationButton';
 import {useContext} from "react";
+import {RightDrawerContext} from "./RightDrawer";
 const NavigationBar = ({navigation}) => {
     const {menu, profile} = icons;
     return (
-        <View style={styles.navigationBar}>
-            <NavigationButton
-                icon={menu}
-                onPress={() => navigation.openDrawer()}
-                size={20}
-            />
-            <NavigationButton icon={profile}
-                              onPress={() => navigation.openRightDrawer()}
-                              size={20} />
-        </View>
+        <RightDrawerContext.Consumer>
+            {({ openRightDrawer }) => (
+                <View style={styles.navigationBar}>
+                    <NavigationButton
+                        icon={menu}
+                        onPress={() => navigation.openDrawer()}
+                        size={20}
+                    />
+                    <NavigationButton
+                        icon={profile}
+                        onPress={openRightDrawer} 
+                        size={20}
+                    />
+                </View>
+            )}
+        </RightDrawerContext.Consumer>
     );
 };
 
