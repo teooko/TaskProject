@@ -13,7 +13,6 @@ const initialState = {
 export const postRegister = createAsyncThunk(
     'account/register',
     async (values) => {
-        console.log(values);
         try {
             const response = await axios.post(
                 `${API_DOMAIN}/register`,
@@ -55,7 +54,7 @@ export const postLogIn = createAsyncThunk(
 );
 
 export const getUserClaims = createAsyncThunk(
-    'account/userClaims',
+    'account/getUserClaims',
     async (bearerToken) => {
         try {
             const response = await axios.get(
@@ -74,6 +73,26 @@ export const getUserClaims = createAsyncThunk(
     }
 );
 
+export const postUserClaims = createAsyncThunk(
+    'account/postUserClaims',
+    async ({bearerToken, values}) => {
+        console.log(values);
+        try {
+            const response = await axios.post(
+                `${API_DOMAIN}/Account`,
+                values,
+                {
+                    headers: {
+                        Authorization: `Bearer ${bearerToken}`,
+                    }
+                }
+            );
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+);
 const slice = createSlice({
     name: 'account',
     initialState,
@@ -101,6 +120,9 @@ const slice = createSlice({
                 }, {});
                 state.userName = claims?.Username ?? state.userName;
                 state.profilePicturePath = claims?.ProfilePicturePath ?? state.profilePicturePath;
+            })
+            .addCase(postUserClaims.fulfilled, (state, action) => {
+                console.log(action.payload);
             })
     }
 })

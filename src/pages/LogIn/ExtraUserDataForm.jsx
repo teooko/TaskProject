@@ -1,7 +1,7 @@
 ﻿import {KeyboardAvoidingView, StyleSheet, Text, TextInput, View} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import {resetUserData} from "../../store/accountSlice";
-import {useDispatch} from "react-redux";
+import {postUserClaims, resetUserData} from "../../store/accountSlice";
+import {useDispatch, useSelector} from "react-redux";
 import * as yup from "yup";
 import AuthenticationButton from "./AuthenticationButton";
 import {Formik} from "formik";
@@ -15,26 +15,28 @@ const ExtraUserDataForm = ({navigation}) => {
         dispatch(resetUserData());
         navigation.navigate("Log out");
     };
+    const {bearerToken} = useSelector(state => state.account);
     
     return (
             <LinearGradient colors={['#E97C6F', '#FFC165']} style={styles.gradient}>
                 <KeyboardAvoidingView behavior={"position"} >
                     <Navigation skipButtonVisible={false} backButtonVisible={true} handleNavigation={handleNavigation} />
                     <Logo />
-                    <SelectProfilePicture />
                     <Formik
-                        initialValues={{ username: '' }}
-                        onSubmit={(values) => {
-                            console.log(values);
-                            //dispatch(postLogIn(values));
+                        initialValues={{profilePicturePath: '', username: '' }}
+                        onSubmit={(values, {setSubmitting}) => {
+                            setSubmitting(false);
+                            dispatch(postUserClaims({bearerToken, values}));
+                            //console.log(values);
                         }}
                         validationSchema={yup.object().shape({
                             username: yup.string().required('User name is required'),
                         })}
                     >
-                        {({ handleChange, handleBlur, handleSubmit, values, errors }) => 
+                        {({ isSubmitting, setFieldValue, handleChange, handleBlur, handleSubmit, values, errors }) => 
                             (
                             <View style={styles.signUpForm}>
+                                <SelectProfilePicture isSubmitting={isSubmitting} setFieldValue={setFieldValue}/>
                                     <View style={styles.textInputWrapper}>
                                         <Text style={styles.textInputLabel}>User name</Text>
                                         <TextInput
@@ -47,7 +49,7 @@ const ExtraUserDataForm = ({navigation}) => {
                                         />
                                         {errors.username && <Text style={styles.errorText}>{errors.username}</Text>}
                                     </View>
-                                <AuthenticationButton title="Submit" handlePress={handleSubmit} />
+                                <AuthenticationButton title="Submit" handlePress={handleSubmit} isSubmitting = {isSubmitting}/>
                             </View>
                             )}
                     </Formik>

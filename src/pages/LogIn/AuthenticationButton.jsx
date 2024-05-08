@@ -4,9 +4,9 @@ import {SvgXml} from "react-native-svg";
 import {icons} from "../../assets/Icons";
 import {Pressable, StyleSheet, Text} from "react-native";
 
-const AuthenticationButton = ({title, handlePress, icon}) => {
+const AuthenticationButton = ({title, handlePress, icon, isSubmitting}) => {
     return (
-        <Pressable style={styles.button} onPress={handlePress}>
+        <Pressable style={styles.button} onPress={handlePress} disabled={isSubmitting}>
             {icon && <SvgXml
                 xml={icon}
                 width={20}

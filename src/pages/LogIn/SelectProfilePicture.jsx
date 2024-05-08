@@ -6,7 +6,7 @@ import {icons} from "../../assets/Icons";
 import {useDispatch, useSelector} from "react-redux";
 import {launchImageLibrary} from "react-native-image-picker";
 
-const SelectProfilePicture = () => {
+const SelectProfilePicture = ({isSubmitting, setFieldValue}) => {
 
     const [selectedImage, setSelectedImage] = useState(null);
     const dispatch = useDispatch();
@@ -23,6 +23,7 @@ const SelectProfilePicture = () => {
             } else {
                 const source = { uri: response };
                 setSelectedImage(source);
+                setFieldValue("profilePicturePath", source.uri.assets[0].uri)
                 dispatch(setProfilePicturePath({uri: source.uri.assets[0].uri}));
                 //uploadImage(response);
             }
