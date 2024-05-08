@@ -2,6 +2,7 @@
 import {icons} from '../../assets/Icons';
 import * as React from 'react';
 import NavigationButton from '../../components/NavigationButton';
+import {useContext} from "react";
 const NavigationBar = ({navigation}) => {
     const {menu, profile} = icons;
     return (
@@ -11,7 +12,9 @@ const NavigationBar = ({navigation}) => {
                 onPress={() => navigation.openDrawer()}
                 size={20}
             />
-            <NavigationButton icon={profile} size={20} />
+            <NavigationButton icon={profile}
+                              onPress={() => navigation.openRightDrawer()}
+                              size={20} />
         </View>
     );
 };

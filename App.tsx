@@ -4,13 +4,14 @@ import CustomDrawer from './src/pages/Page/CustomDrawer';
 import {Provider} from 'react-redux';
 import Store, {persistor} from './src/store';
 import {PersistGate} from "redux-persist/integration/react";
+import RightDrawer from "./src/pages/Page/RightDrawer";
 
 export default function App() {
     return (
         <NavigationContainer theme={theme}>
             <Provider store={Store}>
                 <PersistGate loading={null} persistor={persistor}>
-                    <CustomDrawer />
+                    <RightDrawer/>
                 </PersistGate>
             </Provider>
         </NavigationContainer>

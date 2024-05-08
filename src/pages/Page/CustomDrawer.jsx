@@ -20,6 +20,7 @@ const CustomDrawer = () => {
                 headerShown: false,
                 swipeEdgeWidth: 5,
                 swipeMinDistance: 50,
+                drawerPosition: 'left'
             }}>
             <Drawer.Screen name="Log out" component={LogIn} />
             <Drawer.Screen name="Home" component={Home} />

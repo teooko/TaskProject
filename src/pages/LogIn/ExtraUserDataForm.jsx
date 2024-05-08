@@ -27,7 +27,6 @@ const ExtraUserDataForm = ({navigation}) => {
                         onSubmit={(values, {setSubmitting}) => {
                             setSubmitting(false);
                             dispatch(postUserClaims({bearerToken, values}));
-                            //console.log(values);
                         }}
                         validationSchema={yup.object().shape({
                             username: yup.string().required('User name is required'),

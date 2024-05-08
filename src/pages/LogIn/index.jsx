@@ -17,6 +17,7 @@ import LogInForm from "./LogInForm";
 import Loading from "../Loading";
 import Navigation from "./Navigation";
 import Logo from "./Logo";
+
 const LogIn = () => {
     const menus = {
         authenticate: "authenticate",
@@ -27,6 +28,7 @@ const LogIn = () => {
     const dispatch = useDispatch();
     const {bearerToken} = useSelector(state => state.account);
     const navigation = useNavigation();
+    
     const [menu, setMenu] = useState(menus.authenticate);
     
     useEffect(() => {
