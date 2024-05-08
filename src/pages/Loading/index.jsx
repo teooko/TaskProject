@@ -28,7 +28,7 @@ const Loading = ({navigation}) => {
     const dispatch = useDispatch();
     const isFocused = useIsFocused();
     
-    const {bearerToken, userName, profilePicturePath} = useSelector(state => state.account);
+    const {bearerToken, userName} = useSelector(state => state.account);
     const animatedStyle = useAnimatedStyle(() => {
         return {
             transform: [{ rotate: `${rotation.value}deg` }],

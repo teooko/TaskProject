@@ -1,7 +1,5 @@
 ﻿import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
-import {act} from "react-test-renderer";
-import {localIp} from "../launchSettings";
 import {API_DOMAIN} from "../../config";
 
 const initialState = {

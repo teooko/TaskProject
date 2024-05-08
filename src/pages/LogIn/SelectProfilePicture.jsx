@@ -1,4 +1,4 @@
-﻿import React, {useState} from 'react';
+﻿import React, {useEffect, useState} from 'react';
 import {Dimensions, Pressable, StyleSheet, View, Image, Text} from "react-native";
 import {setProfilePicturePath} from "../../store/accountSlice";
 import {SvgXml} from "react-native-svg";
@@ -24,7 +24,7 @@ const SelectProfilePicture = ({isSubmitting, setFieldValue}) => {
                 const source = { uri: response };
                 setSelectedImage(source);
                 setFieldValue("profilePicturePath", source.uri.assets[0].uri)
-                dispatch(setProfilePicturePath({uri: source.uri.assets[0].uri}));
+                dispatch(setProfilePicturePath(source.uri.assets[0].uri));
                 //uploadImage(response);
             }
         });
@@ -44,7 +44,7 @@ const SelectProfilePicture = ({isSubmitting, setFieldValue}) => {
             <View style={styles.selectProfilePicture} >
                 {
                     profilePicturePath ?
-                        <Image source={profilePicturePath} style={styles.image}/>
+                        <Image source={{uri: profilePicturePath}} style={styles.image}/>
                         :
                         <>
                             <Text style={styles.imageText}>

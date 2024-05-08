@@ -2,6 +2,7 @@
 import {Drawer} from "react-native-drawer-layout";
 import CustomDrawer from "./CustomDrawer";
 import CustomDrawerContent from "./CustomDrawerContent";
+import RightDrawerContent from "./RightDrawerContent";
 
 export const RightDrawerContext = createContext();
 const RightDrawer = () => {
@@ -31,8 +32,8 @@ const RightDrawer = () => {
             onOpen={() => setRightDrawerOpen(true)}
             onClose={() => setRightDrawerOpen(false)}
             drawerPosition="right"
-            renderDrawerContent={() => <>{/* Right drawer content */}</>}
-            //drawerContent={CustomDrawerContent}
+            renderDrawerContent={() => <RightDrawerContent />}
+            drawerContent={CustomDrawerContent}
             swipeEdgeWidth={5}
             swipeMinDistance={50}
             gestureHandlerProps={{
