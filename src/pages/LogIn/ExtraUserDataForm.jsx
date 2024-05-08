@@ -12,24 +12,19 @@ import AuthenticationButton from "./AuthenticationButton";
 import {Formik} from "formik";
 import LogIn from "./index";
 import SelectProfilePicture from "./SelectProfilePicture";
+import Navigation from "./Navigation";
 
 const ExtraUserDataForm = ({navigation}) => {
     const dispatch = useDispatch();
-   
+    const handleNavigation = () => {
+        dispatch(resetUserData());
+        navigation.navigate("Log out");
+    };
     
     return (
             <LinearGradient colors={['#E97C6F', '#FFC165']} style={styles.gradient}>
                 <KeyboardAvoidingView behavior={"position"} >
-                    <View style={styles.navigation}>
-                        <Pressable onPress={() => {
-                            dispatch(resetUserData());
-                            navigation.navigate("Log out");
-                        }}>
-                            <Text style={styles.text}>
-                                Back
-                            </Text>
-                        </Pressable>
-                    </View>
+                    <Navigation skipButtonVisible={false} backButtonVisible={true} handleNavigation={handleNavigation} />
                     <View style={styles.logoWrapper}>
                         <SvgXml
                             xml={icons.logo}

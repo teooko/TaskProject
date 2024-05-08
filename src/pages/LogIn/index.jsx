@@ -2,7 +2,7 @@
 import {StyleSheet, Button, View, Pressable, Text, TextInput, KeyboardAvoidingView, Dimensions} from "react-native";
 import NavigationBar from "../Page/NavigationBar";
 import {useDispatch, useSelector} from "react-redux";
-import {getUserClaims, postLogInDefault, postLogInOtherAcc} from "../../store/accountSlice";
+import {getUserClaims, postLogInDefault, postLogInOtherAcc, resetUserData} from "../../store/accountSlice";
 import {useNavigation} from "@react-navigation/native";
 import Home from "../Home";
 import {fetchDailyTasks, fetchTasks} from "../../store/tasksSlice";
@@ -38,11 +38,16 @@ const LogIn = () => {
             }, 100);
         }
     }, [bearerToken]);
+
+    const handleNavigation = () => {
+        setMenu(menus.authenticate);
+    };
     
     return (
             <LinearGradient colors={['#E97C6F', '#FFC165']} style={styles.gradient}>
                 <KeyboardAvoidingView behavior={"position"} >
-                    <Navigation menus={menus} setMenu={setMenu} menu={menu} />
+                    <Navigation  skipButtonVisible={true} backButtonVisible={(menu === menus.logIn ||
+                        menu === menus.signUp)} handleNavigation={handleNavigation}/>
                     <Logo />
                     {menu === menus.authenticate && <AuthenticationButtons menus={menus} setMenu={setMenu}/>}
                     {menu === menus.signUp && <SignUpForm menus={menus} setMenu={setMenu}/>}

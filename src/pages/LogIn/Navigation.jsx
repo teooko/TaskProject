@@ -1,15 +1,14 @@
 ﻿import React from 'react';
 import {Dimensions, Pressable, StyleSheet, View, Text} from "react-native";
 
-const Navigation = ({menus, menu, setMenu}) => {
+const Navigation = ({skipButtonVisible, backButtonVisible, handleNavigation}) => {
     return (
         <View style={styles.navigation}>
-            <Text style={styles.text}>
+            {skipButtonVisible ? <Text style={styles.text}>
                 Skip
-            </Text>
-            {   (menu === menus.logIn ||
-                    menu === menus.signUp) &&
-                <Pressable onPress={() => setMenu(menus.authenticate)}>
+            </Text> : <View />}
+            { backButtonVisible &&
+                <Pressable onPress={() => handleNavigation()}>
                     <Text style={styles.text}>
                         Back
                     </Text>
