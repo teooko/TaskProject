@@ -15,6 +15,8 @@ import AuthenticationButton from "./AuthenticationButton";
 import SignUpForm from "./SignUpForm";
 import LogInForm from "./LogInForm";
 import Loading from "../Loading";
+import Navigation from "./Navigation";
+import Logo from "./Logo";
 const LogIn = () => {
     const menus = {
         authenticate: "authenticate",
@@ -40,26 +42,8 @@ const LogIn = () => {
     return (
             <LinearGradient colors={['#E97C6F', '#FFC165']} style={styles.gradient}>
                 <KeyboardAvoidingView behavior={"position"} >
-                <View style={styles.navigation}>
-                    <Text style={styles.text}>
-                        Skip
-                    </Text>
-                    {   (menu === menus.logIn ||
-                        menu === menus.signUp) &&
-                        <Pressable onPress={() => setMenu(menus.authenticate)}>
-                        <Text style={styles.text}>
-                            Back
-                        </Text>
-                    </Pressable>}
-                </View>
-                    <View style={styles.logoWrapper}>
-                        <SvgXml
-                            xml={icons.logo}
-                            width={"90%"}
-                            height={Dimensions.get('window').width / 3}
-                            style={styles.logo}
-                        />
-                    </View>
+                    <Navigation menus={menus} setMenu={setMenu} menu={menu} />
+                    <Logo />
                     {menu === menus.authenticate && <AuthenticationButtons menus={menus} setMenu={setMenu}/>}
                     {menu === menus.signUp && <SignUpForm menus={menus} setMenu={setMenu}/>}
                     {menu === menus.logIn && <LogInForm menus={menus} setMenu={setMenu}/>}

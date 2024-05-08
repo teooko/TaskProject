@@ -29,7 +29,7 @@ function Timer({navigation}) {
     const {currentTaskId, time, reset, timerRunning, currentWorkSessionId} = useSelector(state => state.timer);
     const [ws, setWs] = useState(null);
     const addFriend = () => {
-        setWs(new WebSocket('ws://192.168.1.103:8080'));
+        setWs(new WebSocket('ws://192.168.100.8:8080'));
     }
 
     const sendMsg = () => {

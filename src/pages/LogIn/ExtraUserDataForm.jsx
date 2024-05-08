@@ -11,28 +11,11 @@ import * as yup from "yup";
 import AuthenticationButton from "./AuthenticationButton";
 import {Formik} from "formik";
 import LogIn from "./index";
+import SelectProfilePicture from "./SelectProfilePicture";
 
 const ExtraUserDataForm = ({navigation}) => {
-    const [selectedImage, setSelectedImage] = useState(null);
     const dispatch = useDispatch();
-    const {profilePicturePath} = useSelector(state => state.account);
-    const selectImage = async() => {
-        const options = {
-          //  includeBase64: true
-        }
-        await launchImageLibrary(options, response => {
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else {
-                const source = { uri: response };
-                setSelectedImage(source);
-                dispatch(setProfilePicturePath({uri: source.uri.assets[0].uri}));
-                //uploadImage(response);
-            }
-        });
-    };
+   
     
     return (
             <LinearGradient colors={['#E97C6F', '#FFC165']} style={styles.gradient}>
@@ -55,34 +38,7 @@ const ExtraUserDataForm = ({navigation}) => {
                             style={styles.logo}
                         />
                     </View>
-                    <Pressable style={styles.selectProfilePictureWrapper} onPress={() => selectImage()} >
-                        {profilePicturePath &&
-                                <Pressable onPress={() => dispatch(setProfilePicturePath(null))} style={styles.removeImageButtonWrapper}>
-                                    <SvgXml xml={icons.x}
-                                            style={styles.removeImageButton}
-                                            fill={"white"}
-                                            width={15}
-                                            height={15}
-                                    />
-                                </Pressable>}
-                        <View style={styles.selectProfilePicture} >
-                            {
-                                profilePicturePath ? 
-                                        <Image source={profilePicturePath} style={styles.image}/>
-                                    :
-                                    <>
-                                        <Text style={styles.imageText}>
-                                            Add profile picture
-                                        </Text>
-                                        <SvgXml xml={icons.picture} 
-                                                style={styles.logo}
-                                        fill={"white"}
-                                        width={30}
-                                        height={30}/>
-                                    </>
-                        }
-                        </View>
-                    </Pressable>
+                    <SelectProfilePicture />
                     <Formik
                         initialValues={{ username: '' }}
                         onSubmit={(values) => {
