@@ -8,14 +8,21 @@ import {Formik} from "formik";
 import SelectProfilePicture from "./SelectProfilePicture";
 import Navigation from "./Navigation";
 import Logo from "./Logo";
+import {useEffect} from "react";
+import Home from "../Home";
 
 const ExtraUserDataForm = ({navigation}) => {
     const dispatch = useDispatch();
+    const {bearerToken, username} = useSelector(state => state.account);
+    
+    useEffect(() => {
+        if(username !== null)
+            navigation.navigate(Home);
+    }, []);
     const handleNavigation = () => {
         dispatch(resetUserData());
         navigation.navigate("Log out");
     };
-    const {bearerToken} = useSelector(state => state.account);
     
     return (
             <LinearGradient colors={['#E97C6F', '#FFC165']} style={styles.gradient}>
