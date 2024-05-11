@@ -16,7 +16,6 @@ const CustomDrawerContent = props => {
         dispatch(resetTaskState());
         //dispatch(resetCalendarState());
         dispatch(resetUserData());
-        console.log("AFTER DO EXTRA " + bearerToken);
     }
     return (
         <DrawerContentScrollView {...props} style={styles.content}>

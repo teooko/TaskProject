@@ -30,7 +30,7 @@ const ExtraUserDataForm = ({navigation}) => {
                     <Navigation skipButtonVisible={false} backButtonVisible={true} handleNavigation={handleNavigation} />
                     <Logo />
                     <Formik
-                        initialValues={{profilePicturePath: '', username: '' }}
+                        initialValues={{profilePicturePath: '', username: '', profilePictureBase64: '' }}
                         onSubmit={(values, {setSubmitting}) => {
                             setSubmitting(false);
                             dispatch(postUserClaims({bearerToken, values}));
