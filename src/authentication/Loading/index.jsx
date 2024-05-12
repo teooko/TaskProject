@@ -13,9 +13,9 @@ import Animated, {
 import {fetchWeeklyTasks, insertDays, resetCalendarState, selectDay} from "../../store/slice";
 import {fetchDailyTasks, fetchTasks} from "../../store/tasksSlice";
 import {useDispatch, useSelector} from "react-redux";
-import Home from "../Home";
 import {useIsFocused} from "@react-navigation/native";
 import ExtraUserDataForm from "../LogIn/ExtraUserDataForm";
+import Home from "../../pages/Home";
 
 const Loading = ({navigation}) => {
 

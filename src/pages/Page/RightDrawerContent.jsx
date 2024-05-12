@@ -1,12 +1,12 @@
 ﻿import React, {useEffect, useState} from 'react';
 import {Dimensions, KeyboardAvoidingView, Text, TextInput, View} from "react-native";
 import {StyleSheet} from "react-native";
-import SelectProfilePicture from "../LogIn/SelectProfilePicture";
 import {Formik} from "formik";
 import {postUserClaims} from "../../store/accountSlice";
 import * as yup from "yup";
-import AuthenticationButton from "../LogIn/AuthenticationButton";
 import {useDispatch, useSelector} from "react-redux";
+import SelectProfilePicture from "../../authentication/LogIn/SelectProfilePicture";
+import AuthenticationButton from "../../authentication/LogIn/AuthenticationButton";
 
 const RightDrawerContent = () => {
     const dispatch = useDispatch();

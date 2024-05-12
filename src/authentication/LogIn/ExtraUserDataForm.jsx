@@ -9,7 +9,7 @@ import SelectProfilePicture from "./SelectProfilePicture";
 import Navigation from "./Navigation";
 import Logo from "./Logo";
 import {useEffect} from "react";
-import Home from "../Home";
+import Home from "../../pages/Home";
 
 const ExtraUserDataForm = ({navigation}) => {
     const dispatch = useDispatch();

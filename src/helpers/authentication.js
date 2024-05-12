@@ -1,4 +1,6 @@
-﻿//isAuthenticated
+﻿const checkAuthentication = (bearerToken) => {
+    return bearerToken !== null;
+}
 
 //refreshAppState
 

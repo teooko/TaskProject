@@ -6,9 +6,9 @@ import * as React from 'react';
 import Tasks from '../Tasks';
 import Test from '../Test';
 import Statistics from "../Statistics";
-import LogIn from "../LogIn";
-import Loading from "../Loading";
-import ExtraUserDataForm from "../LogIn/ExtraUserDataForm";
+import Loading from "../../authentication/Loading";
+import ExtraUserDataForm from "../../authentication/LogIn/ExtraUserDataForm";
+import LogIn from "../../authentication/LogIn";
 
 const Drawer = createDrawerNavigator();
 const CustomDrawer = () => {
