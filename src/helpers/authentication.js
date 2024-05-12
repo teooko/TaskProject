@@ -1,4 +1,4 @@
-﻿const checkAuthentication = (bearerToken) => {
+﻿export const checkAuthentication = (bearerToken) => {
     return bearerToken !== null;
 }
 
