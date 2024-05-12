@@ -27,14 +27,7 @@ function Timer({navigation}) {
 
     const dispatch = useDispatch();
     const {currentTaskId, time, reset, timerRunning, currentWorkSessionId} = useSelector(state => state.timer);
-    const [ws, setWs] = useState(null);
-    const addFriend = () => {
-        setWs(new WebSocket('ws://192.168.100.8:8080'));
-    }
-
-    const sendMsg = () => {
-        ws.send("mesaj");
-    }
+    
     
     const {startTimerAnimation, stopTimerAnimation, resetTimerAnimation, frontWaveStyle, backWaveStyle, riseAnimationStyle} = useTimerAnimation();
     const handleStartTimer = async id => {
@@ -86,25 +79,6 @@ function Timer({navigation}) {
         setCountDownId(id)
     }, [time, reset]);
     
-    useEffect(() => {
-        if(ws !== null) {
-            const serverMessagesList = [];
-            ws.onopen = () => {
-                ws.send('something');
-            };
-            ws.onclose = (e) => {
-            };
-            ws.onerror = (e) => {
-                console.log(e.message);
-            };
-            ws.onmessage = async (e) => {
-                if(e.data === "press timer") {
-                    await handlePress();
-                };
-                console.log(e.data);
-            };
-        }
-    }, [ws, timerRunning]);
     
     return (
         <View>
