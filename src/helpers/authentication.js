@@ -1,0 +1,7 @@
+﻿//isAuthenticated
+
+//refreshAppState
+
+//hasUserData
+
+//HOC
