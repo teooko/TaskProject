@@ -5,8 +5,8 @@ import {Formik} from "formik";
 import {postUserClaims} from "../../store/accountSlice";
 import * as yup from "yup";
 import {useDispatch, useSelector} from "react-redux";
-import SelectProfilePicture from "../../authentication/LogIn/SelectProfilePicture";
-import AuthenticationButton from "../../authentication/LogIn/AuthenticationButton";
+import SelectProfilePicture from "../../authentication/LogIn/components/SelectProfilePicture";
+import AuthenticationButton from "../../authentication/LogIn/components/AuthenticationButton";
 
 const RightDrawerContent = () => {
     const dispatch = useDispatch();

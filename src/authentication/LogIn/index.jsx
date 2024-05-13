@@ -1,55 +1,32 @@
 ﻿import {useDispatch, useSelector} from "react-redux";
-import {useNavigation} from "@react-navigation/native";
-import {useEffect, useState} from "react";
-import {getUserClaims, resetBearerToken} from "../../store/accountSlice";
-import Loading from "../Loading";
 import LinearGradient from "react-native-linear-gradient";
 import {Dimensions, KeyboardAvoidingView, StyleSheet} from "react-native";
-import Navigation from "./Navigation";
-import Logo from "./Logo";
-import AuthenticationButtons from "./AuthenticationButtons";
-import SignUpForm from "./SignUpForm";
-import LogInForm from "./LogInForm";
-
+import LogInForm from "./forms/LogInForm";
+import SignUpForm from "./forms/SignUpForm";
+import AuthenticationButtons from "./components/AuthenticationButtons";
+import Logo from "./components/Logo";
+import Navigation from "./components/Navigation";
+import {menus} from "../../constants";
+import ExtraUserDataForm from "./forms/ExtraUserDataForm";
+import {goToPage} from "../../store/layoutSlice";
 
 const LogIn = () => {
-    const menus = {
-        authenticate: "authenticate",
-        logIn: "logIn",
-        signUp: "signUp",
-        extraUserData: "extraUserData"
-    }
+    const {menu} = useSelector(state => state.layout);
     const dispatch = useDispatch();
-    const {bearerToken} = useSelector(state => state.account);
-    
-    const [menu, setMenu] = useState(menus.authenticate);
-    
-    useEffect(() => {
-        if(bearerToken !== null) {
-            dispatch(getUserClaims(bearerToken));
-            setTimeout(() => {
-                dispatch(getUserClaims(bearerToken));
-                //navigation.navigate(Loading);
-            }, 100);
-        }
-    }, [bearerToken]);
-
     const handleNavigation = () => {
-        setMenu(menus.authenticate);
-    };
-    useEffect(() => {
-        resetBearerToken();
-    }, []);
+        dispatch(goToPage(menus.authenticate));
+    }
     return (
             <LinearGradient colors={['#E97C6F', '#FFC165']} style={styles.gradient}>
-                {/*<KeyboardAvoidingView behavior={"position"}>
+                <KeyboardAvoidingView behavior={"position"}>
                     <Navigation skipButtonVisible={true} backButtonVisible={(menu === menus.logIn ||
                         menu === menus.signUp)} handleNavigation={handleNavigation}/>
                     <Logo/>
-                    {menu === menus.authenticate && <AuthenticationButtons menus={menus} setMenu={setMenu}/>}
-                    {menu === menus.signUp && <SignUpForm menus={menus} setMenu={setMenu}/>}
-                    {menu === menus.logIn && <LogInForm menus={menus} setMenu={setMenu}/>}
-                </KeyboardAvoidingView> */}
+                    {menu === menus.authenticate && <AuthenticationButtons />}
+                    {menu === menus.signUp && <SignUpForm />}
+                    {menu === menus.logIn && <LogInForm />}
+                    {menu === menus.extraUserData && <ExtraUserDataForm />}
+                </KeyboardAvoidingView> 
             </LinearGradient>
     );
 };

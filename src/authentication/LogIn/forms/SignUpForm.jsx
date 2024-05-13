@@ -1,31 +1,36 @@
 ﻿import React from 'react';
 import {Dimensions, StyleSheet, Text, TextInput, View} from "react-native";
-import AuthenticationButton from "./AuthenticationButton";
 import {Formik} from "formik";
 import * as yup from "yup";
-import {useDispatch, useSelector} from "react-redux";
-import {postLogIn, postRegister} from "../../store/accountSlice";
+import {useDispatch} from "react-redux";
+import {menus} from "../../../constants";
+import {goToPage} from "../../../store/layoutSlice";
+import AuthenticationButton from "../components/AuthenticationButton";
+import {postRegister} from "../../../store/accountSlice";
 
-const LogInForm = ({menus, setMenu}) => {
+const SignUpForm = () => {
     const dispatch = useDispatch();
-    const {bearerToken} = useSelector(state => state.account);
     return (
         <Formik
             initialValues={{ email: '', password: '' }}
             onSubmit={(values) => {
                 console.log(values);
-                dispatch(postLogIn(values));
-                //setMenu(menus.authenticate);
+                dispatch(postRegister(values));
+                dispatch(goToPage(menus.authenticate));
             }}
             validationSchema={yup.object().shape({
                 email: yup.string().email('Invalid email').required('Email is required'),
-                password: yup.string().required('Password is required'),
+                password: yup.string().min(6, 'Password must be at least 6 characters')
+                    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+                    .matches(/[0-9]/, 'Password must contain at least one digit')
+                    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one symbol')
+                    .required('Password is required'),
             })}
         >
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                 <View style={styles.signUpForm}>
                     <View style={styles.signUpFormInput}>
-                        <Text style={styles.title}>Log in</Text>
+                        <Text style={styles.title}>Sign up</Text>
                         <View style={styles.textInputWrapper}>
                             <Text style={styles.textInputLabel}>Email</Text>
                             <TextInput
@@ -100,7 +105,7 @@ const styles = StyleSheet.create({
         height: 35,
         color: "red",
         flexWrap: "wrap",
-
+        
     }
 })
-export default LogInForm;
+export default SignUpForm;

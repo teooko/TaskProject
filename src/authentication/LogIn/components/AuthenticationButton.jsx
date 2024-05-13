@@ -1,7 +1,5 @@
 ﻿import React from 'react';
-import {postLogInDefault} from "../../store/accountSlice";
 import {SvgXml} from "react-native-svg";
-import {icons} from "../../assets/Icons";
 import {Pressable, StyleSheet, Text} from "react-native";
 
 const AuthenticationButton = ({title, handlePress, icon, isSubmitting}) => {

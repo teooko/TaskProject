@@ -1,10 +1,10 @@
 ﻿import React, {useEffect, useState} from 'react';
 import {Dimensions, Pressable, StyleSheet, View, Image, Text} from "react-native";
-import {setProfilePicturePath} from "../../store/accountSlice";
 import {SvgXml} from "react-native-svg";
-import {icons} from "../../assets/Icons";
 import {useDispatch, useSelector} from "react-redux";
 import {launchImageLibrary} from "react-native-image-picker";
+import {setProfilePicturePath} from "../../../store/accountSlice";
+import {icons} from "../../../assets/Icons";
 const SelectProfilePicture = ({isSubmitting, setFieldValue}) => {
     const dispatch = useDispatch();
     const {profilePicturePath} = useSelector(state => state.account);

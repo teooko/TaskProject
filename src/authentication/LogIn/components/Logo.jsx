@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import {Dimensions, StyleSheet, View} from "react-native";
 import {SvgXml} from "react-native-svg";
-import {icons} from "../../assets/Icons";
+import {icons} from "../../../assets/Icons";
 
 const Logo = () => {
     return (

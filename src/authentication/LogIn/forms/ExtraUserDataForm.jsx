@@ -1,15 +1,15 @@
 ﻿import {KeyboardAvoidingView, StyleSheet, Text, TextInput, View} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import {postUserClaims, resetUserData} from "../../store/accountSlice";
 import {useDispatch, useSelector} from "react-redux";
 import * as yup from "yup";
-import AuthenticationButton from "./AuthenticationButton";
 import {Formik} from "formik";
-import SelectProfilePicture from "./SelectProfilePicture";
-import Navigation from "./Navigation";
-import Logo from "./Logo";
 import {useEffect} from "react";
-import Home from "../../pages/Home";
+import Home from "../../../pages/Home";
+import {postUserClaims, resetUserData} from "../../../store/accountSlice";
+import Navigation from "../components/Navigation";
+import Logo from "../components/Logo";
+import SelectProfilePicture from "../components/SelectProfilePicture";
+import AuthenticationButton from "../components/AuthenticationButton";
 
 const ExtraUserDataForm = ({navigation}) => {
     const dispatch = useDispatch();

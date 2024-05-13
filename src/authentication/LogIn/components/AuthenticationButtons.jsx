@@ -1,10 +1,7 @@
 ﻿import React from 'react';
 import {Pressable, StyleSheet, Text, View} from "react-native";
-import {postLogInDefault, postLogInOtherAcc} from "../../store/accountSlice";
-import {SvgXml} from "react-native-svg";
-import {icons} from "../../assets/Icons";
 import AuthenticationButton from "./AuthenticationButton";
-import {useDispatch} from "react-redux";
+import {icons} from "../../../assets/Icons";
 
 const AuthenticationButtons = ({menus, setMenu}) => {
     return (

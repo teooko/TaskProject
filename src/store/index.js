@@ -7,6 +7,7 @@ import accountReducer from './accountSlice';
 import {persistReducer, persistStore} from "redux-persist";
 import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from "redux-persist/es/constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import layoutReducer from './layoutSlice'
 
 const accountPersistConfig = {
     key: 'account',
@@ -21,6 +22,7 @@ const store = configureStore({
         timer: timerReducer,
         deviceInfo: deviceInfoReducer,
         account: persistedAccountReducer,
+        layout: layoutReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
