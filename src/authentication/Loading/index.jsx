@@ -45,7 +45,7 @@ const Loading = ({navigation}) => {
     useEffect(() => {
         if(isFocused) {
             if(userName === null) {
-                navigation.navigate(ExtraUserDataForm);
+                console.log("username is null");
             }
             else {
                 //dispatch(resetTaskState());

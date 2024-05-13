@@ -2,20 +2,18 @@
 import {Dimensions, StyleSheet, Text, TextInput, View} from "react-native";
 import {Formik} from "formik";
 import * as yup from "yup";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {postLogIn} from "../../../store/accountSlice";
 import AuthenticationButton from "../components/AuthenticationButton";
 
-const LogInForm = ({menus, setMenu}) => {
+const LogInForm = () => {
     const dispatch = useDispatch();
-    const {bearerToken} = useSelector(state => state.account);
     return (
         <Formik
             initialValues={{ email: '', password: '' }}
             onSubmit={(values) => {
                 console.log(values);
                 dispatch(postLogIn(values));
-                //setMenu(menus.authenticate);
             }}
             validationSchema={yup.object().shape({
                 email: yup.string().email('Invalid email').required('Email is required'),
