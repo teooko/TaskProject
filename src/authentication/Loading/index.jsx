@@ -14,11 +14,9 @@ import {fetchWeeklyTasks, insertDays, resetCalendarState, selectDay} from "../..
 import {fetchDailyTasks, fetchTasks} from "../../store/tasksSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {useIsFocused} from "@react-navigation/native";
-import Home from "../../pages/Home";
-import ExtraUserDataForm from "../LogIn/forms/ExtraUserDataForm";
 
 const Loading = ({navigation}) => {
-
+    //TODO: change to hook
     const rotation = useSharedValue(0);
     const dispatch = useDispatch();
     const isFocused = useIsFocused();
@@ -60,7 +58,7 @@ const Loading = ({navigation}) => {
                 dispatch(fetchDailyTasks({bearerToken, date: formattedDate}));
                 dispatch(insertDays());
                 dispatch(fetchWeeklyTasks({bearerToken, fromDate: 0}));
-                navigation.navigate(Home);
+                console.log("NAVIGATE HOME");
             }
         }
     }, [isFocused]);

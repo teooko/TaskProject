@@ -7,7 +7,6 @@ const initialState = {
     userName: null,
     profilePicturePath: null,
 };
-
 export const postRegister = createAsyncThunk(
     'account/register',
     async (values) => {
@@ -31,7 +30,7 @@ export const postRegister = createAsyncThunk(
 
 export const postLogIn = createAsyncThunk(
     'account/login',
-    async (values) => { 
+    async (values) => {
         try {
             const response = await axios.post(
                 `${API_DOMAIN}/login`,
@@ -39,13 +38,13 @@ export const postLogIn = createAsyncThunk(
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Accept': 'application/json', // 'accept' should be 'Accept'
+                        'Accept': 'application/json',
                     },
                 }
             );
             return response.data;
         } catch (error) {
-            // Handle error if needed
+            console.log(error);
             throw error;
         }
     }
@@ -65,7 +64,7 @@ export const getUserClaims = createAsyncThunk(
             );
             return response.data;
         } catch (error) {
-            // Handle error if needed
+            console.log(error);
             throw error;
         }
     }

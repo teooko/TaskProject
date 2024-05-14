@@ -8,11 +8,12 @@ import RightDrawer from "./src/pages/Page/RightDrawer";
 import WithAuthentication from "./src/authentication/LogIn/WithAuthentication";
 
 export default function App() {
+    // TODO: Make WithAuthentication a wrapper
     return (
         <Provider store={Store}>
             <NavigationContainer theme={theme}>
                 <PersistGate loading={null} persistor={persistor}>
-                    <WithAuthentication />
+                    <WithAuthentication/>
                 </PersistGate>
             </NavigationContainer>
         </Provider>

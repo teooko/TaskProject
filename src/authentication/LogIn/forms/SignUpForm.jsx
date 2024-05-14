@@ -10,6 +10,7 @@ import {postRegister} from "../../../store/accountSlice";
 
 const SignUpForm = () => {
     const dispatch = useDispatch();
+    //TODO: go to extra user data from here
     return (
         <Formik
             initialValues={{ email: '', password: '' }}

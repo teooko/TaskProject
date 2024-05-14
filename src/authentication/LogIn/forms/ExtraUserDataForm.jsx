@@ -1,34 +1,27 @@
-﻿import {KeyboardAvoidingView, StyleSheet, Text, TextInput, View} from "react-native";
-import LinearGradient from "react-native-linear-gradient";
+﻿import {StyleSheet, Text, TextInput, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import * as yup from "yup";
 import {Formik} from "formik";
 import {useEffect} from "react";
-import Home from "../../../pages/Home";
 import {postUserClaims, resetUserData} from "../../../store/accountSlice";
-import Navigation from "../components/Navigation";
-import Logo from "../components/Logo";
 import SelectProfilePicture from "../components/SelectProfilePicture";
 import AuthenticationButton from "../components/AuthenticationButton";
+import {menus} from "../../../constants";
 
 const ExtraUserDataForm = ({navigation}) => {
     const dispatch = useDispatch();
-    const {bearerToken, username} = useSelector(state => state.account);
+    const {bearerToken, userName} = useSelector(state => state.account);
     
     useEffect(() => {
-        if(username !== null)
-            navigation.navigate(Home);
+        if(userName !== null)
+            console.log("username nu e null, e " + userName);
     }, []);
     const handleNavigation = () => {
         dispatch(resetUserData());
-        navigation.navigate("Log out");
+        dispatch(menus.authenticate);
     };
     
     return (
-            <LinearGradient colors={['#E97C6F', '#FFC165']} style={styles.gradient}>
-                <KeyboardAvoidingView behavior={"position"} >
-                    <Navigation skipButtonVisible={false} backButtonVisible={true} handleNavigation={handleNavigation} />
-                    <Logo />
                     <Formik
                         initialValues={{profilePicturePath: '', username: '', profilePictureBase64: '' }}
                         onSubmit={(values, {setSubmitting}) => {
@@ -59,8 +52,6 @@ const ExtraUserDataForm = ({navigation}) => {
                             </View>
                             )}
                     </Formik>
-                </KeyboardAvoidingView>
-            </LinearGradient>
     );
 };
 

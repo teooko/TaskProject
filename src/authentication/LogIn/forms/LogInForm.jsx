@@ -3,7 +3,7 @@ import {Dimensions, StyleSheet, Text, TextInput, View} from "react-native";
 import {Formik} from "formik";
 import * as yup from "yup";
 import {useDispatch} from "react-redux";
-import {postLogIn} from "../../../store/accountSlice";
+import {getUserClaims, postLogIn} from "../../../store/accountSlice";
 import AuthenticationButton from "../components/AuthenticationButton";
 
 const LogInForm = () => {
@@ -12,8 +12,9 @@ const LogInForm = () => {
         <Formik
             initialValues={{ email: '', password: '' }}
             onSubmit={(values) => {
-                console.log(values);
-                dispatch(postLogIn(values));
+                dispatch(postLogIn(values)).then((response) => {
+                    dispatch(getUserClaims(response.payload.accessToken));
+                });
             }}
             validationSchema={yup.object().shape({
                 email: yup.string().email('Invalid email').required('Email is required'),
