@@ -119,7 +119,6 @@ const slice = createSlice({
                 state.profilePicturePath = claims?.ProfilePicturePath ?? state.profilePicturePath;
             })
             .addCase(postUserClaims.fulfilled, (state, action) => {
-                console.log(action.payload);
                 const claims = action.payload.$values?.reduce((acc, claim) => {
                     acc[claim.type] = claim.value;
                     return acc;

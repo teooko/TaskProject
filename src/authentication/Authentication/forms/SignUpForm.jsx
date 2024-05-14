@@ -6,18 +6,17 @@ import {useDispatch} from "react-redux";
 import {menus} from "../../../constants";
 import {goToPage} from "../../../store/layoutSlice";
 import AuthenticationButton from "../components/AuthenticationButton";
-import {getUserClaims, postLogIn, postRegister} from "../../../store/accountSlice";
+import {postLogIn, postRegister} from "../../../store/accountSlice";
 
 const SignUpForm = () => {
     const dispatch = useDispatch();
-    //TODO: go to extra user data from here
     return (
         <Formik
             initialValues={{ email: '', password: '' }}
             onSubmit={(values) => {
                 console.log(values);
                 dispatch(postRegister(values)).then(() => {
-                    dispatch(postLogIn(values)).then((response) => {
+                    dispatch(postLogIn(values)).then(() => {
                         dispatch(goToPage(menus.extraUserData));
                     });
                 });

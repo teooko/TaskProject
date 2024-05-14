@@ -1,11 +1,9 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import CustomDrawer from './src/pages/Page/CustomDrawer';
 import {Provider} from 'react-redux';
 import Store, {persistor} from './src/store';
 import {PersistGate} from "redux-persist/integration/react";
-import RightDrawer from "./src/pages/Page/RightDrawer";
-import WithAuthentication from "./src/authentication/LogIn/WithAuthentication";
+import WithAuthentication from "./src/authentication/Authentication/WithAuthentication";
 
 export default function App() {
     // TODO: Make WithAuthentication a wrapper

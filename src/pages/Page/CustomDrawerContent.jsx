@@ -10,8 +10,8 @@ import {resetCalendarState} from "../../store/slice";
 
 const CustomDrawerContent = props => {
     const dispatch = useDispatch();
-    const {bearerToken} = useSelector(state => state.account);
     const handleDoExtra = () => {
+        //TODO: GO to authentication form
         dispatch(resetBearerToken());
         dispatch(resetTaskState());
         //dispatch(resetCalendarState());

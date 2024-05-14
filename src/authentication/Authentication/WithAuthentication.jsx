@@ -1,6 +1,6 @@
 ﻿import { useSelector } from 'react-redux';
-import LogIn from "./index";
 import RightDrawer from "../../pages/Page/RightDrawer";
+import Authentication from "./index";
 
 const WithAuthentication = () => {
     const { bearerToken, userName } = useSelector(state => state.account);
@@ -9,7 +9,7 @@ const WithAuthentication = () => {
     const hasClaims = userName !== null;
     
     if (!isAuthenticated || !hasClaims)
-        return <LogIn />;
+        return <Authentication />;
     return <RightDrawer />;
 };
 
