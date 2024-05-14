@@ -14,7 +14,6 @@ const SignUpForm = () => {
         <Formik
             initialValues={{ email: '', password: '' }}
             onSubmit={(values) => {
-                console.log(values);
                 dispatch(postRegister(values)).then(() => {
                     dispatch(postLogIn(values)).then(() => {
                         dispatch(goToPage(menus.extraUserData));

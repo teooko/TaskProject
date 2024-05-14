@@ -3,12 +3,13 @@ import {Drawer} from "react-native-drawer-layout";
 import CustomDrawer from "./CustomDrawer";
 import CustomDrawerContent from "./CustomDrawerContent";
 import RightDrawerContent from "./RightDrawerContent";
+import {useStartup} from "../../hooks/useStartup";
 
 export const RightDrawerContext = createContext();
 const RightDrawer = () => {
     const [rightDrawerOpen, setRightDrawerOpen] = useState(false);
     const [activeOffsetX, setActiveOffsetX] = useState(-5);
-    
+    useStartup();
     const value = useMemo(
         () => ({
             openRightDrawer: () => setRightDrawerOpen(true),

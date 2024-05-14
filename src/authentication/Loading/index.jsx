@@ -15,7 +15,7 @@ import {fetchDailyTasks, fetchTasks} from "../../store/tasksSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {useIsFocused} from "@react-navigation/native";
 
-const Loading = ({navigation}) => {
+const Loading = () => {
     //TODO: change to hook
     const rotation = useSharedValue(0);
     const dispatch = useDispatch();
@@ -28,7 +28,6 @@ const Loading = ({navigation}) => {
             width: 30, height: 30
         };
     });
-    
     
     useEffect(() => {
         rotation.value = withRepeat(
@@ -46,15 +45,13 @@ const Loading = ({navigation}) => {
                 console.log("username is null");
             }
             else {
-                //dispatch(resetTaskState());
-                dispatch(resetCalendarState());
                 const currentDate = new Date();
                 const year = currentDate.getFullYear();
                 const month = String(currentDate.getMonth() + 1).padStart(2, '0');
                 const day = String(currentDate.getDate()).padStart(2, '0');
                 const formattedDate = `${year}-${month}-${day}`;
                 dispatch(fetchTasks(bearerToken));
-                dispatch(selectDay(0));
+                //dispatch(selectDay(0));
                 dispatch(fetchDailyTasks({bearerToken, date: formattedDate}));
                 dispatch(insertDays());
                 dispatch(fetchWeeklyTasks({bearerToken, fromDate: 0}));
