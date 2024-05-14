@@ -1,10 +1,5 @@
-﻿import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {getUserClaims} from "../../store/accountSlice";
-import {menus} from "../../constants";
-import {goToPage} from "../../store/layoutSlice";
+﻿import { useSelector } from 'react-redux';
 import LogIn from "./index";
-import Loading from "../Loading";
 import RightDrawer from "../../pages/Page/RightDrawer";
 
 const WithAuthentication = () => {

@@ -120,6 +120,12 @@ const slice = createSlice({
             })
             .addCase(postUserClaims.fulfilled, (state, action) => {
                 console.log(action.payload);
+                const claims = action.payload.$values?.reduce((acc, claim) => {
+                    acc[claim.type] = claim.value;
+                    return acc;
+                }, {});
+                state.userName = claims?.Username ?? state.userName;
+                state.profilePicturePath = claims?.ProfilePicturePath ?? state.profilePicturePath;
             })
     }
 })

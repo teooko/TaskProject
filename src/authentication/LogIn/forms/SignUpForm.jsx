@@ -6,7 +6,7 @@ import {useDispatch} from "react-redux";
 import {menus} from "../../../constants";
 import {goToPage} from "../../../store/layoutSlice";
 import AuthenticationButton from "../components/AuthenticationButton";
-import {postRegister} from "../../../store/accountSlice";
+import {getUserClaims, postLogIn, postRegister} from "../../../store/accountSlice";
 
 const SignUpForm = () => {
     const dispatch = useDispatch();
@@ -16,8 +16,11 @@ const SignUpForm = () => {
             initialValues={{ email: '', password: '' }}
             onSubmit={(values) => {
                 console.log(values);
-                dispatch(postRegister(values));
-                dispatch(goToPage(menus.authenticate));
+                dispatch(postRegister(values)).then(() => {
+                    dispatch(postLogIn(values)).then((response) => {
+                        dispatch(goToPage(menus.extraUserData));
+                    });
+                });
             }}
             validationSchema={yup.object().shape({
                 email: yup.string().email('Invalid email').required('Email is required'),
