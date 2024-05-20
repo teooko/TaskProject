@@ -13,9 +13,7 @@ export default function App() {
         <Provider store={Store}>
             <NavigationContainer theme={theme}>
                 <PersistGate loading={null} persistor={persistor}>
-                    <WebSocketService>
                         <WithAuthentication/>
-                    </WebSocketService>
                 </PersistGate>
             </NavigationContainer>
         </Provider>
