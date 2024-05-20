@@ -1,8 +1,12 @@
 ﻿import {useEffect, useState} from "react";
 import React from 'react';
-import {Alert, Modal, Pressable, View, StyleSheet, Text} from "react-native";
+import {Alert, Modal, Pressable, View, StyleSheet, Text, TextInput} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import {triggerInvitationModal} from "../store/webSocketSlice";
+import {Formik} from "formik";
+import {getUserClaims, postLogIn} from "../store/accountSlice";
+import * as yup from "yup";
+import AuthenticationButton from "../authentication/Authentication/components/AuthenticationButton";
 
 const WebSocketService = ({children}) => {
     const [ws, setWs] = useState(null);
@@ -44,9 +48,9 @@ const WebSocketService = ({children}) => {
     const sendInvitation = (ws, recipient, roomId) => {
         if(ws !== null) {
             ws.send(JSON.stringify({
-                        "sender": {username},
-                        "recipient": {recipient},
-                        "roomId": {roomId},
+                        "sender": userName,
+                        "recipient": recipient,
+                        "roomId": roomId,
                     }
                 )
             )
@@ -65,7 +69,6 @@ const WebSocketService = ({children}) => {
                 setModalVisible(true);
             }
     }
-    
     return (
         <View style={styles.wrapper}>
             <Modal
@@ -106,21 +109,48 @@ const WebSocketService = ({children}) => {
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <Text style={styles.title}>Send an Invitation</Text>
-                        <Text style={styles.modalText}>
-                            To:
-                        </Text>
-                        <View style={styles.buttonsWrapper}>
-                            <Pressable
-                                style={styles.button}
-                                onPress={() => dispatch(triggerInvitationModal())}>
-                                <Text style={styles.textStyle}>Send</Text>
-                            </Pressable>
-                            <Pressable
-                                style={styles.button}
-                                onPress={() => dispatch(triggerInvitationModal())}>
-                                <Text style={styles.textStyle}>Cancel</Text>
-                            </Pressable>
-                        </View>
+                        <Formik
+                            initialValues={{ recipient: '' }}
+                            onSubmit={(values) => {
+                                dispatch(triggerInvitationModal());
+                                sendInvitation(ws, values.recipient, 100);
+                            }}
+                            validationSchema={yup.object().shape({
+                                recipient: yup.string().required('Recipient is required'),
+                            })}
+                        >
+                            {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
+                                <View style={styles.signUpForm}>
+                                        <View style={styles.textInputWrapper}>
+                                            <Text style={styles.modalText}>
+                                                To:
+                                            </Text>
+                                            <TextInput
+                                                placeholder="Recipient"
+                                                style={styles.textInput}
+                                                placeholderTextColor="white"
+                                                onChangeText={handleChange('recipient')}
+                                                onBlur={handleBlur('recipient')}
+                                                value={values.recipient}
+                                                autoCapitalize="none"
+                                            />
+                                            {errors.recipient && <Text style={styles.errorText}>{errors.recipient}</Text>}
+                                        </View>
+                                    <View style={styles.buttonsWrapper}>
+                                        <Pressable
+                                            style={styles.button}
+                                            onPress={() => handleSubmit()}>
+                                            <Text style={styles.textStyle}>Send</Text>
+                                        </Pressable>
+                                        <Pressable
+                                            style={styles.button}
+                                            onPress={() => dispatch(triggerInvitationModal())}>
+                                            <Text style={styles.textStyle}>Cancel</Text>
+                                        </Pressable>
+                                    </View>
+                                </View>
+                            )}
+                        </Formik>
                     </View>
                 </View>
             </Modal>
@@ -184,6 +214,18 @@ const styles = StyleSheet.create({
     senderName: {
         color: "#DF5454",
         fontWeight: "bold"
+    },
+    textInput: {
+        backgroundColor: "lightgray",
+        color: "black",
+        borderRadius: 10,
+        marginBottom: 20,
+    },
+    errorText: {
+        height: 35,
+        color: "red",
+        flexWrap: "wrap",
+
     }
 });
 
