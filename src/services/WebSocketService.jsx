@@ -1,7 +1,8 @@
 ﻿import {useEffect, useState} from "react";
 import React from 'react';
 import {Alert, Modal, Pressable, View, StyleSheet, Text} from "react-native";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {triggerInvitationModal} from "../store/webSocketSlice";
 
 const WebSocketService = ({children}) => {
     const [ws, setWs] = useState(null);
@@ -10,12 +11,12 @@ const WebSocketService = ({children}) => {
         sender: null,
         roomId: null
     });
-
+    
     const {userName, bearerToken} = useSelector(state => state.account);
-
+    const {showInvitationModal} = useSelector(state => state.webSocket);
+    const dispatch = useDispatch();
     const connect = () => {
         setWs(new WebSocket('ws://192.168.100.8:8080'));
-        console.log("s-a facut");
     }
     useEffect(() => {
         if(bearerToken !== null)
@@ -27,7 +28,7 @@ const WebSocketService = ({children}) => {
     useEffect(() => {
         if(ws !== null) {
             ws.onopen = () => {
-                ws.send('something');
+                //ws.send('something');
             };
             ws.onclose = (e) => {
             };
@@ -91,6 +92,33 @@ const WebSocketService = ({children}) => {
                                 style={styles.button}
                                 onPress={() => setModalVisible(!modalVisible)}>
                                 <Text style={styles.textStyle}>Decline</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
+            <Modal
+                transparent={true}
+                visible={showInvitationModal}
+                onRequestClose={() => {
+                    dispatch(triggerInvitationModal());
+                }}>
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <Text style={styles.title}>Send an Invitation</Text>
+                        <Text style={styles.modalText}>
+                            To:
+                        </Text>
+                        <View style={styles.buttonsWrapper}>
+                            <Pressable
+                                style={styles.button}
+                                onPress={() => dispatch(triggerInvitationModal())}>
+                                <Text style={styles.textStyle}>Send</Text>
+                            </Pressable>
+                            <Pressable
+                                style={styles.button}
+                                onPress={() => dispatch(triggerInvitationModal())}>
+                                <Text style={styles.textStyle}>Cancel</Text>
                             </Pressable>
                         </View>
                     </View>

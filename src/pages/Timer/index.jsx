@@ -1,4 +1,4 @@
-﻿import {View, Text, StatusBar, Button} from 'react-native';
+﻿import {View, Text, StatusBar, Button, Pressable} from 'react-native';
 import Page from '../Page';
 import React, {useCallback, useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
@@ -20,6 +20,8 @@ import Picker from "./Picker";
 import useOrientation from "../../helpers/useOrientation";
 import CountDown from "react-native-countdown-fixed";
 import useTimerAnimation from "../../hooks/useTimerAnimation";
+import {SvgXml} from "react-native-svg";
+import {triggerInvitationModal} from "../../store/webSocketSlice";
 
 function Timer({navigation}) {
     const {start, pause} = icons;
@@ -117,8 +119,12 @@ function Timer({navigation}) {
                         frontWaveStyle={frontWaveStyle}
                         riseAnimationStyle={riseAnimationStyle}
                     />
-                    <Button title={"send msg"}  onPress={() => sendMsg()} />
-                    <Button title={"ADD FRIEND"} onPress={() => addFriend()}/>
+                    <Pressable style={styles.addFriendsButton} onPress={() => dispatch(triggerInvitationModal())}>
+                        <SvgXml xml={icons.userPlus} width={25} height={25} fill={"white"} />
+                        <Text style={styles.buttonText}>
+                            Add Friends
+                        </Text>
+                    </Pressable>
                     <TimerControls
                         svg={svg}
                         handleReset={handleReset}
@@ -152,5 +158,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 70,
     },
+    buttonText: {
+        color: "white",
+    },
+    addFriendsButton: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: 5,
+        marginBottom: 10,
+    }
 });
 export default Timer;

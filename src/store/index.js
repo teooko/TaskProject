@@ -4,6 +4,7 @@ import tasksReducer, {fetchDailyTasks, fetchTasks} from './tasksSlice';
 import deviceInfoReducer from './deviceInfoSlice'
 import timerReducer from './timerSlice';
 import accountReducer from './accountSlice';
+import webSocketReducer from './webSocketSlice'
 import {persistReducer, persistStore} from "redux-persist";
 import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from "redux-persist/es/constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -23,6 +24,7 @@ const store = configureStore({
         deviceInfo: deviceInfoReducer,
         account: persistedAccountReducer,
         layout: layoutReducer,
+        webSocket: webSocketReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
