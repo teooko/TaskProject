@@ -4,6 +4,7 @@ import {Provider} from 'react-redux';
 import Store, {persistor} from './src/store';
 import {PersistGate} from "redux-persist/integration/react";
 import WithAuthentication from "./src/authentication/Authentication/WithAuthentication";
+import WebSocketService from "./src/services/WebSocketService";
 
 export default function App() {
     
@@ -12,7 +13,9 @@ export default function App() {
         <Provider store={Store}>
             <NavigationContainer theme={theme}>
                 <PersistGate loading={null} persistor={persistor}>
-                    <WithAuthentication/>
+                    <WebSocketService>
+                        <WithAuthentication/>
+                    </WebSocketService>
                 </PersistGate>
             </NavigationContainer>
         </Provider>
