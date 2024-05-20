@@ -6,6 +6,7 @@ import {PersistGate} from "redux-persist/integration/react";
 import WithAuthentication from "./src/authentication/Authentication/WithAuthentication";
 
 export default function App() {
+    
     // TODO: Make WithAuthentication a wrapper
     return (
         <Provider store={Store}>

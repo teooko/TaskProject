@@ -1,6 +1,5 @@
 ﻿import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
-import {patchStopTimer, postStartTimer} from './timerSlice';
 import {API_DOMAIN} from "../../config";
 
 const today = new Date(Date.now());
@@ -97,7 +96,7 @@ const slice = createSlice({
                     const newTimestamp = new Date(weekDay.day);
 
                     const difference = today - newTimestamp;
-                    const millisecondsPerDay = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
+                    const millisecondsPerDay = 24 * 60 * 60 * 1000;
                     const daysPassed = Math.floor(
                         difference / millisecondsPerDay,
                     );

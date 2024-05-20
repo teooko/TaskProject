@@ -6,7 +6,6 @@ import {useSelector} from 'react-redux';
 
 const Piechart = () => {
     const {dailyTasks} = useSelector(state => state.tasks);
-    const dailyStatus = useSelector(state => state.tasks.dailyStatus);
 
     const data = dailyTasks.map(task => ({
         name: task.name,

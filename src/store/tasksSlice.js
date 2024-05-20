@@ -9,7 +9,6 @@ const initialState = {
     newTask: {},
     status: 'idle',
     error: null,
-    dailyStatus: 'idle',
     dailyTasks: [],
     halfYearTime: [],
     totalTasksTime: []

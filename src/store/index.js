@@ -32,6 +32,11 @@ const store = configureStore({
             
         })
 });
+const bearerToken = store.getState().account.bearerToken;
+store.dispatch(insertDays());
+store.dispatch(fetchWeeklyTasks({ bearerToken, fromDate: 0 }))
+
+
 
 export const persistor = persistStore(store);
 export default store;

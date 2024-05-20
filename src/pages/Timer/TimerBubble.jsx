@@ -20,7 +20,6 @@ const TimerBubble = ({
     useEffect(() => {
         const id = new Date().getTime().toString();
         setCountDownId(id);
-        
     }, [time, reset]);
 
     const handleStopTimer = async id => {

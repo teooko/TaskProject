@@ -9,7 +9,8 @@ export const RightDrawerContext = createContext();
 const RightDrawer = () => {
     const [rightDrawerOpen, setRightDrawerOpen] = useState(false);
     const [activeOffsetX, setActiveOffsetX] = useState(-5);
-    useStartup();
+   
+    
     const value = useMemo(
         () => ({
             openRightDrawer: () => setRightDrawerOpen(true),
@@ -27,7 +28,6 @@ const RightDrawer = () => {
     }, [rightDrawerOpen]);
     
     return (
-        
         <Drawer
             open={rightDrawerOpen}
             onOpen={() => setRightDrawerOpen(true)}

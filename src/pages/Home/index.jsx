@@ -7,14 +7,9 @@ import {fetchDailyTasks, fetchTasks} from "../../store/tasksSlice";
 import {fetchWeeklyTasks, insertDays} from "../../store/slice";
 import store from "../../store";
 import {useDispatch, useSelector} from "react-redux";
+import {useStartup} from "../../hooks/useStartup";
 
 const Home = ({navigation}) => {
-    const dispatch = useDispatch();
-    const {bearerToken} = useSelector(state => state.account);
-    useEffect(() => {
-        
-    }, []);
-    
     return (
         <Page navigation={navigation}>
             <ScrollView
