@@ -6,12 +6,16 @@ import {useSelector} from "react-redux";
 const WebSocketService = ({children}) => {
     const [ws, setWs] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
-    const [invitation, setInvitation] = useState(null);
+    const [invitation, setInvitation] = useState({
+        sender: null,
+        roomId: null
+    });
 
     const {userName, bearerToken} = useSelector(state => state.account);
 
     const connect = () => {
         setWs(new WebSocket('ws://192.168.100.8:8080'));
+        console.log("s-a facut");
     }
     useEffect(() => {
         if(bearerToken !== null)
@@ -23,7 +27,7 @@ const WebSocketService = ({children}) => {
     useEffect(() => {
         if(ws !== null) {
             ws.onopen = () => {
-                //ws.send('something');
+                ws.send('something');
             };
             ws.onclose = (e) => {
             };
@@ -64,21 +68,31 @@ const WebSocketService = ({children}) => {
     return (
         <View style={styles.wrapper}>
             <Modal
-                animationType="slide"
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
                     setModalVisible(!modalVisible);
                 }}>
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={styles.modalText}>Hello World!</Text>
-                        <Pressable
-                            style={[styles.button, styles.buttonClose]}
-                            onPress={() => setModalVisible(!modalVisible)}>
-                            <Text style={styles.textStyle}>Hide Modal</Text>
-                        </Pressable>
+                        <Text style={styles.title}>Invitation</Text>
+                        <Text style={styles.modalText}>
+                            {`You received an invitation from `}
+                            <Text style={styles.senderName}>{invitation.sender}</Text>
+                            {` to join their pomodoro session. Do you accept?`}
+                        </Text>
+                        <View style={styles.buttonsWrapper}>
+                            <Pressable
+                                style={styles.button}
+                                onPress={() => setModalVisible(!modalVisible)}>
+                                <Text style={styles.textStyle}>Accept</Text>
+                            </Pressable>
+                            <Pressable
+                                style={styles.button}
+                                onPress={() => setModalVisible(!modalVisible)}>
+                                <Text style={styles.textStyle}>Decline</Text>
+                            </Pressable>
+                        </View>
                     </View>
                 </View>
             </Modal>
@@ -92,13 +106,13 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 22,
+        backgroundColor: "rgba(128, 64, 64, 0.5)"
     },
     modalView: {
         margin: 20,
         backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 35,
+        borderRadius: 10,
+        padding: 20,
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
@@ -110,15 +124,10 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     button: {
-        borderRadius: 20,
+        borderRadius: 10,
         padding: 10,
         elevation: 2,
-    },
-    buttonOpen: {
-        backgroundColor: '#F194FF',
-    },
-    buttonClose: {
-        backgroundColor: '#2196F3',
+        backgroundColor: "#DF5454"
     },
     textStyle: {
         color: 'white',
@@ -128,10 +137,25 @@ const styles = StyleSheet.create({
     modalText: {
         marginBottom: 15,
         textAlign: 'center',
+        color: "black",
+        paddingTop: 10
     },
     wrapper: {
         width: "100%",
         height: "100%"
+    },
+    buttonsWrapper: {
+        display: "flex",
+        flexDirection: "row",
+        gap: 40
+    },
+    title: {
+        color: "#DF5454",
+        fontSize: 20,
+    },
+    senderName: {
+        color: "#DF5454",
+        fontWeight: "bold"
     }
 });
 
