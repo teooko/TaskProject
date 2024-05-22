@@ -180,6 +180,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
+        width: 300
     },
     button: {
         borderRadius: 10,
@@ -205,7 +206,8 @@ const styles = StyleSheet.create({
     buttonsWrapper: {
         display: "flex",
         flexDirection: "row",
-        gap: 40
+        gap: 40,
+        justifyContent: "center"
     },
     title: {
         color: "#DF5454",
@@ -220,6 +222,7 @@ const styles = StyleSheet.create({
         color: "black",
         borderRadius: 10,
         marginBottom: 20,
+        width: 250
     },
     errorText: {
         height: 35,
