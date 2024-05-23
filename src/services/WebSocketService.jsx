@@ -9,9 +9,7 @@ import {
     triggerInvitationModal
 } from "../store/webSocketSlice";
 import {Formik} from "formik";
-import {getUserClaims, postLogIn} from "../store/accountSlice";
 import * as yup from "yup";
-import AuthenticationButton from "../authentication/Authentication/components/AuthenticationButton";
 
 const WebSocketService = ({children}) => {
     const [ws, setWs] = useState(null);
@@ -80,11 +78,11 @@ const WebSocketService = ({children}) => {
         if(ws !== null) {
             if(roomId === null)
                 dispatch(postCreateGroupSession(bearerToken))
-                    .then(() => {
+                    .then((response) => {
                         ws.send(JSON.stringify({
                                     "sender": userName,
                                     "recipient": recipient,
-                                    "roomId": roomId,
+                                    "roomId": response.payload.id,
                                 }
                             )
                         )
