@@ -29,12 +29,39 @@ export const postCreateGroupSession = createAsyncThunk(
     }
 );
 
+export const patchJoinGroupSession = createAsyncThunk(
+    'groupSession/join',
+    async ({bearerToken, roomId}) => {
+        try {
+            console.log('bearerToken:', bearerToken);
+            console.log('roomId:', roomId);
+            const response = await axios.patch(
+                `${API_DOMAIN}/GroupSession/${roomId}/Join`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${bearerToken}`,
+                    }
+                }
+            );
+            return response.data;
+        } catch (error) {
+            console.log(`${API_DOMAIN}/GroupSession/${roomId}/Join`);
+            console.log(error);
+            throw error;
+        }
+    }
+);
+
 const slice = createSlice({
     name: "webSocket",
     initialState,
     reducers: {
         triggerInvitationModal(state) {
             state.showInvitationModal = !state.showInvitationModal;
+        },
+        setRoomId(state, {payload}) {
+            state.roomId = payload;
         }
     },
     extraReducers(builder)
@@ -46,6 +73,6 @@ const slice = createSlice({
     }
 })
 
-export const {triggerInvitationModal} = slice.actions;
+export const {triggerInvitationModal, setRoomId} = slice.actions;
 
 export default slice.reducer;

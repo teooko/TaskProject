@@ -1,8 +1,13 @@
 ﻿import {useEffect, useState} from "react";
 import React from 'react';
-import {Alert, Modal, Pressable, View, StyleSheet, Text, TextInput} from "react-native";
+import {Alert, Modal, Pressable, View, StyleSheet, Text, TextInput, Button} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
-import {postCreateGroupSession, triggerInvitationModal} from "../store/webSocketSlice";
+import {
+    patchJoinGroupSession,
+    postCreateGroupSession,
+    setRoomId,
+    triggerInvitationModal
+} from "../store/webSocketSlice";
 import {Formik} from "formik";
 import {getUserClaims, postLogIn} from "../store/accountSlice";
 import * as yup from "yup";
@@ -73,8 +78,18 @@ const WebSocketService = ({children}) => {
     }, [roomWs]);
     const sendInvitation = (ws, recipient) => {
         if(ws !== null) {
-            dispatch(postCreateGroupSession(bearerToken));
-            ws.send(JSON.stringify({
+            if(roomId === null)
+                dispatch(postCreateGroupSession(bearerToken))
+                    .then(() => {
+                        ws.send(JSON.stringify({
+                                    "sender": userName,
+                                    "recipient": recipient,
+                                    "roomId": roomId,
+                                }
+                            )
+                        )
+                    })
+            else ws.send(JSON.stringify({
                         "sender": userName,
                         "recipient": recipient,
                         "roomId": roomId,
@@ -96,6 +111,14 @@ const WebSocketService = ({children}) => {
                 setModalVisible(true);
             }
     }
+    
+    const handleAcceptInvitation = () => {
+        setModalVisible(!modalVisible);
+        console.log(invitation);
+        dispatch(setRoomId(invitation.roomId));
+        dispatch(patchJoinGroupSession({bearerToken, roomId: invitation.roomId}));
+    }
+    
     return (
         <View style={styles.wrapper}>
             <Modal
@@ -115,7 +138,7 @@ const WebSocketService = ({children}) => {
                         <View style={styles.buttonsWrapper}>
                             <Pressable
                                 style={styles.button}
-                                onPress={() => setModalVisible(!modalVisible)}>
+                                onPress={() => handleAcceptInvitation()}>
                                 <Text style={styles.textStyle}>Accept</Text>
                             </Pressable>
                             <Pressable
@@ -181,6 +204,7 @@ const WebSocketService = ({children}) => {
                     </View>
                 </View>
             </Modal>
+            <Button title={"press me"} onPress={() => roomWs.send("HALLO")} />
             {children}
         </View>
     );
