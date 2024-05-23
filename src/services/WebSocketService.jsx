@@ -2,7 +2,7 @@
 import React from 'react';
 import {Alert, Modal, Pressable, View, StyleSheet, Text, TextInput} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
-import {triggerInvitationModal} from "../store/webSocketSlice";
+import {postCreateGroupSession, triggerInvitationModal} from "../store/webSocketSlice";
 import {Formik} from "formik";
 import {getUserClaims, postLogIn} from "../store/accountSlice";
 import * as yup from "yup";
@@ -10,6 +10,8 @@ import AuthenticationButton from "../authentication/Authentication/components/Au
 
 const WebSocketService = ({children}) => {
     const [ws, setWs] = useState(null);
+    const [roomWs, setRoomWs] = useState(null);
+    
     const [modalVisible, setModalVisible] = useState(false);
     const [invitation, setInvitation] = useState({
         sender: null,
@@ -17,17 +19,25 @@ const WebSocketService = ({children}) => {
     });
     
     const {userName, bearerToken} = useSelector(state => state.account);
-    const {showInvitationModal} = useSelector(state => state.webSocket);
+    const {showInvitationModal, roomId, connectionString} = useSelector(state => state.webSocket);
     const dispatch = useDispatch();
-    const connect = () => {
-        setWs(new WebSocket('ws://192.168.100.8:8080'));
+    const connect = (connectionString) => {
+        setWs(new WebSocket(connectionString));
     }
     useEffect(() => {
         if(bearerToken !== null)
         {
-            connect();
+            connect(connectionString);
         }
     }, [bearerToken]);
+
+    useEffect(() => {
+        if(bearerToken !== null && roomId !== null)
+        {
+            setRoomWs(new WebSocket(connectionString + '/' + roomId));
+            console.log(roomId);
+        }
+    }, [roomId]);
 
     useEffect(() => {
         if(ws !== null) {
@@ -37,16 +47,33 @@ const WebSocketService = ({children}) => {
             ws.onclose = (e) => {
             };
             ws.onerror = (e) => {
-                console.log(e.message);
+                console.log(e.message + " GLOBAL SOCKET");
             };
             ws.onmessage = async (e) => {
+                console.log(e.data + " GLOBAL SOCKET");
                 receiveInvitation(e);
             };
         }
     }, [ws]);
 
-    const sendInvitation = (ws, recipient, roomId) => {
+    useEffect(() => {
+        if(roomWs !== null) {
+            roomWs.onopen = () => {
+                roomWs.send('connected');
+            };
+            roomWs.onclose = (e) => {
+            };
+            roomWs.onerror = (e) => {
+                console.log(e.message);
+            };
+            roomWs.onmessage = async (e) => {
+                console.log(e.data + " ROOM SOCKET");
+            };
+        }
+    }, [roomWs]);
+    const sendInvitation = (ws, recipient) => {
         if(ws !== null) {
+            dispatch(postCreateGroupSession(bearerToken));
             ws.send(JSON.stringify({
                         "sender": userName,
                         "recipient": recipient,
