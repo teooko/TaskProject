@@ -5,7 +5,9 @@ import {API_DOMAIN} from "../../config";
 const initialState = {
     roomId: null,
     showInvitationModal: false,
-    connectionString: `ws://192.168.100.8:8080`
+    connectionString: `ws://192.168.100.8:8080`,
+    userIds: [],
+    users: {}
 }
 
 export const postCreateGroupSession = createAsyncThunk(
@@ -33,8 +35,6 @@ export const patchJoinGroupSession = createAsyncThunk(
     'groupSession/join',
     async ({bearerToken, roomId}) => {
         try {
-            console.log('bearerToken:', bearerToken);
-            console.log('roomId:', roomId);
             const response = await axios.patch(
                 `${API_DOMAIN}/GroupSession/${roomId}/Join`,
                 {},
@@ -46,7 +46,36 @@ export const patchJoinGroupSession = createAsyncThunk(
             );
             return response.data;
         } catch (error) {
-            console.log(`${API_DOMAIN}/GroupSession/${roomId}/Join`);
+            console.log(error);
+            throw error;
+        }
+    }
+);
+
+export const fetchGroupSessionData = createAsyncThunk(
+    'groupSession/get',
+    async (groupSessionId) => {
+        const response = await axios.get(
+            `${API_DOMAIN}/GroupSession/${groupSessionId}`
+        );
+        return response.data;
+    },
+);
+
+export const getAnotherUserClaims = createAsyncThunk(
+    'account/getAnotherUserClaims',
+    async ({bearerToken, userId}) => {
+        try {
+            const response = await axios.get(
+                `${API_DOMAIN}/Account/${userId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${bearerToken}`,
+                    }
+                }
+            );
+            return response.data;
+        } catch (error) {
             console.log(error);
             throw error;
         }
@@ -69,6 +98,26 @@ const slice = createSlice({
         builder
             .addCase(postCreateGroupSession.fulfilled, (state, action) => {
                 state.roomId = action.payload.id;
+            })
+            .addCase(fetchGroupSessionData.fulfilled, (state, action) => {
+                state.userIds = [];
+                if(action.payload.userId2)
+                    state.userIds.push(action.payload.userId2);
+                if(action.payload.userId3)
+                    state.userIds.push(action.payload.userId3);
+                if(action.payload.userId4)
+                    state.userIds.push(action.payload.userId4);
+            })
+            .addCase(getAnotherUserClaims.fulfilled, (state, action) => {
+                const claims = action.payload.$values?.reduce((acc, claim) => {
+                    acc[claim.type] = claim.value;
+                    return acc;
+                }, {});
+                state.users[action.meta.arg.userId] = {
+                    userName: claims?.Username ?? state.users[action.meta.arg.userId].userName,
+                    profilePictureBase64: claims?.ProfilePictureBase64 ? state.users[action.meta.arg.userId].profilePictureBase64 : "poza"
+                };
+                console.log(state.users);
             })
     }
 })

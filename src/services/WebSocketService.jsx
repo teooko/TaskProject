@@ -3,6 +3,7 @@ import React from 'react';
 import {Alert, Modal, Pressable, View, StyleSheet, Text, TextInput, Button} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import {
+    fetchGroupSessionData, getAnotherUserClaims,
     patchJoinGroupSession,
     postCreateGroupSession,
     setRoomId,
@@ -10,6 +11,7 @@ import {
 } from "../store/webSocketSlice";
 import {Formik} from "formik";
 import * as yup from "yup";
+import {getUserClaims} from "../store/accountSlice";
 
 const WebSocketService = ({children}) => {
     const [ws, setWs] = useState(null);
@@ -22,7 +24,7 @@ const WebSocketService = ({children}) => {
     });
     
     const {userName, bearerToken} = useSelector(state => state.account);
-    const {showInvitationModal, roomId, connectionString} = useSelector(state => state.webSocket);
+    const {showInvitationModal, roomId, connectionString, users} = useSelector(state => state.webSocket);
     const dispatch = useDispatch();
     const connect = (connectionString) => {
         setWs(new WebSocket(connectionString));
@@ -70,6 +72,25 @@ const WebSocketService = ({children}) => {
                 console.log(e.message);
             };
             roomWs.onmessage = async (e) => {
+                if(e.data === 'connected')
+                    dispatch(fetchGroupSessionData(roomId)).then((response) => {
+                        if(response.payload.userId1)
+                        {
+                            dispatch(getAnotherUserClaims({bearerToken, userId: response.payload.userId1}))
+                        }
+                        if(response.payload.userId2)
+                        {
+                            dispatch(getAnotherUserClaims({bearerToken, userId: response.payload.userId2}))
+                        }
+                        if(response.payload.userId3)
+                        {
+                            dispatch(getAnotherUserClaims({bearerToken, userId: response.payload.userId3}))
+                        }
+                        if(response.payload.userId4)
+                        {
+                            dispatch(getAnotherUserClaims({bearerToken, userId: response.payload.userId4}))
+                        }
+                    })
                 console.log(e.data + " ROOM SOCKET");
             };
         }
@@ -80,17 +101,23 @@ const WebSocketService = ({children}) => {
                 dispatch(postCreateGroupSession(bearerToken))
                     .then((response) => {
                         ws.send(JSON.stringify({
-                                    "sender": userName,
-                                    "recipient": recipient,
-                                    "roomId": response.payload.id,
+                                    "invitation":
+                                        {
+                                            "sender": userName,
+                                            "recipient": recipient,
+                                            "roomId": response.payload.id,
+                                        }
                                 }
                             )
                         )
                     })
             else ws.send(JSON.stringify({
-                        "sender": userName,
-                        "recipient": recipient,
-                        "roomId": roomId,
+                    "invitation":
+                        {
+                            "sender": userName,
+                            "recipient": recipient,
+                            "roomId": roomId,
+                        }
                     }
                 )
             )
@@ -99,14 +126,15 @@ const WebSocketService = ({children}) => {
 
     const receiveInvitation = (e) => {
             const data = JSON.parse(e.data);
-            
-            if(userName === data.recipient)
-            {
-                setInvitation({
-                    sender: data.sender,
-                    roomId: data.roomId
-                });
-                setModalVisible(true);
+            console.log("AIAE " + data);
+            if(data.invitation) {
+                if (userName === data.invitation.recipient) {
+                    setInvitation({
+                        sender: data.invitation.sender,
+                        roomId: data.invitation.roomId
+                    });
+                    setModalVisible(true);
+                }
             }
     }
     
