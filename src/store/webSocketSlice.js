@@ -1,6 +1,7 @@
 ﻿import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
 import {API_DOMAIN} from "../../config";
+import {defaultUser} from "../constants";
 
 const initialState = {
     roomId: null,
@@ -101,6 +102,8 @@ const slice = createSlice({
             })
             .addCase(fetchGroupSessionData.fulfilled, (state, action) => {
                 state.userIds = [];
+                if(action.payload.userId1)
+                    state.userIds.push(action.payload.userId1);
                 if(action.payload.userId2)
                     state.userIds.push(action.payload.userId2);
                 if(action.payload.userId3)
@@ -115,9 +118,8 @@ const slice = createSlice({
                 }, {});
                 state.users[action.meta.arg.userId] = {
                     userName: claims?.Username ?? state.users[action.meta.arg.userId].userName,
-                    profilePictureBase64: claims?.ProfilePictureBase64 ? state.users[action.meta.arg.userId].profilePictureBase64 : "poza"
+                    profilePictureBase64: claims?.ProfilePictureBase64 ?? defaultUser.picture
                 };
-                console.log(state.users);
             })
     }
 })

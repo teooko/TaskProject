@@ -73,7 +73,6 @@ export const getUserClaims = createAsyncThunk(
 export const postUserClaims = createAsyncThunk(
     'account/postUserClaims',
     async ({bearerToken, values}) => {
-        console.log(values);
         try {
             const response = await axios.post(
                 `${API_DOMAIN}/Account`,

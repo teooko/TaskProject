@@ -46,7 +46,6 @@ const slice = createSlice({
             state.timerRunning = false;
         },
         setTime(state, {payload}) {
-            console.log(payload);
             state.time = payload;
             state.currentTime =  payload;
         },

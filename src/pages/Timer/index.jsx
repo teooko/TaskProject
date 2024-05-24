@@ -1,4 +1,4 @@
-﻿import {View, Text, StatusBar, Button, Pressable} from 'react-native';
+﻿import {View, Text, StatusBar, Button, Pressable, Image} from 'react-native';
 import Page from '../Page';
 import React, {useCallback, useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
@@ -72,8 +72,6 @@ function Timer({navigation}) {
     const {tasks} = useSelector(state => state.tasks);
     const {orientation} = useSelector(state => state.deviceInfo);
     useOrientation();
-    useEffect(() => console.log("orientation changed"), [orientation]);
-
     const [countDownId, setCountDownId] = useState(null);
 
     useEffect(() => {
@@ -81,7 +79,8 @@ function Timer({navigation}) {
         setCountDownId(id)
     }, [time, reset]);
     
-    
+    const {users, userIds} = useSelector(state => state.webSocket);
+    const {userName} = useSelector(state => state.account);
     return (
         <View>
             <View style={{display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "black", height: "100%", width: "100%", position: "absolute", zIndex: orientation === "PORTRAIT" ? -2 : 3}}>
@@ -120,6 +119,9 @@ function Timer({navigation}) {
                         riseAnimationStyle={riseAnimationStyle}
                     />
                     <Pressable style={styles.addFriendsButton} onPress={() => dispatch(triggerInvitationModal())}>
+                        
+                            {(userIds && users) ? userIds.map(userId => users[userId]?.userName === userName ? null : <Image style={styles.profileImages} key={userId} source={{uri: `data:image/png;base64,${users[userId]?.profilePictureBase64}`}} /> ) : null
+                            }
                         <SvgXml xml={icons.userPlus} width={25} height={25} fill={"white"} />
                         <Text style={styles.buttonText}>
                             Add Friends
@@ -168,6 +170,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         gap: 5,
         marginBottom: 10,
+    },
+    profileImages: {
+        width: 30,
+        height: 30,
+        borderRadius: 15
     }
 });
 export default Timer;
