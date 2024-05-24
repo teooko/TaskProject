@@ -4,8 +4,10 @@ import * as React from 'react';
 import NavigationButton from '../../components/NavigationButton';
 import {useContext} from "react";
 import {RightDrawerContext} from "./RightDrawer";
+import {useSelector} from "react-redux";
 const NavigationBar = ({navigation}) => {
-    const {menu, profile} = icons;
+    const {menu, profile, speechBubble} = icons;
+    const {userIds} = useSelector(state => state.webSocket);
     return (
         <RightDrawerContext.Consumer>
             {({ openRightDrawer }) => (
@@ -15,11 +17,18 @@ const NavigationBar = ({navigation}) => {
                         onPress={() => navigation.openDrawer()}
                         size={20}
                     />
+                    <View style={styles.navigationButtons}>
+                        {userIds.length !== 0 ? <NavigationButton
+                            icon={speechBubble}
+                            onPress={() => console.log("ceau")}
+                            size={20}
+                        /> : null}
                     <NavigationButton
                         icon={profile}
                         onPress={openRightDrawer} 
                         size={20}
                     />
+                    </View>
                 </View>
             )}
         </RightDrawerContext.Consumer>
@@ -39,6 +48,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
     },
+    navigationButtons: {
+        display: "flex",
+        flexDirection: "row",
+        gap: 20
+    }
 });
 
 export default NavigationBar;

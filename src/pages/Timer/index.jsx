@@ -119,9 +119,9 @@ function Timer({navigation}) {
                         riseAnimationStyle={riseAnimationStyle}
                     />
                     <Pressable style={styles.addFriendsButton} onPress={() => dispatch(triggerInvitationModal())}>
-                        
-                            {(userIds && users) ? userIds.map(userId => users[userId]?.userName === userName ? null : <Image style={styles.profileImages} key={userId} source={{uri: `data:image/png;base64,${users[userId]?.profilePictureBase64}`}} /> ) : null
-                            }
+                        {
+                            (userIds && users) ? userIds.map(userId => users[userId]?.userName === userName ? null : <Image style={styles.profileImages} key={userId} source={{uri: `data:image/png;base64,${users[userId]?.profilePictureBase64}`}} /> ) : null
+                        }
                         <SvgXml xml={icons.userPlus} width={25} height={25} fill={"white"} />
                         <Text style={styles.buttonText}>
                             Add Friends
@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         gap: 5,
         marginBottom: 10,
+        height: 30
     },
     profileImages: {
         width: 30,
