@@ -96,8 +96,13 @@ const slice = createSlice({
             state.roomId = payload;
         },
         setSendingMessage(state, {payload}) {
-            console.log(payload);
-            state.sendingMessage = payload;
+            const newMessage = {
+                chat: payload
+            }
+            state.sendingMessage = JSON.stringify(newMessage);
+        },
+        addMessage(state, {payload}) {
+            state.messages.push(payload);
         }
     },
     extraReducers(builder)
@@ -130,6 +135,6 @@ const slice = createSlice({
     }
 })
 
-export const {triggerInvitationModal, setRoomId, setSendingMessage} = slice.actions;
+export const {triggerInvitationModal, setRoomId, setSendingMessage, addMessage} = slice.actions;
 
 export default slice.reducer;

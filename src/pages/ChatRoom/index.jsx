@@ -9,22 +9,23 @@ import {Formik} from "formik";
 import AuthenticationButton from "../../authentication/Authentication/components/AuthenticationButton";
 
 const ChatRoom = () => {
-    const {users, userIds} = useSelector(state => state.webSocket);
-    const {bearerToken} = useSelector(state => state.account);
+    const {users, userIds, messages} = useSelector(state => state.webSocket);
+    const {userName} = useSelector(state => state.account);
     const userNames = userIds.map(userId => users[userId].userName);
     const dispatch = useDispatch();
     return (
         <Page>
             <ScrollView style={styles.chatRoomWrapper}>
                 <Text style={styles.title}>
-                    {`Chat room created with ${userNames}`} 
+                    {`Chat room created with ${userNames}`}
+                    {messages.map(message => <Text>{message.message}</Text>)}
                 </Text>
             </ScrollView>
             <View style={styles.messageInputWrapper}>
                 <Formik
                     initialValues={{message: ""}}
                     onSubmit={(values, {resetForm}) => {
-                        dispatch(setSendingMessage(values.message));
+                        dispatch(setSendingMessage({user: userName, message: values.message}));
                         resetForm();
                     }}
                     validationSchema={yup.object().shape({

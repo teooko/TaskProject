@@ -3,6 +3,7 @@ import React from 'react';
 import {Alert, Modal, Pressable, View, StyleSheet, Text, TextInput, Button} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import {
+    addMessage,
     fetchGroupSessionData, getAnotherUserClaims,
     patchJoinGroupSession,
     postCreateGroupSession,
@@ -91,6 +92,19 @@ const WebSocketService = ({children}) => {
                             dispatch(getAnotherUserClaims({bearerToken, userId: response.payload.userId4}))
                         }
                     })
+                else 
+                {
+                    try {
+                        const data = JSON.parse(e.data);
+                        if(data.chat)
+                        {
+                            dispatch(addMessage(data.chat));
+                        }
+                    }
+                    catch(e) {
+                        console.log(e);
+                    }
+                }
                 console.log(e.data + " ROOM SOCKET");
             };
         }
@@ -236,7 +250,6 @@ const WebSocketService = ({children}) => {
                     </View>
                 </View>
             </Modal>
-            <Button title={"press me"} onPress={() => roomWs.send("HALLO")} />
             {children}
         </View>
     );
