@@ -18,8 +18,8 @@ const ChatRoom = () => {
             <ScrollView style={styles.chatRoomWrapper}>
                 <Text style={styles.title}>
                     {`Chat room created with ${userNames}`}
-                    {messages.map(message => <Text>{message.message}</Text>)}
                 </Text>
+                {messages.map((message, index) => <Text style={styles.receivedMessage} key={index}>{message.message}</Text>)}
             </ScrollView>
             <View style={styles.messageInputWrapper}>
                 <Formik
@@ -54,7 +54,9 @@ const styles = StyleSheet.create({
         height: "100%",
         backgroundColor: "#B83838",
         alignSelf: "center",
-        borderRadius: 20
+        borderRadius: 20,
+        display: "flex",
+        flexDirection: "column"
     },
     messageInputWrapper: {
         width: "90%",
@@ -73,6 +75,17 @@ const styles = StyleSheet.create({
         color: "#E97C6F",
         alignSelf: "center",
         fontSize: 15
+    },
+    receivedMessage: {
+        borderWidth: 1,
+        borderColor: "white",
+        color: "white",
+        alignSelf: "flex-start",
+        padding: 10,
+        borderRadius: 10,
+        borderTopLeftRadius: 0,
+        marginLeft: 10,
+        marginTop: 10
     }
 })
 export default ChatRoom;
