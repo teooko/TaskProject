@@ -6,6 +6,7 @@ import * as React from 'react';
 import Tasks from '../Tasks';
 import Test from '../Test';
 import Statistics from "../Statistics";
+import ChatRoom from "../ChatRoom";
 
 const Drawer = createDrawerNavigator();
 const CustomDrawer = () => {
@@ -24,6 +25,7 @@ const CustomDrawer = () => {
             <Drawer.Screen name="Tasks" component={Tasks} />
             <Drawer.Screen name="Test" component={Test} />
             <Drawer.Screen name="Statistics" component={Statistics} />
+            <Drawer.Screen name="ChatRoom" component={ChatRoom} />
         </Drawer.Navigator>
     );
 };

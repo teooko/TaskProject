@@ -20,7 +20,7 @@ const NavigationBar = ({navigation}) => {
                     <View style={styles.navigationButtons}>
                         {userIds.length !== 0 ? <NavigationButton
                             icon={speechBubble}
-                            onPress={() => console.log("ceau")}
+                            onPress={() => navigation.navigate("ChatRoom")}
                             size={20}
                         /> : null}
                     <NavigationButton
