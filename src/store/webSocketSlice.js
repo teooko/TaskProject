@@ -8,7 +8,9 @@ const initialState = {
     showInvitationModal: false,
     connectionString: `ws://192.168.100.8:8080`,
     userIds: [],
-    users: {}
+    users: {},
+    messages: [],
+    sendingMessage: null
 }
 
 export const postCreateGroupSession = createAsyncThunk(
@@ -92,6 +94,10 @@ const slice = createSlice({
         },
         setRoomId(state, {payload}) {
             state.roomId = payload;
+        },
+        setSendingMessage(state, {payload}) {
+            console.log(payload);
+            state.sendingMessage = payload;
         }
     },
     extraReducers(builder)
@@ -124,6 +130,6 @@ const slice = createSlice({
     }
 })
 
-export const {triggerInvitationModal, setRoomId} = slice.actions;
+export const {triggerInvitationModal, setRoomId, setSendingMessage} = slice.actions;
 
 export default slice.reducer;

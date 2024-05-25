@@ -24,7 +24,7 @@ const WebSocketService = ({children}) => {
     });
     
     const {userName, bearerToken} = useSelector(state => state.account);
-    const {showInvitationModal, roomId, connectionString, users} = useSelector(state => state.webSocket);
+    const {showInvitationModal, roomId, connectionString, users, sendingMessage} = useSelector(state => state.webSocket);
     const dispatch = useDispatch();
     const connect = (connectionString) => {
         setWs(new WebSocket(connectionString));
@@ -95,6 +95,12 @@ const WebSocketService = ({children}) => {
             };
         }
     }, [roomWs]);
+
+    useEffect(() => {
+        if(sendingMessage !== null) {
+            roomWs.send(sendingMessage);
+        }
+    }, [roomWs, sendingMessage]);
     const sendInvitation = (ws, recipient) => {
         if(ws !== null) {
             if(roomId === null)
