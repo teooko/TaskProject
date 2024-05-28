@@ -21,7 +21,12 @@ import useOrientation from "../../helpers/useOrientation";
 import CountDown from "react-native-countdown-fixed";
 import useTimerAnimation from "../../hooks/useTimerAnimation";
 import {SvgXml} from "react-native-svg";
-import {triggerInvitationModal} from "../../store/webSocketSlice";
+import {
+    addMessage,
+    fetchGroupSessionData,
+    getAnotherUserClaims,
+    triggerInvitationModal
+} from "../../store/webSocketSlice";
 import {useWebSocket} from "../../services/WebSocketService";
 
 function Timer({navigation}) {
@@ -34,17 +39,53 @@ function Timer({navigation}) {
     useEffect(() => {
         if(roomWs !== null) {
             roomWs.onmessage = async (e) => {
-                const num = Number(e.data);
-                
-                if(e.data === "press timer") {
-                    await handlePress();
-                }
-                else if(e.data === "reset timer") {
-                    await handleReset();
-                }
-                else if (!isNaN(num) && Number.isInteger(num)) {
-                    dispatch(setTime(num));
-                }
+                const data = JSON.parse(e.data);
+                if(e.data === 'connected')
+                    dispatch(fetchGroupSessionData(roomId)).then((response) => {
+                        if(response.payload.userId1)
+                        {
+                            dispatch(getAnotherUserClaims({bearerToken, userId: response.payload.userId1}))
+                        }
+                        if(response.payload.userId2)
+                        {
+                            dispatch(getAnotherUserClaims({bearerToken, userId: response.payload.userId2}))
+                        }
+                        if(response.payload.userId3)
+                        {
+                            dispatch(getAnotherUserClaims({bearerToken, userId: response.payload.userId3}))
+                        }
+                        if(response.payload.userId4)
+                        {
+                            dispatch(getAnotherUserClaims({bearerToken, userId: response.payload.userId4}))
+                        }
+                    })
+                else
+                {
+                    try {
+                        const data = JSON.parse(e.data);
+                        if(data.chat)
+                        {
+                            dispatch(addMessage(data.chat));
+                        }
+                        if(data.control !== null) {
+                            const num = Number(data.control.action);
+
+                            if (data.control.action === "press timer") {
+                                await handlePress();
+                                dispatch(addMessage(data));
+                            } else if (data.control.action === "reset timer") {
+                                await handleReset();
+                                dispatch(addMessage(data));
+                            } else if (!isNaN(num) && Number.isInteger(num)) {
+                                dispatch(setTime(num));
+                                dispatch(addMessage(data));
+                            }
+                        }
+                    }
+                    catch(e) {
+                        console.log(e);
+                    }
+                } 
             };
         }
     }, [timerRunning, userIds]);
@@ -149,15 +190,41 @@ function Timer({navigation}) {
                         svg={svg}
                         handleReset={() => {
                             if(roomWs !== null) {
-                                roomWs.send("reset timer");
+                                roomWs.send(JSON.stringify({
+                                    control:
+                                        {
+                                            user: userName,
+                                            action: "reset timer"
+                                        }
+                                }));
                             }
                             handleReset();
+                            dispatch(addMessage({
+                                control:
+                                    {
+                                        user: userName,
+                                        action: "reset timer"
+                                    }
+                            }));
                         }}
                         handlePress={() => {
                             if(roomWs !== null) {
-                                roomWs.send("press timer");
+                                roomWs.send(JSON.stringify({
+                                    control:
+                                        {
+                                            user: userName,
+                                            action: "press timer"
+                                        }
+                                }));
                             }
                             handlePress();
+                            dispatch(addMessage({
+                                control:
+                                    {
+                                        user: userName,
+                                        action: "press timer"
+                                    }
+                            }));
                         }}
                     />
                 </Page>

@@ -8,13 +8,20 @@ import {useWebSocket} from "../../services/WebSocketService";
 
 const Picker = () => {
     const {pickerVisible, timerRunning} = useSelector(state => state.timer);
+    const {userName} = useSelector(state => state.account);
     const dispatch = useDispatch();
     const roomWs = useWebSocket();
     const setTheTime = (pickedDuration) => {
         dispatch(setTime(pickedDuration.hours * 60 * 60 + pickedDuration.minutes * 60 + pickedDuration.seconds))
         if(roomWs !== null)
         {
-            roomWs.send((pickedDuration.hours * 60 * 60 + pickedDuration.minutes * 60 + pickedDuration.seconds).toString());
+            roomWs.send(JSON.stringify({
+                control:
+                    {
+                        user: userName,
+                        action: (pickedDuration.hours * 60 * 60 + pickedDuration.minutes * 60 + pickedDuration.seconds).toString()
+                    }
+            }))
         }
     }
     

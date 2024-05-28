@@ -96,6 +96,7 @@ const slice = createSlice({
             state.roomId = payload;
         },
         setSendingMessage(state, {payload}) {
+            state.messages.push(payload);
             const newMessage = {
                 chat: payload
             }

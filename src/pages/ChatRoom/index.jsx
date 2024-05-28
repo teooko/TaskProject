@@ -37,17 +37,21 @@ const ChatRoom = ({navigation}) => {
                     {`Chat room created with ${userNames}`}
                 </Text>
                 {messages.map((message, index) => {
-                    const profileImage = getImageByUser(message.user);
-                    if(message.user === userName)
-                        return <Text key={index} style={styles.sentMessage}>{message.message}</Text>
-                    return (<View key={index}>
+                    if(message.control)
+                        return <Text  key={index} >{`${message.control.user} did ${message.control.action}`}</Text>
+                    else {
+                        const profileImage = getImageByUser(message.user);
+                        if (message.user === userName)
+                            return <Text key={index} style={styles.sentMessage}>{message.message}</Text>
+                        return (<View key={index}>
                             <View style={styles.userDetails}>
                                 <Image style={styles.profileImages}
-                                    source={{uri: `data:image/png;base64,${profileImage}`}}/>
+                                       source={{uri: `data:image/png;base64,${profileImage}`}}/>
                                 <Text style={styles.userName}>{message.user}</Text>
                             </View>
-                        <Text style={styles.receivedMessage}>{message.message}</Text>
-                    </View>)
+                            <Text style={styles.receivedMessage}>{message.message}</Text>
+                        </View>)
+                    }
                 })}
                 <View style={{height: 25}}/>
             </ScrollView>
