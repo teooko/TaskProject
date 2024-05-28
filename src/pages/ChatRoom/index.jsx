@@ -18,6 +18,7 @@ const ChatRoom = ({navigation}) => {
     const userNames = userIds.map(userId => users[userId].userName);
     const dispatch = useDispatch();
     const scrollViewRef = useRef(null);
+    const {timerRunning} = useSelector(state => state.timer);
     const getImageByUser = (user) => {
         for (let userId of userIds) {
             if (users[userId].userName === user) {
@@ -38,7 +39,29 @@ const ChatRoom = ({navigation}) => {
                 </Text>
                 {messages.map((message, index) => {
                     if(message.control)
-                        return <Text  key={index} >{`${message.control.user} did ${message.control.action}`}</Text>
+                    {
+                        if(message.control.action === "press timer")
+                        {
+                            if(message.control.action.details === null){
+                                message.control.action.details = timerRunning;
+                            }
+                            else {
+                                if (message.control.action.details) {
+                                    return <Text key={index}
+                                                 style={styles.messageAction}>{`${message.control.user} started the timer`}</Text>
+                                } else
+                                    return <Text key={index}
+                                                 style={styles.messageAction}>{`${message.control.user} stopped the timer`}</Text>
+                            }
+                        }
+                        else if(message.control.action === "reset timer")
+                        {
+                            return <Text key={index} style={styles.messageAction}>{`${message.control.user} reset the timer`}</Text>
+                        }
+                        else
+                            return <Text key={index} style={styles.messageAction}>{`${message.control.user} changed the time`}</Text>
+                    }
+                        
                     else {
                         const profileImage = getImageByUser(message.user);
                         if (message.user === userName)
@@ -171,5 +194,13 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
+    messageAction: {
+        alignSelf: "center",
+        backgroundColor: "#FFC165",
+        padding: 10,
+        marginTop: 13,
+        color: "#B83838",
+        borderRadius: 20
+    }
 })
 export default ChatRoom;
