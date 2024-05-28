@@ -1,5 +1,5 @@
-﻿import React, {useState} from 'react';
-import {ScrollView, View, StyleSheet, TextInput, Text, Image} from "react-native";
+﻿import React, {useRef, useState} from 'react';
+import {ScrollView, View, StyleSheet, TextInput, Text, Image, Pressable} from "react-native";
 import Page from "../Page";
 import {useDispatch, useSelector} from "react-redux";
 import {setSendingMessage} from "../../store/webSocketSlice";
@@ -7,14 +7,17 @@ import * as yup from "yup";
 import {getUserClaims, postLogIn} from "../../store/accountSlice";
 import {Formik} from "formik";
 import AuthenticationButton from "../../authentication/Authentication/components/AuthenticationButton";
+import Svg, {SvgXml} from "react-native-svg";
+import {icons} from "../../assets/Icons";
 
 
-const ChatRoom = () => {
+const ChatRoom = ({navigation}) => {
     const [lastUser, setLastUser] = useState(null);
     const {users, userIds, messages} = useSelector(state => state.webSocket);
     const {userName} = useSelector(state => state.account);
     const userNames = userIds.map(userId => users[userId].userName);
     const dispatch = useDispatch();
+    const scrollViewRef = useRef(null);
     const getImageByUser = (user) => {
         for (let userId of userIds) {
             if (users[userId].userName === user) {
@@ -24,8 +27,12 @@ const ChatRoom = () => {
         return null;
     }
     return (
-        <Page>
-            <ScrollView style={styles.chatRoomWrapper}>
+        <Page navigation={navigation}>
+            <ScrollView style={styles.chatRoomWrapper}
+                        ref={scrollViewRef}
+                        onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
+                        overScrollMode={"never"}
+                        showsVerticalScrollIndicator={false}>
                 <Text style={styles.title}>
                     {`Chat room created with ${userNames}`}
                 </Text>
@@ -42,30 +49,36 @@ const ChatRoom = () => {
                         <Text style={styles.receivedMessage}>{message.message}</Text>
                     </View>)
                 })}
+                <View style={{height: 25}}/>
             </ScrollView>
-            <View style={styles.messageInputWrapper}>
                 <Formik
                     initialValues={{message: ""}}
                     onSubmit={(values, {resetForm}) => {
-                        dispatch(setSendingMessage({user: userName, message: values.message}));
-                        resetForm();
+                        if (values.message.trim()) {
+                            dispatch(setSendingMessage({ user: userName, message: values.message }));
+                            resetForm();
+                        }
                     }}
                     validationSchema={yup.object().shape({
-                        message: yup.string().max(255),
+                        message: yup.string().max(1000).required(),
                     })}
                 >
                     {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
-                        <TextInput placeholder={"Write a message..."}
-                                   placeholderTextColor={"#E97C6F"}
-                                   style={styles.messageInput}
-                                   onChangeText={handleChange('message')}
-                                   onBlur={handleBlur('message')}
-                                   value={values.message}
-                                   onEndEditing={() => handleSubmit()} />
+                        <View style={styles.messageInputWrapper}>
+                            <TextInput placeholder={"Write a message..."}
+                                       placeholderTextColor={"#E97C6F"}
+                                       style={styles.messageInput}
+                                       onChangeText={handleChange('message')}
+                                       onBlur={handleBlur('message')}
+                                       value={values.message}
+                                       returnKeyType={"send"}
+                                       onSubmitEditing={handleSubmit} />
+                            <Pressable style={styles.sendButton} onPress={handleSubmit}>
+                                <SvgXml style={styles.icon} xml={icons.paperAirplane} fill={"white"} width={20} height={20}/>
+                            </Pressable>
+                        </View>
                     )}
                 </Formik>
-                
-            </View>
         </Page>
     );
 };
@@ -84,16 +97,21 @@ const styles = StyleSheet.create({
     },
     messageInputWrapper: {
         width: "90%",
-        height: 40,
         borderRadius: 5,
         borderWidth: 1,
         borderColor: "#E97C6F",
         backgroundColor: "#DF5454",
         alignSelf: "center",
-        marginBottom: 7
+        marginBottom: 7,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
     },
     messageInput: {
-        color: "white"
+        color: "white",
+        overflow: "scroll",
+        width: "80%"
     },
     title: {
         color: "#E97C6F",
@@ -139,6 +157,15 @@ const styles = StyleSheet.create({
     userName: {
         color: "white",
         marginLeft: 5,
-    }
+    },
+    sendButton: {
+        backgroundColor: "#B83838",
+        width: 35,
+        height: 35,
+        margin: 5,
+        borderRadius: 5,
+        justifyContent: "center",
+        alignItems: "center"
+    },
 })
 export default ChatRoom;

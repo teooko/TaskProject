@@ -1,6 +1,6 @@
 ﻿import {useEffect, useState} from "react";
 import React from 'react';
-import {Alert, Modal, Pressable, View, StyleSheet, Text, TextInput, Button} from "react-native";
+import {Modal, Pressable, View, StyleSheet, Text, TextInput, Button} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import {
     addMessage,
@@ -12,7 +12,6 @@ import {
 } from "../store/webSocketSlice";
 import {Formik} from "formik";
 import * as yup from "yup";
-import {getUserClaims} from "../store/accountSlice";
 
 const WebSocketService = ({children}) => {
     const [ws, setWs] = useState(null);
