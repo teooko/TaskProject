@@ -1,6 +1,6 @@
-﻿import {useEffect, useState} from "react";
+﻿import {createContext, useContext, useEffect, useState} from "react";
 import React from 'react';
-import {Modal, Pressable, View, StyleSheet, Text, TextInput, Button} from "react-native";
+import {Modal, Pressable, View, StyleSheet, Text, TextInput} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import {
     addMessage,
@@ -13,6 +13,9 @@ import {
 import {Formik} from "formik";
 import * as yup from "yup";
 
+const WebSocketContext = createContext(null);
+
+export const useWebSocket = () => useContext(WebSocketContext);
 const WebSocketService = ({children}) => {
     const [ws, setWs] = useState(null);
     const [roomWs, setRoomWs] = useState(null);
@@ -55,7 +58,7 @@ const WebSocketService = ({children}) => {
                 console.log(e.message + " GLOBAL SOCKET");
             };
             ws.onmessage = async (e) => {
-                console.log(e.data + " GLOBAL SOCKET");
+                //console.log(e.data + " GLOBAL SOCKET");
                 receiveInvitation(e);
             };
         }
@@ -104,7 +107,7 @@ const WebSocketService = ({children}) => {
                         console.log(e);
                     }
                 }
-                console.log(e.data + " ROOM SOCKET");
+                //console.log(e.data + " ROOM SOCKET");
             };
         }
     }, [roomWs]);
@@ -144,8 +147,9 @@ const WebSocketService = ({children}) => {
     };
 
     const receiveInvitation = (e) => {
+        console.log(e.data + " " + userName);
             const data = JSON.parse(e.data);
-            console.log("AIAE " + data);
+            //console.log("AIAE " + data);
             if(data.invitation) {
                 if (userName === data.invitation.recipient) {
                     setInvitation({
@@ -162,7 +166,26 @@ const WebSocketService = ({children}) => {
         console.log(invitation);
         dispatch(setRoomId(invitation.roomId));
         dispatch(patchJoinGroupSession({bearerToken, roomId: invitation.roomId}));
+        dispatch(fetchGroupSessionData(invitation.roomId)).then((response) => {
+            if(response.payload.userId1)
+            {
+                dispatch(getAnotherUserClaims({bearerToken, userId: response.payload.userId1}))
+            }
+            if(response.payload.userId2)
+            {
+                dispatch(getAnotherUserClaims({bearerToken, userId: response.payload.userId2}))
+            }
+            if(response.payload.userId3)
+            {
+                dispatch(getAnotherUserClaims({bearerToken, userId: response.payload.userId3}))
+            }
+            if(response.payload.userId4)
+            {
+                dispatch(getAnotherUserClaims({bearerToken, userId: response.payload.userId4}))
+            }
+        })
     }
+    
     
     return (
         <View style={styles.wrapper}>
@@ -249,7 +272,9 @@ const WebSocketService = ({children}) => {
                     </View>
                 </View>
             </Modal>
-            {children}
+            <WebSocketContext.Provider value={roomWs}>
+                {children}
+            </WebSocketContext.Provider>
         </View>
     );
 };

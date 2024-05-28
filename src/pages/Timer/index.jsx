@@ -1,6 +1,6 @@
 ﻿import {View, Text, StatusBar, Button, Pressable, Image} from 'react-native';
 import Page from '../Page';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {icons} from '../../assets/Icons';
 import TimerControls from './TimerControls';
@@ -10,7 +10,7 @@ import {
     patchStopTimer,
     postStartTimer,
     setCurrentTaskId, setCurrentTime,
-    setReset,
+    setReset, setTime,
     startTimer,
     stopTimer
 } from '../../store/timerSlice';
@@ -22,14 +22,32 @@ import CountDown from "react-native-countdown-fixed";
 import useTimerAnimation from "../../hooks/useTimerAnimation";
 import {SvgXml} from "react-native-svg";
 import {triggerInvitationModal} from "../../store/webSocketSlice";
+import {useWebSocket} from "../../services/WebSocketService";
 
 function Timer({navigation}) {
     const {start, pause} = icons;
     const [svg, setSvg] = useState(start);
-
+    const roomWs = useWebSocket();
     const dispatch = useDispatch();
     const {currentTaskId, time, reset, timerRunning, currentWorkSessionId} = useSelector(state => state.timer);
-    
+    const {users, userIds} = useSelector(state => state.webSocket);
+    useEffect(() => {
+        if(roomWs !== null) {
+            roomWs.onmessage = async (e) => {
+                const num = Number(e.data);
+                
+                if(e.data === "press timer") {
+                    await handlePress();
+                }
+                else if(e.data === "reset timer") {
+                    await handleReset();
+                }
+                else if (!isNaN(num) && Number.isInteger(num)) {
+                    dispatch(setTime(num));
+                }
+            };
+        }
+    }, [timerRunning, userIds]);
     
     const {startTimerAnimation, stopTimerAnimation, resetTimerAnimation, frontWaveStyle, backWaveStyle, riseAnimationStyle} = useTimerAnimation();
     const handleStartTimer = async id => {
@@ -79,7 +97,7 @@ function Timer({navigation}) {
         setCountDownId(id)
     }, [time, reset]);
     
-    const {users, userIds} = useSelector(state => state.webSocket);
+    
     const {userName} = useSelector(state => state.account);
     return (
         <View>
@@ -129,8 +147,18 @@ function Timer({navigation}) {
                     </Pressable>
                     <TimerControls
                         svg={svg}
-                        handleReset={handleReset}
-                        handlePress={handlePress}
+                        handleReset={() => {
+                            if(roomWs !== null) {
+                                roomWs.send("reset timer");
+                            }
+                            handleReset();
+                        }}
+                        handlePress={() => {
+                            if(roomWs !== null) {
+                                roomWs.send("press timer");
+                            }
+                            handlePress();
+                        }}
                     />
                 </Page>
         </View>
