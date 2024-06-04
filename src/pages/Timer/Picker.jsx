@@ -4,6 +4,7 @@ import {TimerPickerModal} from "react-native-timer-picker";
 import {useDispatch, useSelector} from "react-redux";
 import {closePicker, openPicker, setTime} from "../../store/timerSlice";
 import {useWebSocket} from "../../services/WebSocketService";
+import {addMessage} from "../../store/webSocketSlice";
 
 
 const Picker = () => {
@@ -15,6 +16,13 @@ const Picker = () => {
         dispatch(setTime(pickedDuration.hours * 60 * 60 + pickedDuration.minutes * 60 + pickedDuration.seconds))
         if(roomWs !== null)
         {
+            dispatch(addMessage({
+                control:
+                    {
+                        user: userName,
+                        action: (pickedDuration.hours * 60 * 60 + pickedDuration.minutes * 60 + pickedDuration.seconds).toString()
+                    }
+            }))
             roomWs.send(JSON.stringify({
                 control:
                     {

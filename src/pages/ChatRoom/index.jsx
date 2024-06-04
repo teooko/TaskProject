@@ -46,36 +46,41 @@ const ChatRoom = ({navigation}) => {
                                 message.control.action.details = timerRunning;
                             }
                             else {
-                                if (message.control.action.details) {
                                     return <View key={index} style={styles.messageAction}>
                                         <SvgXml xml={icons.clockThin} fill={"#B83838"}
                                                 width={15}
                                                 height={15}/>
                                         <Text style={styles.messageActionText}>
-                                            {`${message.control.user} started the timer`}</Text>
+                                            {`${message.control.user} ${message.control.timerStatus ? 'stopped the timer' : 'started the timer'}`}</Text>
                                         <SvgXml xml={icons.clockThin} fill={"#B83838"}
                                                 width={15}
                                                 height={15}/>
                                     </View>
-                                } else
-                                    return <View key={index} style={styles.messageAction}>
-                                        <SvgXml xml={icons.clockThin} fill={"#B83838"}
-                                                width={15}
-                                                height={15}/>
-                                        <Text style={styles.messageActionText}>
-                                        {`${message.control.user} stopped the timer`}</Text>
-                                        <SvgXml xml={icons.clockThin} fill={"#B83838"}
-                                                width={15}
-                                                height={15}/>
-                                </View>
                             }
                         }
                         else if(message.control.action === "reset timer")
                         {
-                            return <Text key={index} style={styles.messageAction}>{`${message.control.user} reset the timer`}</Text>
+                            return <View key={index} style={styles.messageAction}>
+                                <SvgXml xml={icons.clockThin} fill={"#B83838"}
+                                        width={15}
+                                        height={15}/>
+                                <Text style={styles.messageActionText}>{`${message.control.user} reset the timer`}</Text>
+                                <SvgXml xml={icons.clockThin} fill={"#B83838"}
+                                        width={15}
+                                        height={15}/>
+                            </View>
+                            
                         }
                         else
-                            return <Text key={index} style={styles.messageAction}>{`${message.control.user} changed the time`}</Text>
+                            return <View key={index} style={styles.messageAction}>
+                                <SvgXml xml={icons.clockThin} fill={"#B83838"}
+                                        width={15}
+                                        height={15}/>
+                                <Text style={styles.messageActionText}>{`${message.control.user} set the timer to ${Number.isInteger((message.control.action / 60)) ? message.control.action / 60 : (message.control.action / 60).toFixed(1)} minutes`}</Text>
+                                <SvgXml xml={icons.clockThin} fill={"#B83838"}
+                                        width={15}
+                                        height={15}/>
+                            </View>
                     }
                         
                     else {

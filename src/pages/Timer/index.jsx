@@ -203,7 +203,7 @@ function Timer({navigation}) {
                                 control:
                                     {
                                         user: userName,
-                                        action: "reset timer"
+                                        action: "reset timer",
                                     }
                             }));
                         }}
@@ -213,7 +213,8 @@ function Timer({navigation}) {
                                     control:
                                         {
                                             user: userName,
-                                            action: "press timer"
+                                            action: "press timer",
+                                            timerStatus: timerRunning,
                                         }
                                 }));
                             }
@@ -222,7 +223,8 @@ function Timer({navigation}) {
                                 control:
                                     {
                                         user: userName,
-                                        action: "press timer"
+                                        action: "press timer",
+                                        timerStatus: timerRunning,
                                     }
                             }));
                         }}
