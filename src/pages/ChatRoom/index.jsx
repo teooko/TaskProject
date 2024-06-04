@@ -47,11 +47,27 @@ const ChatRoom = ({navigation}) => {
                             }
                             else {
                                 if (message.control.action.details) {
-                                    return <Text key={index}
-                                                 style={styles.messageAction}>{`${message.control.user} started the timer`}</Text>
+                                    return <View key={index} style={styles.messageAction}>
+                                        <SvgXml xml={icons.clockThin} fill={"#B83838"}
+                                                width={15}
+                                                height={15}/>
+                                        <Text style={styles.messageActionText}>
+                                            {`${message.control.user} started the timer`}</Text>
+                                        <SvgXml xml={icons.clockThin} fill={"#B83838"}
+                                                width={15}
+                                                height={15}/>
+                                    </View>
                                 } else
-                                    return <Text key={index}
-                                                 style={styles.messageAction}>{`${message.control.user} stopped the timer`}</Text>
+                                    return <View key={index} style={styles.messageAction}>
+                                        <SvgXml xml={icons.clockThin} fill={"#B83838"}
+                                                width={15}
+                                                height={15}/>
+                                        <Text style={styles.messageActionText}>
+                                        {`${message.control.user} stopped the timer`}</Text>
+                                        <SvgXml xml={icons.clockThin} fill={"#B83838"}
+                                                width={15}
+                                                height={15}/>
+                                </View>
                             }
                         }
                         else if(message.control.action === "reset timer")
@@ -200,7 +216,14 @@ const styles = StyleSheet.create({
         padding: 10,
         marginTop: 13,
         color: "#B83838",
-        borderRadius: 20
+        borderRadius: 20,
+        display: "flex",
+        flexDirection: "row",
+        alignItems : "center",
+        gap: 5,
+    },
+    messageActionText: {
+        color: "#B83838"
     }
 })
 export default ChatRoom;
