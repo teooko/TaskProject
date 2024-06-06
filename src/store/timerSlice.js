@@ -9,7 +9,8 @@ const initialState = {
     time: null,
     currentTime: 60,
     pickerVisible: false,
-    reset: false
+    reset: false,
+    breakTime: false
 };
 
 export const postStartTimer = createAsyncThunk(

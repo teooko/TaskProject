@@ -10,8 +10,8 @@ const SelectProfilePicture = ({isSubmitting, setFieldValue}) => {
     const {profilePicturePath} = useSelector(state => state.account);
     const selectImage = async() => {
         const options = {
-            maxWidth: 200,
-            maxHeight: 200,
+            maxWidth: 800,
+            maxHeight: 800,
             quality: 0.3,
             includeBase64: true
         }

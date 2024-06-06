@@ -1,4 +1,4 @@
-﻿import {StyleSheet, View} from 'react-native';
+﻿import {StyleSheet, View, Text} from 'react-native';
 import {icons} from '../../assets/Icons';
 import * as React from 'react';
 import NavigationButton from '../../components/NavigationButton';
@@ -7,7 +7,7 @@ import {RightDrawerContext} from "./RightDrawer";
 import {useSelector} from "react-redux";
 const NavigationBar = ({navigation}) => {
     const {menu, profile, speechBubble} = icons;
-    const {userIds} = useSelector(state => state.webSocket);
+    const {userIds, newMessagesIndicator} = useSelector(state => state.webSocket);
     return (
         <RightDrawerContext.Consumer>
             {({ openRightDrawer }) => (
@@ -18,6 +18,7 @@ const NavigationBar = ({navigation}) => {
                         size={20}
                     />
                     <View style={styles.navigationButtons}>
+                        {/*newMessagesIndicator ? <Text>AI MESAJE</Text> : null*/}
                         {userIds.length !== 0 ? <NavigationButton
                             icon={speechBubble}
                             onPress={() => navigation.navigate("ChatRoom")}

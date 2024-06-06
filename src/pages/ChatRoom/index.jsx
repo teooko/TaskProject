@@ -1,8 +1,8 @@
-﻿import React, {useRef, useState} from 'react';
+﻿import React, {useEffect, useRef, useState} from 'react';
 import {ScrollView, View, StyleSheet, TextInput, Text, Image, Pressable} from "react-native";
 import Page from "../Page";
 import {useDispatch, useSelector} from "react-redux";
-import {setSendingMessage} from "../../store/webSocketSlice";
+import {setNewMessagesIndicator, setSendingMessage} from "../../store/webSocketSlice";
 import * as yup from "yup";
 import {getUserClaims, postLogIn} from "../../store/accountSlice";
 import {Formik} from "formik";
@@ -13,7 +13,7 @@ import {icons} from "../../assets/Icons";
 
 const ChatRoom = ({navigation}) => {
     const [lastUser, setLastUser] = useState(null);
-    const {users, userIds, messages} = useSelector(state => state.webSocket);
+    const {users, userIds, messages, newMessagesIndicator} = useSelector(state => state.webSocket);
     const {userName} = useSelector(state => state.account);
     const userNames = userIds.map(userId => users[userId].userName);
     const dispatch = useDispatch();
@@ -27,6 +27,11 @@ const ChatRoom = ({navigation}) => {
         }
         return null;
     }
+    //check which page is navigated to
+    /*useEffect(() => {
+        dispatch(setNewMessagesIndicator(false));
+    }, [newMessagesIndicator]);
+    */
     return (
         <Page navigation={navigation}>
             <ScrollView style={styles.chatRoomWrapper}

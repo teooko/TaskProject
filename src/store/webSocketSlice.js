@@ -10,7 +10,8 @@ const initialState = {
     userIds: [],
     users: {},
     messages: [],
-    sendingMessage: null
+    sendingMessage: null,
+    newMessagesIndicator: false
 }
 
 export const postCreateGroupSession = createAsyncThunk(
@@ -104,6 +105,10 @@ const slice = createSlice({
         },
         addMessage(state, {payload}) {
             state.messages.push(payload);
+            //state.newMessagesIndicator = true;
+        },
+        setNewMessagesIndicator(state, {payload}) {
+            state.newMessagesIndicator = payload;
         }
     },
     extraReducers(builder)
@@ -136,6 +141,6 @@ const slice = createSlice({
     }
 })
 
-export const {triggerInvitationModal, setRoomId, setSendingMessage, addMessage} = slice.actions;
+export const {triggerInvitationModal, setRoomId, setSendingMessage, addMessage, setNewMessagesIndicator} = slice.actions;
 
 export default slice.reducer;
