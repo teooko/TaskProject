@@ -102,6 +102,7 @@ const slice = createSlice({
                 chat: payload
             }
             state.sendingMessage = JSON.stringify(newMessage);
+            console.log(JSON.stringify(newMessage));
         },
         addMessage(state, {payload}) {
             state.messages.push(payload);

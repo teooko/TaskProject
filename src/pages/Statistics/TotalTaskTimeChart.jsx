@@ -26,9 +26,9 @@ const TotalTaskTimeChart = () => {
         ]
     });
     const {totalTasksTime} = useSelector(state => state.tasks);
-
+    const {bearerToken} = useSelector(state => state.account);
     useEffect(() => {
-        dispatch(fetchTotalTasksTime());
+        dispatch(fetchTotalTasksTime(bearerToken));
     }, [])
 
     useEffect(() => {
@@ -48,7 +48,7 @@ const TotalTaskTimeChart = () => {
     return (
         <BarChart
             data={data}
-            width={Dimensions.get("window").width}
+            width={Dimensions.get("window").width * 0.95}
             height={220}
             yAxisSuffix="h"
             chartConfig={{

@@ -40,20 +40,32 @@ export const addNewTask = createAsyncThunk(
 
 export const fetchHalfYearTime = createAsyncThunk(
     'tasks/monthly',
-    async () => {
+    async ({bearerToken}) => {
         const response = await axios.get(
-            `${API_DOMAIN}/Task/monthly`
+            `${API_DOMAIN}/Task/monthly`,
+            {
+                headers: {
+                    Authorization: `Bearer ${bearerToken}`,
+                }
+            }
         );
+        console.log(response.data);
         return response.data;
     },
 );
 
 export const fetchTotalTasksTime = createAsyncThunk(
     'tasks/total',
-    async () => {
+    async ({bearerToken}) => {
         const response = await axios.get(
-            `${API_DOMAIN}/Task/total`
+            `${API_DOMAIN}/Task/total`,
+            {
+                headers: {
+                    Authorization: `Bearer ${bearerToken}`,
+                }
+            }
         );
+        
         return response.data;
     },
 );

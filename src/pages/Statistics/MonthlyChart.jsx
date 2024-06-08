@@ -16,9 +16,9 @@ function convertTimeStringToHours(timeString) {
     const parsedSeconds = parseFloat(seconds); // Parse seconds as float for decimal precision
 
     // Calculate total hours
-    const totalHours = parsedHours + (parsedMinutes / 60) + (parsedSeconds / 3600);
+    const totalMinutes = parsedHours + (parsedMinutes) + (parsedSeconds / 60);
 
-    return totalHours;
+    return totalMinutes;
 }
 
 const MonthlyChart = () => {
@@ -26,17 +26,17 @@ const MonthlyChart = () => {
     const {month} = useSelector(state => state.calendar);
     const dispatch = useDispatch();
     const [data, setData] = useState([0, 0, 0, 0, 0, 0]);
-
+    const {bearerToken} = useSelector(state => state.account);
     useEffect(() => {
-        dispatch(fetchHalfYearTime());
-        //console.log(halfYearTime.map(month => month.time) );
+        dispatch(fetchHalfYearTime({bearerToken}));
+        console.log(halfYearTime.map(month => month.time) );
     }, [])
 
     useEffect(() => {
         const newData = [...data];
         halfYearTime.map(month => {
             const hours = convertTimeStringToHours(month.time);
-            newData[month.monthNumber + 1] = hours;
+            newData[month.monthNumber - 1] = hours;
         })
         setData(newData);
     }, [halfYearTime]);
@@ -58,7 +58,6 @@ const MonthlyChart = () => {
     let lastMonthsNames = lastMonths.map(month => constants.months[month]);
     return (
         data && <View style={{marginTop: 70}}>
-            <Text>Bezier Line Chart</Text>
             <LineChart
                 data={{
                     labels: lastMonthsNames,
@@ -68,19 +67,19 @@ const MonthlyChart = () => {
                         }
                     ]
                 }}
-                width={Dimensions.get("window").width} // from react-native
-                height={220}
-                yAxisSuffix="h"
+                width={Dimensions.get("window").width * 0.95} // from react-native
+                height={200}
+                yAxisSuffix="min"
                 yAxisInterval={1} // optional, defaults to 1
                 chartConfig={{
                     backgroundColor: "#e26a00",
-                    backgroundGradientFrom: "#fb8c00",
-                    backgroundGradientTo: "#ffa726",
-                    decimalPlaces: 2, // optional, defaults to 2dp
+                    backgroundGradientFrom: "#E97C6F",
+                    backgroundGradientTo: "#FFC165",
+                    decimalPlaces: 0, // optional, defaults to 2dp
                     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                     labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                     style: {
-                        borderRadius: 16
+                        borderRadius: 16,
                     },
                     propsForDots: {
                         r: "6",
@@ -91,7 +90,8 @@ const MonthlyChart = () => {
                 bezier
                 style={{
                     marginVertical: 8,
-                    borderRadius: 16
+                    borderRadius: 16,
+                    alignSelf: "center"
                 }}
             />
         </View>
