@@ -22,10 +22,10 @@ const SelectProfilePicture = ({isSubmitting, setFieldValue}) => {
                 console.log('ImagePicker Error: ', response.error);
             } else {
                 const source = response;
-                setFieldValue("profilePicturePath", source.assets[0].uri);
+                setFieldValue("profilePicturePath", source.assets[0].base64);
                 setFieldValue("profilePictureBase64", source.assets[0].base64);
-                dispatch(setProfilePicturePath(source.assets[0].uri));
-                console.log(source.assets[0]);
+                dispatch(setProfilePicturePath(source.assets[0].base64));
+                console.log(source.assets[0].base64);
             }
         });
     };
@@ -44,7 +44,7 @@ const SelectProfilePicture = ({isSubmitting, setFieldValue}) => {
             <View style={styles.selectProfilePicture} >
                 {
                     profilePicturePath ?
-                        <Image source={{uri: profilePicturePath}} style={styles.image}/>
+                        <Image source={{uri: `data:image/png;base64,${profilePicturePath}`}} style={styles.image}/>
                         :
                         <>
                             <Text style={styles.imageText}>

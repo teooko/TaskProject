@@ -18,8 +18,9 @@ const RightDrawerContent = () => {
                 <Formik
                     initialValues={{username: userName, profilePicturePath: profilePicturePath}}
                     onSubmit={(values, {setSubmitting}) => {
-                        setSubmitting(false);
-                        dispatch(postUserClaims({bearerToken, values}));
+                        //setSubmitting(false);
+                        //dispatch(postUserClaims({bearerToken, values}));
+                        console.log(profilePicturePath);
                     }}
                     validationSchema={yup.object().shape({
                         username: yup.string().required('User name is required'),
