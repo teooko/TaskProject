@@ -29,7 +29,6 @@ const MonthlyChart = () => {
     const {bearerToken} = useSelector(state => state.account);
     useEffect(() => {
         dispatch(fetchHalfYearTime({bearerToken}));
-        console.log(halfYearTime.map(month => month.time) );
     }, [])
 
     useEffect(() => {

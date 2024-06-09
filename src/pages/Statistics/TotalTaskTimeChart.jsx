@@ -12,7 +12,7 @@ function convertTimeStringToHours(timeString) {
     const parsedMinutes = parseInt(minutes, 10);
     const parsedSeconds = parseFloat(seconds);
 
-    return parsedHours + (parsedMinutes / 60) + (parsedSeconds / 3600);
+    return Math.floor(parsedHours * 60 + parsedMinutes + (parsedSeconds / 60));
 }
 
 const TotalTaskTimeChart = () => {
@@ -28,7 +28,7 @@ const TotalTaskTimeChart = () => {
     const {totalTasksTime} = useSelector(state => state.tasks);
     const {bearerToken} = useSelector(state => state.account);
     useEffect(() => {
-        dispatch(fetchTotalTasksTime(bearerToken));
+        dispatch(fetchTotalTasksTime({bearerToken}));
     }, [])
 
     useEffect(() => {
@@ -50,7 +50,7 @@ const TotalTaskTimeChart = () => {
             data={data}
             width={Dimensions.get("window").width * 0.95}
             height={220}
-            yAxisSuffix="h"
+            yAxisSuffix="min"
             chartConfig={{
                 backgroundColor: "#e26a00",
                 backgroundGradientFrom: "#fb8c00",
