@@ -28,6 +28,8 @@ import {
     triggerInvitationModal
 } from "../../store/webSocketSlice";
 import {useWebSocket} from "../../services/WebSocketService";
+import {Notifier} from "react-native-notifier";
+import {Easing} from "react-native-reanimated";
 
 function Timer({navigation}) {
     const {start, pause} = icons;
@@ -36,6 +38,7 @@ function Timer({navigation}) {
     const dispatch = useDispatch();
     const {currentTaskId, time, reset, timerRunning, currentWorkSessionId} = useSelector(state => state.timer);
     const {users, userIds} = useSelector(state => state.webSocket);
+    
     useEffect(() => {
         if(roomWs !== null) {
             roomWs.onmessage = async (e) => {
@@ -106,6 +109,36 @@ function Timer({navigation}) {
             console.error(error);
         }
     };
+    
+    const handleTimerFinished = () => {
+        dispatch(stopTimer());
+        handleStopTimer(currentWorkSessionId);
+        setSvg(start);
+        Notifier.showNotification({
+            title: 'Timer',
+            description: 'Your pomodoro session has ended. Time for a break.',
+            duration: 4000,
+            showAnimationDuration: 800,
+            showEasing: Easing.bounce,
+            onHidden: () => console.log('Hidden'),
+            onPress: () => console.log('Press'),
+            hideOnPress: false,
+            componentProps: {
+                containerStyle: {
+                    backgroundColor: "#FFC165",
+                },
+                titleStyle: {
+                    color: "#DF5454",
+                    fontWeight: "bold",
+                    alignSelf: "center"
+                },
+                descriptionStyle: {
+                    color: "#DF5454",
+                    alignSelf: "center"
+                }
+            }
+        });
+    }
     const handlePress = async () => {
         if (!timerRunning) {
             // TODO: get rid of 'dispatch' as we use it everywhere
@@ -120,7 +153,10 @@ function Timer({navigation}) {
             setSvg(start);
         }
     };
-
+    
+    useEffect(() => {
+        console.log(time);
+    }, [time])
     const handleReset = () => {
         resetTimerAnimation();
         dispatch(setReset());
@@ -149,7 +185,7 @@ function Timer({navigation}) {
                     size={100}
                     until={time}
                     style={styles.timer}
-                    onFinish={() => handleStopTimer(currentWorkSessionId)}
+                    onFinish={() => handleTimerFinished()}
                     digitStyle={{width: 200, borderRadius: 20, backgroundColor: '#0F0F0F'}}
                     digitTxtStyle={{color: 'white'}}
                     separatorStyle={{color: "white"}}

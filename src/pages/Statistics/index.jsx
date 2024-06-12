@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import Page from "../Page";
-import {Text} from "react-native";
+import {StyleSheet, Text} from "react-native";
 import {SelectList} from "react-native-dropdown-select-list/index";
 import {useSelector} from "react-redux";
 import MonthlyChart from "./MonthlyChart";
@@ -11,13 +11,27 @@ const Statistics = ({navigation}) => {
     
     return (
         <Page navigation={navigation}>
-            <Text>Statistics</Text>
-            <Text>Worked most on: </Text>
-            <Text>Most productive month: </Text>
+            <Text style={styles.title}>Statistics</Text>
+            <Text style={styles.subtitle}>Monthly progress</Text>
             <MonthlyChart />
+            <Text style={styles.subtitle}>Time spent on each task</Text>
             <TotalTaskTimeChart />
         </Page>
     );
 };
+
+const styles = StyleSheet.create({
+    title: {
+        alignSelf: "center",
+        fontSize: 20,
+        color: "white"
+    },
+    subtitle: {
+        alignSelf: "center",
+        fontSize: 15,
+        color: "white",
+        marginTop: 20,
+    },
+});
 
 export default Statistics;

@@ -56,7 +56,7 @@ const MonthlyChart = () => {
 
     let lastMonthsNames = lastMonths.map(month => constants.months[month]);
     return (
-        data && <View style={{marginTop: 70}}>
+        data && <View>
             <LineChart
                 data={{
                     labels: lastMonthsNames,

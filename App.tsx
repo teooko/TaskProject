@@ -4,17 +4,20 @@ import {Provider} from 'react-redux';
 import Store, {persistor} from './src/store';
 import {PersistGate} from "redux-persist/integration/react";
 import WithAuthentication from "./src/authentication/Authentication/WithAuthentication";
-import WebSocketService from "./src/services/WebSocketService";
-
+import { NotifierWrapper } from 'react-native-notifier';
+import {GestureHandlerRootView} from "react-native-gesture-handler";
 export default function App() {
     
-    // TODO: Make WithAuthentication a wrapper
     return (
         <Provider store={Store}>
             <NavigationContainer theme={theme}>
-                <PersistGate loading={null} persistor={persistor}>
-                        <WithAuthentication/>
-                </PersistGate>
+                    <PersistGate loading={null} persistor={persistor}>
+                        <GestureHandlerRootView>
+                            <NotifierWrapper>
+                                <WithAuthentication/>
+                            </NotifierWrapper>
+                        </GestureHandlerRootView>
+                    </PersistGate>
             </NavigationContainer>
         </Provider>
     );
