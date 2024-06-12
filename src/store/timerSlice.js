@@ -63,6 +63,9 @@ const slice = createSlice({
         },
         setCurrentTime(state, {payload}) {
             state.currentTime =  payload - 1;
+        },
+        setIsBreak(state, {payload}) {
+            state.isBreak = payload;
         }
     },
     extraReducers(builder) {
@@ -76,5 +79,5 @@ const slice = createSlice({
     },
 });
 
-export const {setCurrentTaskId, startTimer, stopTimer, openPicker, closePicker, setTime, setReset, setCurrentTime} = slice.actions
+export const {setCurrentTaskId, startTimer, stopTimer, openPicker, closePicker, setTime, setReset, setCurrentTime, setIsBreak} = slice.actions
 export default slice.reducer;

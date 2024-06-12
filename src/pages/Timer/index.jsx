@@ -9,7 +9,7 @@ import {
     openPicker,
     patchStopTimer,
     postStartTimer,
-    setCurrentTaskId, setCurrentTime,
+    setCurrentTaskId, setCurrentTime, setIsBreak,
     setReset, setTime,
     startTimer,
     stopTimer
@@ -36,9 +36,12 @@ function Timer({navigation}) {
     const [svg, setSvg] = useState(start);
     const roomWs = useWebSocket();
     const dispatch = useDispatch();
-    const {currentTaskId, time, reset, timerRunning, currentWorkSessionId} = useSelector(state => state.timer);
+    const {currentTaskId, time, reset, timerRunning, currentWorkSessionId, isBreak} = useSelector(state => state.timer);
     const {users, userIds} = useSelector(state => state.webSocket);
-    
+    const sessionTitles = {
+        work: "Time to work",
+        break: "Time to take a break"
+    }
     useEffect(() => {
         if(roomWs !== null) {
             roomWs.onmessage = async (e) => {
@@ -111,9 +114,7 @@ function Timer({navigation}) {
     };
     
     const handleTimerFinished = () => {
-        dispatch(stopTimer());
         handleStopTimer(currentWorkSessionId);
-        setSvg(start);
         Notifier.showNotification({
             title: 'Timer',
             description: 'Your pomodoro session has ended. Time for a break.',
@@ -138,6 +139,9 @@ function Timer({navigation}) {
                 }
             }
         });
+        dispatch(setIsBreak(true));
+        setSvg(start);
+        dispatch(stopTimer());
     }
     const handlePress = async () => {
         if (!timerRunning) {
@@ -206,7 +210,7 @@ function Timer({navigation}) {
                                     setSelected={(val) => dispatch(setCurrentTaskId(val))}/>
                     </View>
                     <Text style={{fontSize: 30, color: "white", marginTop: 70, marginLeft: "auto", marginRight: "auto"}}>
-                        Time to work
+                        {isBreak ? sessionTitles.break : sessionTitles.work}
                     </Text>
                     <TimerBubble
                         backWaveStyle={backWaveStyle}

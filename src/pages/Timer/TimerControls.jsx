@@ -4,14 +4,14 @@ import React from 'react';
 import {icons} from '../../assets/Icons';
 
 const TimerControls = ({svg, handleReset, handlePress}) => {
-    const {reset, rest} = icons;
+    const {reset, forward} = icons;
 
     return (
         <View style={styles.controls}>
             <NavigationButton
-                icon={rest}
+                icon={forward}
                 onPress={() => handlePress()}
-                size={40}
+                size={30}
             />
             <NavigationButton
                 icon={svg}
