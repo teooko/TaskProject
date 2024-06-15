@@ -2,18 +2,24 @@
 import {Button, View} from "react-native";
 import {TimerPickerModal} from "react-native-timer-picker";
 import {useDispatch, useSelector} from "react-redux";
-import {closePicker, openPicker, setTime} from "../../store/timerSlice";
+import {closePicker, openPicker, setBreakTime, setTime, setWorkingTime} from "../../store/timerSlice";
 import {useWebSocket} from "../../services/WebSocketService";
 import {addMessage} from "../../store/webSocketSlice";
 
 
 const Picker = () => {
-    const {pickerVisible, timerRunning} = useSelector(state => state.timer);
+    const {pickerVisible, timerRunning, isBreak} = useSelector(state => state.timer);
     const {userName} = useSelector(state => state.account);
     const dispatch = useDispatch();
     const roomWs = useWebSocket();
     const setTheTime = (pickedDuration) => {
         dispatch(setTime(pickedDuration.hours * 60 * 60 + pickedDuration.minutes * 60 + pickedDuration.seconds))
+        if(isBreak){
+            dispatch(setBreakTime(pickedDuration.hours * 60 * 60 + pickedDuration.minutes * 60 + pickedDuration.seconds));
+        }
+        else {
+            dispatch(setWorkingTime(pickedDuration.hours * 60 * 60 + pickedDuration.minutes * 60 + pickedDuration.seconds));
+        }
         if(roomWs !== null)
         {
             dispatch(addMessage({

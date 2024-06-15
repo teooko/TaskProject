@@ -11,7 +11,7 @@ const initialState = {
     pickerVisible: false,
     reset: false,
     breakTime: 300,
-    workingTime: null,
+    workingTime: 60,
     isBreak: false,
 };
 
@@ -67,6 +67,12 @@ const slice = createSlice({
         },
         setIsBreak(state, {payload}) {
             state.isBreak = payload;
+        },
+        setWorkingTime(state, {payload}) {
+            state.workingTime = payload;
+        },
+        setBreakTime(state, {payload}) {
+            state.breakTime = payload;
         }
     },
     extraReducers(builder) {
@@ -80,5 +86,8 @@ const slice = createSlice({
     },
 });
 
-export const {setCurrentTaskId, startTimer, stopTimer, openPicker, closePicker, setTime, setReset, setCurrentTime, setIsBreak} = slice.actions
+export const {setCurrentTaskId, startTimer, stopTimer,
+    openPicker, closePicker, setTime,
+    setReset, setCurrentTime, setIsBreak,
+    setWorkingTime, setBreakTime} = slice.actions
 export default slice.reducer;

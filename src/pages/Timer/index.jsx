@@ -158,9 +158,6 @@ function Timer({navigation}) {
         }
     };
     
-    useEffect(() => {
-        console.log(time);
-    }, [time])
     const handleReset = () => {
         resetTimerAnimation();
         dispatch(setReset());
