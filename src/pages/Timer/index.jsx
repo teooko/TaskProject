@@ -115,33 +115,7 @@ function Timer({navigation}) {
     
     const handleTimerFinished = () => {
         handleStopTimer(currentWorkSessionId);
-        Notifier.showNotification({
-            title: 'Timer',
-            description: 'Your pomodoro session has ended. Time for a break.',
-            duration: 4000,
-            showAnimationDuration: 800,
-            showEasing: Easing.bounce,
-            onHidden: () => console.log('Hidden'),
-            onPress: () => console.log('Press'),
-            hideOnPress: false,
-            componentProps: {
-                containerStyle: {
-                    backgroundColor: "#FFC165",
-                },
-                titleStyle: {
-                    color: "#DF5454",
-                    fontWeight: "bold",
-                    alignSelf: "center"
-                },
-                descriptionStyle: {
-                    color: "#DF5454",
-                    alignSelf: "center"
-                }
-            }
-        });
-        dispatch(setIsBreak(true));
-        setSvg(start);
-        dispatch(stopTimer());
+        handleSkip();
     }
     const handlePress = async () => {
         if (!timerRunning) {
@@ -179,7 +153,6 @@ function Timer({navigation}) {
         if (timerRunning) {
             dispatch(stopTimer());
             stopTimerAnimation();
-            await handleStopTimer(currentWorkSessionId);
             setSvg(start);
         }
         if(isBreak) {
@@ -239,6 +212,7 @@ function Timer({navigation}) {
         
         resetTimerAnimation();
         dispatch(setIsBreak(!isBreak));
+        await handleStopTimer(currentWorkSessionId);
     };
     const {userName} = useSelector(state => state.account);
     return (
