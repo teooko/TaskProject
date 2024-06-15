@@ -3,14 +3,14 @@ import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {icons} from '../../assets/Icons';
 
-const TimerControls = ({svg, handleReset, handlePress}) => {
+const TimerControls = ({svg, handleReset, handlePress, handleSkip}) => {
     const {reset, forward} = icons;
 
     return (
         <View style={styles.controls}>
             <NavigationButton
                 icon={forward}
-                onPress={() => handlePress()}
+                onPress={() => handleSkip()}
                 size={30}
             />
             <NavigationButton

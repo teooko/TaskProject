@@ -11,6 +11,7 @@ const initialState = {
     pickerVisible: false,
     reset: false,
     breakTime: 300,
+    workingTime: null,
     isBreak: false,
 };
 

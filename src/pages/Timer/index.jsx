@@ -36,7 +36,7 @@ function Timer({navigation}) {
     const [svg, setSvg] = useState(start);
     const roomWs = useWebSocket();
     const dispatch = useDispatch();
-    const {currentTaskId, time, reset, timerRunning, currentWorkSessionId, isBreak} = useSelector(state => state.timer);
+    const {currentTaskId, time, reset, timerRunning, currentWorkSessionId, isBreak, breakTime, workingTime} = useSelector(state => state.timer);
     const {users, userIds} = useSelector(state => state.webSocket);
     const sessionTitles = {
         work: "Time to work",
@@ -177,8 +177,72 @@ function Timer({navigation}) {
         const id = new Date().getTime().toString()
         setCountDownId(id)
     }, [time, reset]);
-    
-    
+
+    const handleSkip = async () => {
+        if (timerRunning) {
+            dispatch(stopTimer());
+            stopTimerAnimation();
+            await handleStopTimer(currentWorkSessionId);
+            setSvg(start);
+        }
+        if(isBreak) {
+            Notifier.showNotification({
+                title: 'Timer',
+                description: 'Your break time has ended. Time to work.',
+                duration: 4000,
+                showAnimationDuration: 800,
+                showEasing: Easing.bounce,
+                onHidden: () => console.log('Hidden'),
+                onPress: () => console.log('Press'),
+                hideOnPress: false,
+                componentProps: {
+                    containerStyle: {
+                        backgroundColor: "#FFC165",
+                    },
+                    titleStyle: {
+                        color: "#DF5454",
+                        fontWeight: "bold",
+                        alignSelf: "center"
+                    },
+                    descriptionStyle: {
+                        color: "#DF5454",
+                        alignSelf: "center"
+                    }
+                }
+            });
+            dispatch(setTime(workingTime));
+        }
+        else {
+            Notifier.showNotification({
+                title: 'Timer',
+                description: 'Your pomodoro session has ended. Time for a break.',
+                duration: 4000,
+                showAnimationDuration: 800,
+                showEasing: Easing.bounce,
+                onHidden: () => console.log('Hidden'),
+                onPress: () => console.log('Press'),
+                hideOnPress: false,
+                componentProps: {
+                    containerStyle: {
+                        backgroundColor: "#FFC165",
+                    },
+                    titleStyle: {
+                        color: "#DF5454",
+                        fontWeight: "bold",
+                        alignSelf: "center"
+                    },
+                    descriptionStyle: {
+                        color: "#DF5454",
+                        alignSelf: "center"
+                    }
+                }
+            });
+            dispatch(setTime(breakTime));
+        }
+        
+        resetTimerAnimation();
+        dispatch(setIsBreak(!isBreak));
+    };
     const {userName} = useSelector(state => state.account);
     return (
         <View>
@@ -228,6 +292,25 @@ function Timer({navigation}) {
                     </Pressable>
                     <TimerControls
                         svg={svg}
+                        handleSkip={() => {
+                            if(roomWs !== null) {
+                                roomWs.send(JSON.stringify({
+                                    control:
+                                        {
+                                            user: userName,
+                                            action: "skip timer"
+                                        }
+                                }));
+                            }
+                            handleSkip();
+                            dispatch(addMessage({
+                                control:
+                                    {
+                                        user: userName,
+                                        action: "skip timer",
+                                    }
+                            }));
+                        }}
                         handleReset={() => {
                             if(roomWs !== null) {
                                 roomWs.send(JSON.stringify({
