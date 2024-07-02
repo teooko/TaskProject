@@ -17,7 +17,7 @@ const Home = ({navigation}) => {
                 overScrollMode={'never'}
                 showsVerticalScrollIndicator={false}>
                 <Calendar />
-                <DailyActivity />
+                <DailyActivity navigation={navigation} />
             </ScrollView>
         </Page>
     );
