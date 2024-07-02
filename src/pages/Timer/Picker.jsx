@@ -66,7 +66,8 @@ const Picker = () => {
                     },
                     text: {
                         color: "#DF5454",
-                    }
+                    },
+                    
                 }}
                 modalProps={{
                     overlayOpacity: 0.2,

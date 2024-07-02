@@ -1,4 +1,14 @@
-﻿import {View, Text, StatusBar, Button, Pressable, Image} from 'react-native';
+﻿import {
+    View,
+    Text,
+    StatusBar,
+    Button,
+    Pressable,
+    Image,
+    Dimensions,
+    KeyboardAvoidingView,
+    ScrollView
+} from 'react-native';
 import Page from '../Page';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
@@ -31,6 +41,7 @@ import {useWebSocket} from "../../services/WebSocketService";
 import {Notifier} from "react-native-notifier";
 import {Easing} from "react-native-reanimated";
 
+const {height, width} = Dimensions.get('window');
 function Timer({navigation}) {
     const {start, pause} = icons;
     const [svg, setSvg] = useState(start);
@@ -216,8 +227,8 @@ function Timer({navigation}) {
     };
     const {userName} = useSelector(state => state.account);
     return (
-        <View>
-            <View style={{display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "black", height: "100%", width: "100%", position: "absolute", zIndex: orientation === "PORTRAIT" ? -2 : 3}}>
+        <ScrollView style={{flex: 1, height: "100%"}} contentContainerStyle={{ flexGrow: 1 }}>
+            <View style={{display: "flex", justifyContent: "center", backgroundColor: "black", height: "100%", width: "100%", position: "absolute", zIndex: orientation === "PORTRAIT" ? -2 : 3}}>
                 <StatusBar hidden={orientation !== "PORTRAIT"}/>
                 <CountDown
                     id={countDownId}
@@ -237,16 +248,19 @@ function Timer({navigation}) {
             </View>
                 <Page navigation={navigation}>
                     <Picker/>
-                    <View style={{position: "absolute", top: 40, left: 30, width: 300, zIndex: 1}}>
-                        <SelectList dropdownItemStyles={{backgroundColor: "#B83838"}}
-                                    boxStyles={{backgroundColor: "#B83838", borderWidth: 0}}
-                                    dropdownStyles={{backgroundColor: "#B83838", borderColor: "#560D0D"}}
+                    <View style={{position: "absolute", top: 40, left: width / 2 - 150, width: 300, zIndex: 1}}>
+                        <SelectList dropdownItemStyles={{backgroundColor: "#B83838", color: "white"}}
+                                    boxStyles={{backgroundColor: "#B83838", borderWidth: 0, color: "white"}}
+                                    inputStyles={{color: "#EAC4C4"}}
+                                    dropdownTextStyles={{color: "#EAC4C4"}}
+                                    dropdownStyles={{backgroundColor: "#B83838", borderColor: "#560D0D", color: "#A600E8"}}
                                     data={tasks.map(task => ({key: task.id, value: task.name}))}
                                     setSelected={(val) => dispatch(setCurrentTaskId(val))}/>
                     </View>
                     <Text style={{fontSize: 30, color: "white", marginTop: 70, marginLeft: "auto", marginRight: "auto"}}>
                         {isBreak ? sessionTitles.break : sessionTitles.work}
                     </Text>
+                    <View style={{display: "flex", flexDirection: "column", justifyContent: "space-between", height: height - 180}}>
                     <TimerBubble
                         backWaveStyle={backWaveStyle}
                         frontWaveStyle={frontWaveStyle}
@@ -261,6 +275,7 @@ function Timer({navigation}) {
                             Add Friends
                         </Text>
                     </Pressable>
+                    
                     <TimerControls
                         svg={svg}
                         handleSkip={() => {
@@ -323,8 +338,9 @@ function Timer({navigation}) {
                             }));
                         }}
                     />
+                    </View>
                 </Page>
-        </View>
+        </ScrollView>
 );
 }
 
@@ -334,7 +350,7 @@ const styles = StyleSheet.create({
         fontSize: 60,
         marginLeft: "auto",
         marginRight: "auto",
-        alignSelf: "center",
+        top: -150
     },
     icon: {
         fill: 'white',
