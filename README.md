@@ -1,6 +1,8 @@
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 # Task Project
-    This is a mobile app that allows users to come together and use the Pomodoro Technique in order to develop nourishing daily habits. The progress can be tracked through various methods, like graphs and calendars. Adding people to your pomodoro session can be a great motivator. A distinctive feature of this application is the timer with shared controls between users.
+    This is a mobile app that allows users to come together and use the Pomodoro Technique in order to develop nourishing daily habits. 
+    The progress can be tracked through various methods, like graphs and calendars. Adding people to your pomodoro session can be a great motivator. 
+    A distinctive feature of this application is the timer with shared controls between users.
 # Getting Started
 
 > **Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
