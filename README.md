@@ -1,4 +1,24 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+## Task Project
+
+This is a mobile app that allows users to come together and use the Pomodoro Technique in order to develop nourishing daily habits. 
+The progress can be tracked through various methods, like graphs and calendars. Adding people to your pomodoro session can be a great motivator. 
+A distinctive feature of this application is the timer with shared controls between users in a session.
+
+## Features
+* Scrollable calendar that displays the colors of the tasks completed in each day
+* Pie-chart that shows a more detailed overview of the selected calendar day
+* List for your tasks which can be modified
+* Drop down of the tasks available for the pomodoro session
+* Time picker for the session time and break time
+* Invitations for adding people to your pomodoro session
+* Chat for the users who joined your session
+* Page dedicated for statistics
+
+## Screenshots
+| ![Untitled](https://github.com/user-attachments/assets/d067d40a-a6ad-459a-bc80-067279b975f9) | ![Untitled](https://github.com/user-attachments/assets/8cadb581-8429-40f5-a242-f8cd06360fc8) | ![Untitled](https://github.com/user-attachments/assets/a06dd68f-f32a-4392-b19a-3a3d038146f6) |
+|-------------------------------|-------------------------------|-------------------------------|
+
+
 
 # Getting Started
 

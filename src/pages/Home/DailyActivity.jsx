@@ -5,8 +5,7 @@ import Piechart from '../../components/Piechart';
 import TaskList from './TaskList';
 import {useSelector} from 'react-redux';
 import {constants} from '../../components/ScrollingCalendar/constants';
-
-const DailyActivity = () => {
+const DailyActivity = ({navigation}) => {
     // TODO: Maybe get rid of useSelector?
     const {selected, days} = useSelector(state => state.calendar);
     const {dailyTasks} = useSelector(state => state.tasks);
@@ -32,7 +31,7 @@ const DailyActivity = () => {
             <Piechart />
             <TaskList />
             <Pressable style={styles.addTaskButton}>
-                <Text style={styles.taskButtonText}>Add Task</Text>
+                <Text style={styles.taskButtonText} onPress={() => navigation.navigate("Tasks")}>Add Task</Text>
             </Pressable>
         </LinearGradient>
     );

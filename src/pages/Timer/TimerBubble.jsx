@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         fontSize: 60,
         position: 'absolute',
         alignSelf: 'center',
-        marginTop: height / 4 - 70,
+        marginTop: height / 4 - 80,
         color: 'white',
         width: 180,
     },
