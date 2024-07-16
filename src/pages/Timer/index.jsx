@@ -30,6 +30,7 @@ import {
 import {useWebSocket} from "../../services/WebSocketService";
 import {Notifier} from "react-native-notifier";
 import {Easing} from "react-native-reanimated";
+import {Notifications} from "react-native-notifications";
 
 function Timer({navigation}) {
     const {start, pause} = icons;
@@ -178,7 +179,7 @@ function Timer({navigation}) {
                         color: "#DF5454",
                         alignSelf: "center"
                     }
-                }
+                },
             });
             dispatch(setTime(workingTime));
         }
@@ -209,7 +210,19 @@ function Timer({navigation}) {
             });
             dispatch(setTime(breakTime));
         }
-        
+        Notifications.setNotificationChannel({
+            channelId: 'my-channel',
+            name: 'My Channel',
+            importance: 5,
+            description: 'My Description',
+            enableLights: true,
+            enableVibration: true,
+            groupId: 'my-group', // optional
+            groupName: 'My Group', // optional, will be presented in Android OS notification permission
+            showBadge: true,
+            soundFile: 'custom_sound.mp3',  // place this in <project_root>/android/app/src/main/res/raw/custom_sound.mp3
+            vibrationPattern: [200, 1000, 500, 1000, 500],
+        })
         resetTimerAnimation();
         dispatch(setIsBreak(!isBreak));
         await handleStopTimer(currentWorkSessionId);

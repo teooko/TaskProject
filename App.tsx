@@ -9,17 +9,17 @@ import {GestureHandlerRootView} from "react-native-gesture-handler";
 export default function App() {
     
     return (
-        <Provider store={Store}>
-            <NavigationContainer theme={theme}>
-                    <PersistGate loading={null} persistor={persistor}>
-                        <GestureHandlerRootView>
-                            <NotifierWrapper>
+        //<Provider store={Store}>
+            //<NavigationContainer theme={theme}>
+                    //<PersistGate loading={null} persistor={persistor}>
+                        //<GestureHandlerRootView>
+                           // <NotifierWrapper>
                                 <WithAuthentication/>
-                            </NotifierWrapper>
-                        </GestureHandlerRootView>
-                    </PersistGate>
-            </NavigationContainer>
-        </Provider>
+                           // </NotifierWrapper>
+                        //</GestureHandlerRootView>
+                    //</PersistGate>
+           // </NavigationContainer>
+       // </Provider>
     );
 }
 

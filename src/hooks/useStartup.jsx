@@ -2,11 +2,22 @@
 import {fetchWeeklyTasks, insertDays, resetCalendarState, selectDay, setData} from "../store/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import {Notifications} from "react-native-notifications";
 
 export const useStartup = () => {
     const dispatch = useDispatch();
     const { bearerToken } = useSelector(state => state.account);
     const { lastLoaded } = useSelector(state => state.calendar);
+    Notifications.registerRemoteNotifications();
+    const Notification = Notifications.getInitialNotification();
+    Notifications.postLocalNotification({
+        body: 'Local notification!',
+        title: 'Local Notification Title',
+        sound: 'chime.aiff',
+        category: 'SOME_CATEGORY',
+        link: 'localNotificationLink',
+        fireDate: new Date() // only iOS
+    }, 1);
     useEffect(() => {
         //separate each matter into different functions
         dispatch(resetCalendarState());

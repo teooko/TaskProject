@@ -4,9 +4,10 @@ import Authentication from "./index";
 import {useStartup} from "../../hooks/useStartup";
 import {resetCalendarState} from "../../store/slice";
 import WebSocketService from "../../services/WebSocketService";
+import {View} from "react-native";
 
 const WithAuthentication = () => {
-    const { bearerToken, userName } = useSelector(state => state.account);
+    /*const { bearerToken, userName } = useSelector(state => state.account);
     useStartup();
     const isAuthenticated = bearerToken !== null;
     const hasClaims = userName !== null;
@@ -17,6 +18,12 @@ const WithAuthentication = () => {
         <WebSocketService>
             <RightDrawer />
         </WebSocketService>
+    );*/
+
+    return(
+        <View>
+            
+        </View>
     );
 };
 

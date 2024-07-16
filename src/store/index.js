@@ -34,9 +34,9 @@ const store = configureStore({
             
         })
 });
-const bearerToken = store.getState().account.bearerToken;
-store.dispatch(insertDays());
-store.dispatch(fetchWeeklyTasks({ bearerToken, fromDate: 0 }))
+//const bearerToken = store.getState().account.bearerToken;
+//store.dispatch(insertDays());
+//store.dispatch(fetchWeeklyTasks({ bearerToken, fromDate: 0 }))
 
 
 
