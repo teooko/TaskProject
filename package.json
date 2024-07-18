@@ -14,7 +14,7 @@
         "@react-native-community/datetimepicker": "^7.6.3",
         "@react-navigation/drawer": "^6.6.6",
         "@react-navigation/native": "^6.1.9",
-        "@reduxjs/toolkit": "^2.0.1",
+        "@reduxjs/toolkit": "^2.2.6",
         "@shopify/flash-list": "^1.6.3",
         "axios": "^1.6.7",
         "formik": "^2.4.6",

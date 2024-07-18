@@ -9,6 +9,7 @@ import {persistReducer, persistStore} from "redux-persist";
 import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from "redux-persist/es/constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import layoutReducer from './layoutSlice'
+import api from "./api";
 
 const accountPersistConfig = {
     key: 'account',
@@ -24,7 +25,8 @@ const store = configureStore({
         deviceInfo: deviceInfoReducer,
         account: persistedAccountReducer,
         layout: layoutReducer,
-        webSocket: webSocketReducer
+        webSocket: webSocketReducer,
+        [api.reducerPath]: api.reducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
@@ -32,7 +34,7 @@ const store = configureStore({
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
             
-        })
+        }).concat(api.middleware),
 });
 const bearerToken = store.getState().account.bearerToken;
 store.dispatch(insertDays());
