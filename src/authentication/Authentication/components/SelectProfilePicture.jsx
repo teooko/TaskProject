@@ -8,6 +8,7 @@ import {icons} from "../../../assets/Icons";
 const SelectProfilePicture = ({isSubmitting, setFieldValue}) => {
     const dispatch = useDispatch();
     const {profilePicturePath} = useSelector(state => state.account);
+    //test
     const selectImage = async() => {
         const options = {
             maxWidth: 800,
