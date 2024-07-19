@@ -7,7 +7,7 @@ import {useGetDailyTasksQuery} from "../store/api";
 
 const Piechart = () => {
     const {selectedDate} = useSelector(state => state.tasks);
-    const {data: dailyTasks, error, isLoading} = useGetDailyTasksQuery(selectedDate)
+    const {data: dailyTasks, error, isLoading} = useGetDailyTasksQuery(selectedDate);
 
     return (
         <View style={styles.pieChart}>

@@ -5,14 +5,18 @@ import Piechart from '../../components/Piechart';
 import TaskList from './TaskList';
 import {useSelector} from 'react-redux';
 import {constants} from '../../components/ScrollingCalendar/constants';
+import {useGetDailyTasksQuery} from "../../store/api";
 
 const DailyActivity = () => {
     // TODO: Maybe get rid of useSelector?
     const {selected, days} = useSelector(state => state.calendar);
-    const {dailyTasks} = useSelector(state => state.tasks);
-    const totalTime = dailyTasks
-        ? dailyTasks.reduce((acc, task) => (acc = acc + task.time), 0)
+    const {selectedDate} = useSelector(state => state.tasks);
+    const {data: dailyTasks, error, isLoading} = useGetDailyTasksQuery(selectedDate);
+    
+    const totalTime = !isLoading
+        ? dailyTasks.reduce((acc, task) => (acc = acc + task.seconds), 0)
         : null;
+    
     return (
         <LinearGradient
             colors={['#E97C6F', '#FFC165']}
