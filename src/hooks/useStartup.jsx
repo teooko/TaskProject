@@ -9,16 +9,7 @@ export const useStartup = () => {
     const { bearerToken } = useSelector(state => state.account);
     const { lastLoaded } = useSelector(state => state.calendar);
     const { data, error, isLoading } = useGetTasksQuery();
-
-    useEffect(() => {
-        // Perform actions based on data, error, isLoading
-        if (data) {
-            console.log('Tasks:', data);
-        }
-        if (error) {
-            console.error('Error fetching tasks:', error);
-        }
-    }, [data, error]);
+    
     useEffect(() => {
         //separate each matter into different functions
         dispatch(resetCalendarState());

@@ -13,6 +13,7 @@ const api = createApi({
     endpoints: (build) => ({
         getTasks: build.query({
             query: () => '/Task',
+            transformResponse: (response) => response.$values,
         }),
     }),
 });
