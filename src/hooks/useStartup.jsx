@@ -1,4 +1,4 @@
-﻿import {fetchDailyTasks, fetchTasks, resetTaskState} from "../store/tasksSlice";
+﻿import {fetchDailyTasks, fetchTasks, resetTaskState, setSelectedDate} from "../store/tasksSlice";
 import {fetchWeeklyTasks, insertDays, resetCalendarState, selectDay, setData} from "../store/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -21,7 +21,7 @@ export const useStartup = () => {
         const formattedDate = `${year}-${month}-${day}`;
         dispatch(fetchTasks(bearerToken));
         
-        dispatch(fetchDailyTasks({ bearerToken, date: formattedDate }));
+        dispatch(setSelectedDate(formattedDate));
         dispatch(fetchWeeklyTasks({ bearerToken, fromDate: 0 }));
         dispatch(insertDays());
     }, [bearerToken]);

@@ -4,12 +4,11 @@ import TaskListItem from './TaskListItem';
 import {useGetTasksQuery} from "../../store/api";
 
 const TaskList = () => {
-    //const {tasks} = useSelector(state => state.tasks);
     const { data: tasks, error, isLoading } = useGetTasksQuery();
-    const status = useSelector(state => state.tasks.status);
+    
     return (
         <View style={styles.taskList}>
-            {status !== 'loading' && status !== 'failed'
+            { !isLoading
                 ? tasks
                       .map(task => (
                           <TaskListItem

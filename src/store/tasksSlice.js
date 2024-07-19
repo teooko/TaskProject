@@ -11,7 +11,8 @@ const initialState = {
     error: null,
     dailyTasks: [],
     halfYearTime: [],
-    totalTasksTime: []
+    totalTasksTime: [],
+    selectedDate: null,
 };
 
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (bearerToken) => {
@@ -109,6 +110,9 @@ const slice = createSlice({
         },
         resetTaskState(state) {
             state = initialState;
+        },
+        setSelectedDate(state, {payload}) {
+            state.selectedDate = payload;
         }
     },
     extraReducers(builder) {
@@ -164,5 +168,5 @@ const slice = createSlice({
     },
 });
 
-export const {loadTasks, setNewTask, resetTaskState} = slice.actions;
+export const {loadTasks, setNewTask, resetTaskState, setSelectedDate} = slice.actions;
 export default slice.reducer;

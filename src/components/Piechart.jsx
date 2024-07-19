@@ -1,23 +1,19 @@
 ﻿import React, {useEffect} from 'react';
 import {PieChart} from 'react-native-chart-kit';
-import {Dimensions, View} from 'react-native';
+import {Dimensions, Text, View} from 'react-native';
 import {StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
+import {useGetDailyTasksQuery} from "../store/api";
 
 const Piechart = () => {
-    const {dailyTasks} = useSelector(state => state.tasks);
-
-    const data = dailyTasks.map(task => ({
-        name: task.name,
-        seconds: task.time,
-        color: task.color,
-    }));
+    const {selectedDate} = useSelector(state => state.tasks);
+    const {data: dailyTasks, error, isLoading} = useGetDailyTasksQuery(selectedDate)
 
     return (
         <View style={styles.pieChart}>
-            <PieChart
+            {!isLoading ? <PieChart
                 hasLegend={false}
-                data={data}
+                data={dailyTasks}
                 width={Dimensions.get('window').width - 16}
                 height={240}
                 paddingLeft={(Dimensions.get('window').width / 4).toString()}
@@ -28,7 +24,7 @@ const Piechart = () => {
                 backgroundColor="transparent"
                 absolute
                 fromZero
-            />
+            /> : <Text>Se incarca boss</Text>}
         </View>
     );
 };

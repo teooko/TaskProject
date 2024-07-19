@@ -2,7 +2,7 @@
 import {constants} from './constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectDay} from '../../store/slice';
-import {fetchDailyTasks} from '../../store/tasksSlice';
+import {fetchDailyTasks, setSelectedDate} from '../../store/tasksSlice';
 import {SvgXml} from 'react-native-svg';
 import {icons} from '../../assets/Icons';
 const DayCard = ({id}) => {
@@ -12,11 +12,8 @@ const DayCard = ({id}) => {
     const handlePress = () => {
         dispatch(selectDay(id));
         dispatch(
-            fetchDailyTasks(
-                {bearerToken,
-                    date: `${days.daysById[id].year}-${days.daysById[id].month + 1}-${
+            setSelectedDate(`${days.daysById[id].year}-${days.daysById[id].month + 1}-${
                     days.daysById[id].monthDay}`
-                }
             ),
         );
     };
