@@ -19,11 +19,6 @@ const TaskListForm = () => {
     const onSelectColor = ({hex}) => {
         setNewTaskColor(hex);
     };
-
-    const dispatch = useDispatch();
-    const handleAddNewTask = async (newTaskName, newTaskColor) => {
-        await dispatch(addNewTask({bearerToken, initialTask: {name: newTaskName, color: newTaskColor}}));
-    };
     
     const [postTask, result] = usePostTaskMutation();
     /*
@@ -67,9 +62,7 @@ const TaskListForm = () => {
                     </Pressable>
                     <Pressable
                         style={styles.addTask}
-                        onPress={() => postTask({/*new task data*/})
-                            //handleAddNewTask(newTaskName, newTaskColor)
-                        }>
+                        onPress={() => postTask({name: newTaskName, color: newTaskColor})}>
                         <SvgXml
                             xml={icons.plus}
                             width={'20'}

@@ -54,12 +54,14 @@ const api = createApi({
             transformResponse: (response) => transformDailyTasks(response),
         }),
         postTask: build.mutation({
-            query: (initialTask) => ({
+            query: (taskData) => {
+                console.log(taskData.name + " ASTEAS ARGUMENTELE");
+                return {
                 url: `/Task`,
                 method: 'POST',
-                body: {initialTask}
-        }),
-            transformResponse: (response) => { console.log(response) }
+                body: taskData
+        }},
+            transformResponse: (response) => { console.log(response + "Oare de aici vine?") }
         })
     }),
 });
