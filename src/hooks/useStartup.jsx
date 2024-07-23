@@ -19,7 +19,7 @@ export const useStartup = () => {
         const month = String(currentDate.getMonth() + 1).padStart(2, '0');
         const day = String(currentDate.getDate()).padStart(2, '0');
         const formattedDate = `${year}-${month}-${day}`;
-        dispatch(fetchTasks(bearerToken));
+        //dispatch(fetchTasks(bearerToken));
         
         dispatch(setSelectedDate(formattedDate));
         dispatch(fetchWeeklyTasks({ bearerToken, fromDate: 0 }));

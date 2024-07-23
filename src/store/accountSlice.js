@@ -6,6 +6,7 @@ const initialState = {
     bearerToken: null,
     userName: null,
     profilePicturePath: null,
+    refreshToken: null,
 };
 export const postRegister = createAsyncThunk(
     'account/register',
@@ -102,6 +103,10 @@ const slice = createSlice({
         },
         setProfilePicturePath(state, {payload}) {
             state.profilePicturePath = payload;
+        },
+        setNewTokens(state, {payload}) {
+            state.bearerToken = payload.accessToken;
+            state.refreshToken = payload.refreshToken;
         }
     },
     extraReducers(builder){
@@ -128,5 +133,5 @@ const slice = createSlice({
     }
 })
 
-export const {resetBearerToken, resetUserData, setProfilePicturePath} = slice.actions;
+export const {resetBearerToken, resetUserData, setProfilePicturePath, setNewTokens} = slice.actions;
 export default slice.reducer;

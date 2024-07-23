@@ -9,6 +9,7 @@ import {addNewTask} from '../../store/tasksSlice';
 import {icons} from '../../assets/Icons';
 import {SvgXml} from 'react-native-svg';
 import * as React from 'react';
+import {usePostTaskMutation} from "../../store/api";
 
 const TaskListForm = () => {
     const [newTaskName, setNewTaskName] = useState('Create new task...');
@@ -23,6 +24,8 @@ const TaskListForm = () => {
     const handleAddNewTask = async (newTaskName, newTaskColor) => {
         await dispatch(addNewTask({bearerToken, initialTask: {name: newTaskName, color: newTaskColor}}));
     };
+    
+    const [postTask, result] = usePostTaskMutation();
     /*
     const Thumb = ({positionStyle}) => {
         return (
@@ -64,8 +67,8 @@ const TaskListForm = () => {
                     </Pressable>
                     <Pressable
                         style={styles.addTask}
-                        onPress={() =>
-                            handleAddNewTask(newTaskName, newTaskColor)
+                        onPress={() => postTask({/*new task data*/})
+                            //handleAddNewTask(newTaskName, newTaskColor)
                         }>
                         <SvgXml
                             xml={icons.plus}

@@ -15,6 +15,7 @@ const initialState = {
     selectedDate: null,
 };
 
+/*
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (bearerToken) => {
     const response = await axios.get(`${API_DOMAIN}/Task`, {
         headers: {
@@ -23,7 +24,7 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (bearerToke
     });
     return response.data;
 });
-
+*/
 export const addNewTask = createAsyncThunk(
     'tasks/addNewTask',
     async ({bearerToken, initialTask}) => {
@@ -116,7 +117,7 @@ const slice = createSlice({
         }
     },
     extraReducers(builder) {
-        builder
+        builder/*
             .addCase(fetchTasks.pending, (state, action) => {
                 state.status = 'loading';
             })
@@ -127,7 +128,7 @@ const slice = createSlice({
             .addCase(fetchTasks.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message;
-            })
+            })*/
             .addCase(fetchDailyTasks.pending, (state, action) => {
                 state.dailyStatus = 'loading';
             })

@@ -1,5 +1,6 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {API_DOMAIN} from "../../config";
+import {setNewTokens} from "./accountSlice";
 
 
 const parseSeconds = (response) => {
@@ -15,15 +16,34 @@ const transformDailyTasks = (response) => {
     return parsedResponse.map(({ name, time: seconds, color }) => ({ name, seconds, color }));
 };
 
+const baseQuery = fetchBaseQuery({baseUrl: API_DOMAIN,
+    prepareHeaders: (headers, {getState}) => {
+        const token = getState().account.bearerToken;
+        if(token)
+            headers.set('Authorization', `Bearer ${token}`);
+        return headers;
+    }});
+
+const baseQueryWithReauth = async (args, api, extraOptions) => {
+    let result = await baseQuery(args, api, extraOptions);
+    const refreshToken = api.getState().account.refreshToken;
+    const token = api.getState().account.bearerToken;
+    if( result.error && result.error.status === 401 && token !== null) {
+        const refreshResult = await baseQuery({url: '/refresh', method: 'POST', body: {refreshToken}}, api, extraOptions);
+        if(refreshResult.data) {
+            api.dispatch(setNewTokens(refreshResult.data));
+            console.log("TOKENS RECEIVED");
+            result = await baseQuery(args, api, extraOptions);
+        } else {
+            console.log("LOGGED OUT");
+        }
+    }
+    return result;
+}
+
 const api = createApi({
     reducerPath: 'api',
-    baseQuery: fetchBaseQuery({baseUrl: API_DOMAIN,
-        prepareHeaders: (headers, {getState}) => {
-            const token = getState().account.bearerToken;
-            if(token)
-                headers.set('Authorization', `Bearer ${token}`);
-            return headers;
-        }}),
+    baseQuery: baseQueryWithReauth,
     endpoints: (build) => ({
         getTasks: build.query({
             query: () => '/Task',
@@ -32,9 +52,17 @@ const api = createApi({
         getDailyTasks: build.query({
             query: (date) => `/Task/date/${date}`,
             transformResponse: (response) => transformDailyTasks(response),
+        }),
+        postTask: build.mutation({
+            query: (initialTask) => ({
+                url: `/Task`,
+                method: 'POST',
+                body: {initialTask}
+        }),
+            transformResponse: (response) => { console.log(response) }
         })
     }),
 });
 
-export const { useGetTasksQuery, useGetDailyTasksQuery } = api;
+export const { useGetTasksQuery, useGetDailyTasksQuery, usePostTaskMutation } = api;
 export default api;
