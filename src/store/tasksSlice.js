@@ -39,7 +39,7 @@ export const addNewTask = createAsyncThunk(
         return response.data;
     },
 );
-*/
+
 export const fetchHalfYearTime = createAsyncThunk(
     'tasks/monthly',
     async ({bearerToken}) => {
@@ -55,7 +55,7 @@ export const fetchHalfYearTime = createAsyncThunk(
         return response.data;
     },
 );
-
+*/
 export const fetchTotalTasksTime = createAsyncThunk(
     'tasks/total',
     async ({bearerToken}) => {
@@ -158,10 +158,11 @@ const slice = createSlice({
                 state.tasks = state.tasks.filter(
                     task => task.id !== action.payload.id,
                 );
-            })*/
+            })
             .addCase(fetchHalfYearTime.fulfilled, (state, action) => {
                 state.halfYearTime = action.payload.$values;
             })
+             */
             .addCase(fetchTotalTasksTime.fulfilled, (state, action) => {
                 state.totalTasksTime = action.payload.$values;
             });

@@ -12,22 +12,14 @@ import {useGetMonthlyActivityQuery} from "../../store/api";
 const MonthlyChart = () => {
     const {month} = useSelector(state => state.calendar);
     const {data: halfYearTime, error, isLoading} = useGetMonthlyActivityQuery();
-    
+
+    //TODO: Extract to own function
     let lastMonths = [];
-    for(let i = 5; i >= 0; i--)
-    {
-        if(month - i < 0)
-        {
-            lastMonths.push(12 + (month - i))
-        }
-        else
-        {
-            lastMonths.push(month - i)
-        }
-
+    for(let i = 5; i >= 0; i--) {
+        lastMonths.push((month - i + 12) % 12 || 12);
     }
-
     let lastMonthsNames = lastMonths.map(month => constants.months[month]);
+    
     return (
         !isLoading && <View>
             <LineChart
