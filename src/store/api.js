@@ -59,6 +59,19 @@ const parseMontlyTasks = (response) => {
     return newData;
 }
 
+const parseTasksActivity = (response) => {
+    const labels = response.map(task => task.name);
+    const data = response.map(({time}) => time).map(convertTimeStringToHours);
+    return {
+        labels: labels,
+        datasets: [
+            {
+                data: data
+            }
+        ]
+    };
+}
+
 const baseQuery = fetchBaseQuery({baseUrl: API_DOMAIN,
     prepareHeaders: (headers, {getState}) => {
         const token = getState().account.bearerToken;
@@ -125,9 +138,13 @@ const api = createApi({
         getMonthlyActivity: build.query({
             query: () => `/Task/monthly`,
             transformResponse: (response) => parseMontlyTasks(response.$values)
+        }),
+        getTasksActivity: build.query({
+            query: () => `/Task/total`,
+            transformResponse: (response) => parseTasksActivity(response.$values)
         })
     }),
 });
 
-export const { useGetTasksQuery, useGetDailyTasksQuery, usePostTaskMutation, useDeleteTaskMutation, useGetWeeklyTasksQuery, useGetMonthlyActivityQuery } = api;
+export const { useGetTasksQuery, useGetDailyTasksQuery, usePostTaskMutation, useDeleteTaskMutation, useGetWeeklyTasksQuery, useGetMonthlyActivityQuery, useGetTasksActivityQuery } = api;
 export default api;

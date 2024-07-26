@@ -3,6 +3,7 @@ import {Dimensions} from "react-native";
 import {BarChart} from "react-native-chart-kit";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchTotalTasksTime} from "../../store/tasksSlice";
+import {useGetTasksActivityQuery} from "../../store/api";
 
 // TODO: extract this function to its own file
 function convertTimeStringToHours(timeString) {
@@ -16,37 +17,10 @@ function convertTimeStringToHours(timeString) {
 }
 
 const TotalTaskTimeChart = () => {
-    const dispatch = useDispatch();
-    const [data, setData] = useState({
-        labels: ["January", "February", "March", "April", "May"],
-        datasets: [
-            {
-                data: [20, 45, 28, 80, 99]
-            }
-        ]
-    });
-    const {totalTasksTime} = useSelector(state => state.tasks);
-    const {bearerToken} = useSelector(state => state.account);
-    useEffect(() => {
-        dispatch(fetchTotalTasksTime({bearerToken}));
-    }, [])
-
-    useEffect(() => {
-        const labels = totalTasksTime.map(task => task.name);
-        const data = totalTasksTime.map(({time}) => time).map(convertTimeStringToHours);
-        const newData = {
-            labels: labels,
-            datasets: [
-                {
-                    data: data
-                }
-            ]
-        };
-        setData(newData);
-    }, [totalTasksTime]);
+    const {data, error, isLoading} = useGetTasksActivityQuery();
     
     return (
-        <BarChart
+        !isLoading && <BarChart
             data={data}
             width={Dimensions.get("window").width * 0.95}
             height={220}
