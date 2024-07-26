@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {resetBearerToken, resetUserData} from "../../store/accountSlice";
 import {resetTaskState} from "../../store/tasksSlice";
 import {resetCalendarState} from "../../store/slice";
+import api from "../../store/api";
 
 const CustomDrawerContent = props => {
     const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const CustomDrawerContent = props => {
         dispatch(resetTaskState());
         //dispatch(resetCalendarState());
         dispatch(resetUserData());
+        dispatch(api.util.resetApiState());
     }
     return (
         <DrawerContentScrollView {...props} style={styles.content}>
