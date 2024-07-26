@@ -44,10 +44,15 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 const api = createApi({
     reducerPath: 'api',
     baseQuery: baseQueryWithReauth,
+    tagTypes: ['Task'],
     endpoints: (build) => ({
         getTasks: build.query({
             query: () => '/Task',
-            transformResponse: (response) => response.$values,
+            transformResponse: (response) => {
+                console.log("FIRED");
+                return response.$values;
+            },
+            providesTags: ['Task'],
         }),
         getDailyTasks: build.query({
             query: (date) => `/Task/date/${date}`,
@@ -60,7 +65,8 @@ const api = createApi({
                 method: 'POST',
                 body: taskData
         }},
-            transformResponse: (response) => { console.log(response + "Oare de aici vine?") }
+            transformResponse: (response) => { console.log(response + "Oare de aici vine?") },
+            invalidatesTags: ['Task']
         })
     }),
 });
