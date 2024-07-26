@@ -6,11 +6,6 @@ import {useEffect} from "react";
 
 const TaskList = () => {
     const { data: tasks, error, isLoading } = useGetTasksQuery();
-    
-    useEffect(() => {
-        console.log(tasks);
-    }, [tasks]);
-    
     return (
         <View style={styles.taskList}>
             { !isLoading

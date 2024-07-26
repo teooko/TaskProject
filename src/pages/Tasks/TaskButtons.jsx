@@ -4,13 +4,15 @@ import {SvgXml} from 'react-native-svg';
 import {icons} from '../../assets/Icons';
 import {useDispatch} from 'react-redux';
 import {deleteTask} from '../../store/tasksSlice';
+import {useDeleteTaskMutation} from "../../store/api";
 
 const TaskButtons = ({id}) => {
     const dispatch = useDispatch();
     const handleDeleteTask = id => {
-        dispatch(deleteTask(id));
+        deleteTask(id);
     };
-
+    const [deleteTask] = useDeleteTaskMutation();
+    
     return (
         <View style={styles.taskButtons}>
             <Text style={{...styles.changeColor}}>Change color</Text>

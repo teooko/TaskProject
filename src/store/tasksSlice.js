@@ -24,7 +24,7 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (bearerToke
     });
     return response.data;
 });
-*/
+
 export const addNewTask = createAsyncThunk(
     'tasks/addNewTask',
     async ({bearerToken, initialTask}) => {
@@ -39,7 +39,7 @@ export const addNewTask = createAsyncThunk(
         return response.data;
     },
 );
-
+*/
 export const fetchHalfYearTime = createAsyncThunk(
     'tasks/monthly',
     async ({bearerToken}) => {
@@ -152,9 +152,9 @@ const slice = createSlice({
                 state.error = action.error.message;
                 console.log(action.error.message);
             })
-            .addCase(addNewTask.fulfilled, (state, action) => {
+            /*.addCase(addNewTask.fulfilled, (state, action) => {
                 state.tasks = [...state.tasks, action.payload];
-            })
+            })*/
             .addCase(deleteTask.fulfilled, (state, action) => {
                 state.tasks = state.tasks.filter(
                     task => task.id !== action.payload.id,

@@ -48,10 +48,7 @@ const api = createApi({
     endpoints: (build) => ({
         getTasks: build.query({
             query: () => '/Task',
-            transformResponse: (response) => {
-                console.log("FIRED");
-                return response.$values;
-            },
+            transformResponse: (response) => response.$values,
             providesTags: ['Task'],
         }),
         getDailyTasks: build.query({
@@ -59,17 +56,27 @@ const api = createApi({
             transformResponse: (response) => transformDailyTasks(response),
         }),
         postTask: build.mutation({
-            query: (taskData) => {
+            query: (body) => {
                 return {
-                url: `/Task`,
-                method: 'POST',
-                body: taskData
-        }},
-            transformResponse: (response) => { console.log(response + "Oare de aici vine?") },
+                    url: `/Task`, 
+                    method: `POST`,
+                    body
+                }},
+            transformResponse: (response) => { console.log("Added new task") },
+            invalidatesTags: ['Task']
+        }),
+        deleteTask: build.mutation({
+            query: (taskId) => {
+                return {
+                    url: `/Task?id=${taskId}`,
+                    method: `DELETE`
+                }
+            },
+            transformResponse: (response) => {console.log("Deleted task")},
             invalidatesTags: ['Task']
         })
     }),
 });
 
-export const { useGetTasksQuery, useGetDailyTasksQuery, usePostTaskMutation } = api;
+export const { useGetTasksQuery, useGetDailyTasksQuery, usePostTaskMutation, useDeleteTaskMutation } = api;
 export default api;
