@@ -67,11 +67,10 @@ export const fetchTotalTasksTime = createAsyncThunk(
                 }
             }
         );
-        console.log(response.data);
         return response.data;
     },
 );
-
+/*
 export const deleteTask = createAsyncThunk(
     'tasks/deleteTask',
     async (taskId, {rejectWithValue}) => {
@@ -86,7 +85,7 @@ export const deleteTask = createAsyncThunk(
         }
     },
 );
-
+*/
 export const fetchDailyTasks = createAsyncThunk(
     '/tasks/date/fetchDailyTasks',
     async ({bearerToken, date}) => {
@@ -154,12 +153,12 @@ const slice = createSlice({
             })
             /*.addCase(addNewTask.fulfilled, (state, action) => {
                 state.tasks = [...state.tasks, action.payload];
-            })*/
+            })
             .addCase(deleteTask.fulfilled, (state, action) => {
                 state.tasks = state.tasks.filter(
                     task => task.id !== action.payload.id,
                 );
-            })
+            })*/
             .addCase(fetchHalfYearTime.fulfilled, (state, action) => {
                 state.halfYearTime = action.payload.$values;
             })

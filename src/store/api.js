@@ -16,6 +16,49 @@ const transformDailyTasks = (response) => {
     return parsedResponse.map(({ name, time: seconds, color }) => ({ name, seconds, color }));
 };
 
+const parseWeeklyTasks = (response) => {
+    const today = Date.now();
+
+    return response.map(weekDay => {
+        const newTimestamp = new Date(weekDay.day);
+
+        const difference = today - newTimestamp;
+        const millisecondsPerDay = 24 * 60 * 60 * 1000;
+        const daysPassed = Math.floor(
+            difference / millisecondsPerDay,
+        );
+
+        state.days.daysById[daysPassed].colors =
+            weekDay.colors.$values;
+    });
+}
+
+function convertTimeStringToHours(timeString) {
+    // Split the time string into components
+    const [hours, minutes, seconds] = timeString.split(':');
+
+    // Parse hours, minutes, and seconds
+    const parsedHours = parseInt(hours, 10);
+    const parsedMinutes = parseInt(minutes, 10);
+    const parsedSeconds = parseFloat(seconds); // Parse seconds as float for decimal precision
+
+    // Calculate total hours
+    const totalMinutes = parsedHours + (parsedMinutes) + (parsedSeconds / 60);
+
+    return totalMinutes;
+}
+
+const parseMontlyTasks = (response) => {
+    const newData = [0, 0, 0, 0, 0, 0];
+    
+    response.map(month => {
+        const hours = convertTimeStringToHours(month.time);
+        newData[month.monthNumber - 1] = hours;
+    });
+    
+    return newData;
+}
+
 const baseQuery = fetchBaseQuery({baseUrl: API_DOMAIN,
     prepareHeaders: (headers, {getState}) => {
         const token = getState().account.bearerToken;
@@ -74,9 +117,17 @@ const api = createApi({
             },
             transformResponse: (response) => {console.log("Deleted task")},
             invalidatesTags: ['Task']
+        }),
+        getWeeklyTasks: build.query({
+            query: (fromDate) => `/Task/weekly/${fromDate}`,
+            transformResponse: (response) => {}
+        }),
+        getMonthlyActivity: build.query({
+            query: () => `/Task/monthly`,
+            transformResponse: (response) => parseMontlyTasks(response.$values)
         })
     }),
 });
 
-export const { useGetTasksQuery, useGetDailyTasksQuery, usePostTaskMutation, useDeleteTaskMutation } = api;
+export const { useGetTasksQuery, useGetDailyTasksQuery, usePostTaskMutation, useDeleteTaskMutation, useGetWeeklyTasksQuery, useGetMonthlyActivityQuery } = api;
 export default api;
