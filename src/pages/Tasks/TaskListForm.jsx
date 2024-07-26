@@ -15,7 +15,6 @@ const TaskListForm = () => {
     const [newTaskName, setNewTaskName] = useState('Create new task...');
     const [toggleColorPicker, setToggleColorPicker] = useState(false);
     const [newTaskColor, setNewTaskColor] = useState('#B56464');
-    const {bearerToken} = useSelector(state => state.account);
     const onSelectColor = ({hex}) => {
         setNewTaskColor(hex);
     };

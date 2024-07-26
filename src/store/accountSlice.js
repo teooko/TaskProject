@@ -113,6 +113,7 @@ const slice = createSlice({
         builder
             .addCase(postLogIn.fulfilled, (state, action) => {
                 state.bearerToken = action.payload.accessToken;
+                state.refreshToken = action.payload.refreshToken;
             })
             .addCase(getUserClaims.fulfilled, (state, action) => {
                 const claims = action.payload.$values?.reduce((acc, claim) => {

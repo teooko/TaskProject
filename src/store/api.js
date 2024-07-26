@@ -35,7 +35,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
             console.log("TOKENS RECEIVED");
             result = await baseQuery(args, api, extraOptions);
         } else {
-            console.log("LOGGED OUT");
+            console.log("LOGGED OUT " + refreshToken + token);
         }
     }
     return result;
@@ -55,7 +55,6 @@ const api = createApi({
         }),
         postTask: build.mutation({
             query: (taskData) => {
-                console.log(taskData.name + " ASTEAS ARGUMENTELE");
                 return {
                 url: `/Task`,
                 method: 'POST',
