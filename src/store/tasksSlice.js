@@ -5,13 +5,13 @@ import async from 'async';
 import {API_DOMAIN} from "../../config";
 
 const initialState = {
-    tasks: [],
-    newTask: {},
-    status: 'idle',
-    error: null,
-    dailyTasks: [],
-    halfYearTime: [],
-    totalTasksTime: [],
+  // tasks: [],
+  // newTask: {},
+  // status: 'idle',
+  // error: null,
+   // dailyTasks: [],
+   //halfYearTime: [],
+  //totalTasksTime: [],
     selectedDate: null,
 };
 
@@ -86,7 +86,7 @@ export const deleteTask = createAsyncThunk(
         }
     },
 );
-*/
+
 export const fetchDailyTasks = createAsyncThunk(
     '/tasks/date/fetchDailyTasks',
     async ({bearerToken, date}) => {
@@ -101,7 +101,7 @@ export const fetchDailyTasks = createAsyncThunk(
         return response.data;
     },
 );
-
+*/
 const slice = createSlice({
     name: 'tasks',
     initialState,
@@ -116,8 +116,9 @@ const slice = createSlice({
             state.selectedDate = payload;
         }
     },
+    /*
     extraReducers(builder) {
-        builder/*
+        builder
             .addCase(fetchTasks.pending, (state, action) => {
                 state.status = 'loading';
             })
@@ -128,7 +129,7 @@ const slice = createSlice({
             .addCase(fetchTasks.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message;
-            })*/
+            })
             .addCase(fetchDailyTasks.pending, (state, action) => {
                 state.dailyStatus = 'loading';
             })
@@ -168,8 +169,8 @@ const slice = createSlice({
                 state.totalTasksTime = action.payload.$values;
             });
             
-             */
-    },
+             
+    },*/
 });
 
 export const {loadTasks, setNewTask, resetTaskState, setSelectedDate} = slice.actions;

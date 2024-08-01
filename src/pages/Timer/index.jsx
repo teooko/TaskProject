@@ -40,6 +40,7 @@ import {
 import {useWebSocket} from "../../services/WebSocketService";
 import {Notifier} from "react-native-notifier";
 import {Easing} from "react-native-reanimated";
+import {useGetTasksQuery} from "../../store/api";
 
 const {height, width} = Dimensions.get('window');
 function Timer({navigation}) {
@@ -150,7 +151,7 @@ function Timer({navigation}) {
         setSvg(start);
     };
     
-    const {tasks} = useSelector(state => state.tasks);
+    const {data: tasks, isLoading, error} = useGetTasksQuery();
     const {orientation} = useSelector(state => state.deviceInfo);
     useOrientation();
     const [countDownId, setCountDownId] = useState(null);
