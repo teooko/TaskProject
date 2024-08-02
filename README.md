@@ -15,7 +15,7 @@ This is a mobile app that allows users to come together and use the Pomodoro Tec
 
 
 ## Screenshots
-<img src="(https://github.com/user-attachments/assets/57772a0b-4a48-489f-8bca-b76f4e1f922f" width="300" height="auto">
+<img src="https://github.com/user-attachments/assets/57772a0b-4a48-489f-8bca-b76f4e1f922f" width="300" height="auto">
 
 
 
