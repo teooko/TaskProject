@@ -1,22 +1,18 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Task Project
 
-# Getting Started
+This is a mobile app that allows users to come together and use the Pomodoro Technique to develop nourishing daily habits. Progress can be tracked through various methods, such as graphs and calendars. Adding people to your Pomodoro session can be a great motivator. A distinctive feature of this application is the timer with shared controls between users in a session.
 
-> **Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Features
 
-## Step 1: Start the Metro Server
+- **Scrollable calendar** that displays the colors of the tasks completed each day.
+- **Pie-chart** that shows a more detailed overview of the selected calendar day.
+- **List** for your tasks, which can be modified.
+- **Drop-down** of the tasks available for the Pomodoro session.
+- **Time picker** for setting session time and break time.
+- **Invitations** for adding people to your Pomodoro session.
+- **Chat** for users who joined your session.
+- **Page dedicated to statistics**.
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
-
-To start Metro, run the following command from the _root_ of your React Native project:
-
-```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
-```
 
 ## Step 2: Start your Application
 
