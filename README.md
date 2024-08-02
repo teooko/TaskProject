@@ -14,9 +14,10 @@ This is a mobile app that allows users to come together and use the Pomodoro Tec
 - **Page dedicated to statistics**.
 
 
-## Step 2: Start your Application
+## Screenshots
+![2024-08-02 22-50-21_1](https://github.com/user-attachments/assets/57772a0b-4a48-489f-8bca-b76f4e1f922f)
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+
 
 ### For Android
 
