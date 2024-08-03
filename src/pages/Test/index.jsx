@@ -1,25 +1,32 @@
 ﻿import CalendarStrip from 'react-native-calendar-strip';
+import DayCard from "./DayCard";
 
 const Test = () => {
     
     return ( <CalendarStrip
+        dayComponentHeight={200}
+        dayContainerStyle={{ height: 200 }}
         calendarAnimation={{type: 'parallel', duration: 30}}
         daySelectionAnimation={{type: 'border', duration: 200, borderWidth: 1, borderHighlightColor: 'white'}}
-        style={{height: 100, paddingTop: 20, paddingBottom: 10}}
+        style={{height: 300, paddingTop: 20, paddingBottom: 10}}
         calendarHeaderStyle={{color: 'white'}}
         calendarColor={'#7743CE'}
-        dateNumberStyle={{color: 'white'}}
-        dateNameStyle={{color: 'white'}}
+        //dateNumberStyle={{fontSize: 30, color: '#560D0D', }}
+        //dateNameStyle={{color: '#560D0D', fontSize: 15}}
         highlightDateNumberStyle={{color: 'yellow'}}
         highlightDateNameStyle={{color: 'yellow'}}
         disabledDateNameStyle={{color: 'grey'}}
         disabledDateNumberStyle={{color: 'grey'}}
+        dayComponent={(props) => <DayCard props={props} />}
         // datesWhitelist={datesWhitelist}
         // datesBlacklist={datesBlacklist}
         // iconLeft={require('./img/left-arrow.png')}
         // iconRight={require('./img/right-arrow.png')}
+        responsiveSizingOffset={30}
         scrollable
-        iconContainer={{flex: 0.1}}
+        iconContainer={{flex: 0}}
+        leftSelector={[]}
+        rightSelector={[]}
     />)
 }
 
