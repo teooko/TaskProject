@@ -1,29 +1,26 @@
-﻿import React, {useState} from 'react';
-import { View, Text, Button } from 'react-native';
-import { Formik } from 'formik';
-import ImagePicker from 'react-native-image-picker';
-import CountDown from "react-native-countdown-fixed";
+﻿import CalendarStrip from 'react-native-calendar-strip';
 
-const ImageForm = () => {
-    const [running, setRunning] = useState(false);
-    return (
-        <>
-        <CountDown
-            size={30}
-            until={1000}
-            onFinish={() => alert('Finished')}
-            digitStyle={{backgroundColor: '#FFF', borderWidth: 2, borderColor: '#1CC625'}}
-            digitTxtStyle={{color: '#1CC625'}}
-            timeLabelStyle={{color: 'red', fontWeight: 'bold'}}
-            separatorStyle={{color: '#1CC625'}}
-            timeToShow={['H', 'M', 'S']}
-            timeLabels={{m: null, s: null}}
-            showSeparator
-            running={running}
-        />
-            <Button title={"start/stop"} onPress={() => setRunning(running => !running)}/>
-        </>
-    )
-};
+const Test = () => {
+    
+    return ( <CalendarStrip
+        calendarAnimation={{type: 'parallel', duration: 30}}
+        daySelectionAnimation={{type: 'border', duration: 200, borderWidth: 1, borderHighlightColor: 'white'}}
+        style={{height: 100, paddingTop: 20, paddingBottom: 10}}
+        calendarHeaderStyle={{color: 'white'}}
+        calendarColor={'#7743CE'}
+        dateNumberStyle={{color: 'white'}}
+        dateNameStyle={{color: 'white'}}
+        highlightDateNumberStyle={{color: 'yellow'}}
+        highlightDateNameStyle={{color: 'yellow'}}
+        disabledDateNameStyle={{color: 'grey'}}
+        disabledDateNumberStyle={{color: 'grey'}}
+        // datesWhitelist={datesWhitelist}
+        // datesBlacklist={datesBlacklist}
+        // iconLeft={require('./img/left-arrow.png')}
+        // iconRight={require('./img/right-arrow.png')}
+        scrollable
+        iconContainer={{flex: 0.1}}
+    />)
+}
 
-export default ImageForm;
+export default Test;
