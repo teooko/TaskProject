@@ -6,25 +6,43 @@ import {SvgXml} from 'react-native-svg';
 import {icons} from '../../assets/Icons';
 import {useEffect} from "react";
 import {calendarNames} from "../../constants";
-const DayCard = (props) => {
-    const {days, selected} = useSelector(state => state.calendar);
-    const dispatch = useDispatch();
+const DayCard = ({props}) => {
     let dayNumber, dayName;
-    const date = new Date(props.props.date);
+    const date = new Date(props.date);
     dayNumber = date.getDate();
     dayName = date.getDay();
+    
+    //TODO replace temporary solution (i need to figure out how to change the timestamp format of the calendar strip)
+    const dateString = date.toJSON().slice(0,-5);
+    const newDateString = dateString.replace("T09", "T00");
+    //----------------------------------------------------------------------------------
+    
+    const markedDates = props.markedDates[0];
+    const colors = markedDates[newDateString] && markedDates[newDateString].$values;
+    useEffect(() => {
+        if(newDateString === "2024-08-04T00:00:00")
+            console.log(newDateString);
+    }, [])
     return (
-        <Pressable style={styles.card}>
+        <Pressable style={styles.card} onPress={() => props.onDateSelected(props.date)}>
             <Text
-                style={styles.weekDay}>
+                style={
+                    props.selected
+                        ? {...styles.weekDay, ...styles.cardSelected}
+                        : styles.weekDay
+                }>
                 {calendarNames.weekDays[dayName]}
             </Text>
             <Text
-                style={styles.monthDay}>
+                style={
+                    props.selected
+                        ? {...styles.monthDay, ...styles.cardSelected}
+                        : styles.monthDay
+                }>
                 {dayNumber}
             </Text>
-            {/*<View style={styles.taskCircles}>
-                {firstThreeTasks?.map((color, index) => (
+            <View style={styles.taskCircles}>
+                {colors?.map((color, index) => (
                     <SvgXml
                         xml={icons.circle}
                         width={13}
@@ -33,15 +51,15 @@ const DayCard = (props) => {
                         key={index}
                     />
                 ))}
-                {days.daysById[id].colors?.length > 3 ? (
+                {colors?.length > 3 ? (
                     <SvgXml
                         xml={icons.chevronCircleRight}
                         width={13}
                         height={13}
-                        fill={selected === id ? '#DF5454' : `#560D0D`}
+                        fill={props.selected ? '#DF5454' : `#560D0D`}
                     />
                 ) : null}
-            </View>*/}
+            </View>
         </Pressable>
     );
 };
