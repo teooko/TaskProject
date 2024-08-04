@@ -142,9 +142,13 @@ const api = createApi({
         getTasksActivity: build.query({
             query: () => `/Task/total`,
             transformResponse: (response) => parseTasksActivity(response.$values)
+        }),
+        getPastYearTasks: build.query({
+            query: () => `/Task/yearly`,
+            transformResponse: (response) => console.log(response)
         })
     }),
 });
 
-export const { useGetTasksQuery, useGetDailyTasksQuery, usePostTaskMutation, useDeleteTaskMutation, useGetWeeklyTasksQuery, useGetMonthlyActivityQuery, useGetTasksActivityQuery } = api;
+export const { useGetTasksQuery, useGetDailyTasksQuery, usePostTaskMutation, useDeleteTaskMutation, useGetWeeklyTasksQuery, useGetMonthlyActivityQuery, useGetTasksActivityQuery, useGetPastYearTasksQuery } = api;
 export default api;

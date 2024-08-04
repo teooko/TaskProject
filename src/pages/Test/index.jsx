@@ -1,9 +1,10 @@
 ﻿import CalendarStrip from 'react-native-calendar-strip';
 import DayCard from "./DayCard";
-
+import {useGetPastYearTasksQuery} from "../../store/api";
+import {Text} from "react-native";
 const Test = () => {
-    
-    return ( <CalendarStrip
+    const {data, isLoading, error} = useGetPastYearTasksQuery();
+    return ( !isLoading ? <CalendarStrip
         dayComponentHeight={200}
         dayContainerStyle={{ height: 200 }}
         calendarAnimation={{type: 'parallel', duration: 30}}
@@ -27,7 +28,49 @@ const Test = () => {
         iconContainer={{flex: 0}}
         leftSelector={[]}
         rightSelector={[]}
-    />)
+        markedDates={[{
+            "$id": "1",
+            "2024-05-14T00:00:00": {
+                "$id": "2",
+                "$values": ["#72fff9"]
+            },
+            "2024-05-20T00:00:00": {
+                "$id": "3",
+                "$values": ["#72fff9"]
+            },
+            "2024-07-01T00:00:00": {
+                "$id": "6",
+                "$values": ["#970fff"]
+            },
+            "2024-07-02T00:00:00": {
+                "$id": "4",
+                "$values": ["#72fff9", "#970fff", "#50a6ff"]
+            },
+            "2024-07-15T00:00:00": {
+                "$id": "9",
+                "$values": ["#50a6ff"]
+            },
+            "2024-07-19T00:00:00": {
+                "$id": "5",
+                "$values": ["#72fff9", "#970fff"]
+            },
+            "2024-07-23T00:00:00": {
+                "$id": "7",
+                "$values": ["#970fff"]
+            },
+            "2024-08-01T00:00:00": {
+                "$id": "8",
+                "$values": ["#970fff"]
+            },
+            "2024-08-02T00:00:00": {
+                "$id": "10",
+                "$values": ["#ffc43b"]
+            }
+        }]}
+    /> :
+    <Text>
+        se incarca
+    </Text>)
 }
 
 export default Test;
