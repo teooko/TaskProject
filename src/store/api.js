@@ -144,8 +144,7 @@ const api = createApi({
             transformResponse: (response) => parseTasksActivity(response.$values)
         }),
         getPastYearTasks: build.query({
-            query: () => `/Task/yearly`,
-            transformResponse: (response) => console.log(response)
+            query: () => `/Task/yearly`
         })
     }),
 });
