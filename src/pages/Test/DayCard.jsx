@@ -19,10 +19,7 @@ const DayCard = ({props}) => {
     
     const markedDates = props.markedDates[0];
     const colors = markedDates[newDateString] && markedDates[newDateString].$values;
-    useEffect(() => {
-        if(newDateString === "2024-08-04T00:00:00")
-            console.log(newDateString);
-    }, [])
+
     return (
         <Pressable style={styles.card} onPress={() => props.onDateSelected(props.date)}>
             <Text
@@ -42,7 +39,7 @@ const DayCard = ({props}) => {
                 {dayNumber}
             </Text>
             <View style={styles.taskCircles}>
-                {colors?.map((color, index) => (
+                {colors?.slice(0, 3).map((color, index) => (
                     <SvgXml
                         xml={icons.circle}
                         width={13}
