@@ -2,9 +2,12 @@
 import {SvgXml} from 'react-native-svg';
 import {icons} from '../../assets/Icons';
 import {calendarNames} from "../../constants";
+import {setSelectedDate} from "../../store/tasksSlice";
+import {useDispatch} from "react-redux";
 const DayCard = ({props}) => {
     let dayNumber, dayName;
     const date = new Date(props.date);
+    const dateReqString = date.toJSON().toString();
     dayNumber = date.getDate();
     dayName = date.getDay();
     
@@ -15,9 +18,15 @@ const DayCard = ({props}) => {
     
     const markedDates = props.markedDates[0];
     const colors = markedDates[newDateString] && markedDates[newDateString].$values;
-
+    const dispatch = useDispatch();
+    
+    const handleSelectDay = () => {
+        props.onDateSelected(props.date);
+        dispatch(setSelectedDate(dateReqString));
+    }
+    
     return (
-        <Pressable style={styles.card} onPress={() => props.onDateSelected(props.date)}>
+        <Pressable style={styles.card} onPress={handleSelectDay}>
             <Text
                 style={
                     props.selected
