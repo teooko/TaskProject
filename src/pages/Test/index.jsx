@@ -8,25 +8,18 @@ const Test = () => {
     const yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);
     return ( !isLoading && data ? <CalendarStrip
-        dayComponentHeight={200}
-        dayContainerStyle={{ height: 200 }}
-        calendarAnimation={{type: 'parallel', duration: 30}}
-        daySelectionAnimation={{type: 'border', duration: 200, borderWidth: 1, borderHighlightColor: 'white'}}
-        style={{height: 300, paddingTop: 20, paddingBottom: 10}}
-        calendarHeaderStyle={{color: 'white'}}
+        dayComponentHeight={160}
+        style={{height: 160}}
+        calendarHeaderStyle={{
+            color: 'white',
+            fontSize: 15,
+            alignSelf: "flex-start",
+            paddingLeft: 5,
+            marginBottom: 90
+        }}
         calendarColor={'#7743CE'}
-        //dateNumberStyle={{fontSize: 30, color: '#560D0D', }}
-        //dateNameStyle={{color: '#560D0D', fontSize: 15}}
-        highlightDateNumberStyle={{color: 'yellow'}}
-        highlightDateNameStyle={{color: 'yellow'}}
-        disabledDateNameStyle={{color: 'grey'}}
-        disabledDateNumberStyle={{color: 'grey'}}
         dayComponent={(props) => <DayCard props={props} />}
-        // datesWhitelist={datesWhitelist}
-        // datesBlacklist={datesBlacklist}
-        // iconLeft={require('./img/left-arrow.png')}
-        // iconRight={require('./img/right-arrow.png')}
-        responsiveSizingOffset={30}
+        responsiveSizingOffset={40}
         scrollable
         iconContainer={{flex: 0}}
         leftSelector={[]}
