@@ -3,8 +3,8 @@ import {Dimensions, Text, View} from "react-native";
 import {LineChart} from "react-native-chart-kit";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchHalfYearTime} from "../../store/tasksSlice";
-import {constants} from "../../components/ScrollingCalendar/constants";
 import {useGetMonthlyActivityQuery} from "../../store/api";
+import {calendarNames} from "../../constants";
 
 // TODO: extract this function to its own file
 
@@ -18,7 +18,7 @@ const MonthlyChart = () => {
     for(let i = 5; i >= 0; i--) {
         lastMonths.push((month - i + 12) % 12 || 12);
     }
-    let lastMonthsNames = lastMonths.map(month => constants.months[month]);
+    let lastMonthsNames = lastMonths.map(month => calendarNames.months[month]);
     
     return (
         !isLoading && <View>

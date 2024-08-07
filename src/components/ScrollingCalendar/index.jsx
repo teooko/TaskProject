@@ -1,19 +1,34 @@
-﻿import React from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
-import ScrollingDays from './ScrollingDays';
-import CalendarHeader from './CalendarHeader';
+﻿import CalendarStrip from 'react-native-calendar-strip';
+import DayCard from "./DayCard";
+import {useGetPastYearTasksQuery} from "../../store/api";
+import {Text} from "react-native";
 const ScrollingCalendar = () => {
-    return (
-        <SafeAreaView style={styles.backgroundStyle}>
-            <CalendarHeader />
-            <ScrollingDays />
-        </SafeAreaView>
-    );
-};
+    const {data, isLoading, error} = useGetPastYearTasksQuery();
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    return ( !isLoading && data ? <CalendarStrip
+            dayComponentHeight={160}
+            style={{height: 160}}
+            calendarHeaderStyle={{
+                color: 'white',
+                fontSize: 15,
+                alignSelf: "flex-start",
+                paddingLeft: 5,
+                marginBottom: 50
+            }}
+            dayComponent={(props) => <DayCard props={props} />}
+            responsiveSizingOffset={40}
+            scrollable
+            iconContainer={{flex: 0}}
+            leftSelector={[]}
+            rightSelector={[]}
+            markedDates={[data]}
+            selectedDate={today}
+        /> :
+        <Text>
+            se incarca
+        </Text>)
+}
 
-const styles = StyleSheet.create({
-    backgroundStyle: {
-        width: '100%',
-    },
-});
 export default ScrollingCalendar;
