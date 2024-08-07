@@ -1,44 +1,41 @@
 ﻿import {Pressable, StyleSheet, Text, View} from 'react-native';
-import {constants} from './constants';
-import {useDispatch, useSelector} from 'react-redux';
-import {selectDay} from '../../store/slice';
-import {fetchDailyTasks, setSelectedDate} from '../../store/tasksSlice';
 import {SvgXml} from 'react-native-svg';
 import {icons} from '../../assets/Icons';
-const DayCard = ({id}) => {
-    const {days, selected} = useSelector(state => state.calendar);
-    const dispatch = useDispatch();
-    const handlePress = () => {
-        dispatch(selectDay(id));
-        dispatch(
-            setSelectedDate(`${days.daysById[id].year}-${days.daysById[id].month + 1}-${
-                    days.daysById[id].monthDay}`
-            ),
-        );
-    };
-
-    const firstThreeTasks = days.daysById[id].colors?.slice(0, 3);
+import {calendarNames} from "../../constants";
+const DayCard = ({props}) => {
+    let dayNumber, dayName;
+    const date = new Date(props.date);
+    dayNumber = date.getDate();
+    dayName = date.getDay();
+    
+    //TODO replace temporary solution (i need to figure out how to change the timestamp format of the calendar strip)
+    const dateString = date.toJSON().slice(0,-5);
+    const newDateString = dateString.replace("T09", "T00");
+    //----------------------------------------------------------------------------------
+    
+    const markedDates = props.markedDates[0];
+    const colors = markedDates[newDateString] && markedDates[newDateString].$values;
 
     return (
-        <Pressable style={styles.card} onPress={handlePress}>
+        <Pressable style={styles.card} onPress={() => props.onDateSelected(props.date)}>
             <Text
                 style={
-                    selected === id
+                    props.selected
                         ? {...styles.weekDay, ...styles.cardSelected}
                         : styles.weekDay
                 }>
-                {constants.weekDays[days.daysById[id].weekDay]}
+                {calendarNames.weekDays[dayName]}
             </Text>
             <Text
                 style={
-                    selected === id
+                    props.selected
                         ? {...styles.monthDay, ...styles.cardSelected}
                         : styles.monthDay
                 }>
-                {days.daysById[id].monthDay}
+                {dayNumber}
             </Text>
             <View style={styles.taskCircles}>
-                {firstThreeTasks?.map((color, index) => (
+                {colors?.slice(0, 3).map((color, index) => (
                     <SvgXml
                         xml={icons.circle}
                         width={13}
@@ -47,12 +44,12 @@ const DayCard = ({id}) => {
                         key={index}
                     />
                 ))}
-                {days.daysById[id].colors?.length > 3 ? (
+                {colors?.length > 3 ? (
                     <SvgXml
                         xml={icons.chevronCircleRight}
                         width={13}
                         height={13}
-                        fill={selected === id ? '#DF5454' : `#560D0D`}
+                        fill={props.selected ? '#DF5454' : `#560D0D`}
                     />
                 ) : null}
             </View>
@@ -66,7 +63,6 @@ const styles = StyleSheet.create({
         width: 80,
         height: 100,
         borderRadius: 15,
-        marginLeft: 10,
     },
     cardSelected: {
         color: '#DF5454',

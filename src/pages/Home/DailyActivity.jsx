@@ -4,8 +4,8 @@ import React from 'react';
 import Piechart from '../../components/Piechart';
 import TaskList from './TaskList';
 import {useSelector} from 'react-redux';
-import {constants} from '../../components/ScrollingCalendar/constants';
 import {useGetDailyTasksQuery} from "../../store/api";
+import {calendarNames} from "../../constants";
 
 const DailyActivity = () => {
     // TODO: Maybe get rid of useSelector?
@@ -25,7 +25,7 @@ const DailyActivity = () => {
                 {selected === 0
                     ? "Today's Activity"
                     : `Activity from ${days.daysById[selected].monthDay}th of ${
-                          constants.months[days.daysById[selected].month]
+                          calendarNames.months[days.daysById[selected].month]
                       }`}
             </Text>
             <Text style={styles.timeLabel}>
