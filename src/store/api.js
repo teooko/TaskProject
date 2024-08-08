@@ -100,7 +100,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 const api = createApi({
     reducerPath: 'api',
     baseQuery: baseQueryWithReauth,
-    tagTypes: ['Task'],
+    tagTypes: ['Task', 'Daily'],
     endpoints: (build) => ({
         getTasks: build.query({
             query: () => '/Task',
@@ -144,7 +144,8 @@ const api = createApi({
             transformResponse: (response) => parseTasksActivity(response.$values)
         }),
         getPastYearTasks: build.query({
-            query: () => `/Task/yearly`
+            query: () => `/Task/yearly`,
+            providesTags: ['Daily'],
         })
     }),
 });
