@@ -73,6 +73,9 @@ const slice = createSlice({
         },
         setBreakTime(state, {payload}) {
             state.breakTime = payload;
+        },
+        setWorkSessionId(state, {payload}) {
+            state.currentWorkSessionId = payload;
         }
     },
     extraReducers(builder) {
@@ -89,5 +92,5 @@ const slice = createSlice({
 export const {setCurrentTaskId, startTimer, stopTimer,
     openPicker, closePicker, setTime,
     setReset, setCurrentTime, setIsBreak,
-    setWorkingTime, setBreakTime} = slice.actions
+    setWorkingTime, setBreakTime, setWorkSessionId} = slice.actions
 export default slice.reducer;

@@ -20,7 +20,7 @@ import {
     patchStopTimer,
     postStartTimer,
     setCurrentTaskId, setCurrentTime, setIsBreak,
-    setReset, setTime,
+    setReset, setTime, setWorkSessionId,
     startTimer,
     stopTimer
 } from '../../store/timerSlice';
@@ -40,7 +40,8 @@ import {
 import {useWebSocket} from "../../services/WebSocketService";
 import {Notifier} from "react-native-notifier";
 import {Easing} from "react-native-reanimated";
-import {useGetTasksQuery} from "../../store/api";
+import {useGetTasksQuery, usePatchStopTimeStampMutation, usePostStartTimeStampMutation} from "../../store/api";
+import {patch} from "axios";
 
 const {height, width} = Dimensions.get('window');
 function Timer({navigation}) {
@@ -108,10 +109,17 @@ function Timer({navigation}) {
         }
     }, [timerRunning, userIds]);
     
+    const [postStartTimeStamp, result] = usePostStartTimeStampMutation();
+    const [patchStopTimeStamp] = usePatchStopTimeStampMutation();
+    
     const {startTimerAnimation, stopTimerAnimation, resetTimerAnimation, frontWaveStyle, backWaveStyle, riseAnimationStyle} = useTimerAnimation();
+    useEffect(() => {
+        if(result.data !== undefined)
+            dispatch(setWorkSessionId(result.data.id));
+    }, [result]);
     const handleStartTimer = async id => {
         try {
-            await dispatch(postStartTimer(id));
+            await postStartTimeStamp(id);
         } catch (error) {
             console.error(error);
         }
@@ -119,7 +127,7 @@ function Timer({navigation}) {
 
     const handleStopTimer = async id => {
         try {
-            await dispatch(patchStopTimer(id));
+            await patchStopTimeStamp(id);
         } catch (error) {
             console.error(error);
         }

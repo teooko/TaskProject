@@ -146,9 +146,28 @@ const api = createApi({
         getPastYearTasks: build.query({
             query: () => `/Task/yearly`,
             providesTags: ['Daily'],
+        }),
+        postStartTimeStamp: build.mutation({
+            query: (taskId) => {
+                return {
+                    url: `/WorkSession/${taskId}`,
+                    method: `POST`,
+                }},
+        }),
+        patchStopTimeStamp: build.mutation({
+            query: (workSessionId) => {
+                return {
+                    url: `/WorkSession/${workSessionId}`,
+                    method: `PATCH`,
+                }},
+            transformResponse: (response) => console.log(response),
+            invalidatesTags: ['Daily', 'Task'],
         })
     }),
 });
 
-export const { useGetTasksQuery, useGetDailyTasksQuery, usePostTaskMutation, useDeleteTaskMutation, useGetWeeklyTasksQuery, useGetMonthlyActivityQuery, useGetTasksActivityQuery, useGetPastYearTasksQuery } = api;
+export const { useGetTasksQuery, useGetDailyTasksQuery, usePostTaskMutation, 
+    useDeleteTaskMutation, useGetWeeklyTasksQuery, useGetMonthlyActivityQuery, 
+    useGetTasksActivityQuery, useGetPastYearTasksQuery, usePostStartTimeStampMutation,
+    usePatchStopTimeStampMutation } = api;
 export default api;
