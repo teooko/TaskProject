@@ -1,6 +1,5 @@
 ﻿import {configureStore} from '@reduxjs/toolkit';
-import calendarReducer, {fetchWeeklyTasks, insertDays} from './slice';
-import tasksReducer, {fetchDailyTasks, fetchTasks} from './tasksSlice';
+import tasksReducer from './tasksSlice';
 import deviceInfoReducer from './deviceInfoSlice'
 import timerReducer from './timerSlice';
 import accountReducer from './accountSlice';
@@ -19,7 +18,6 @@ const persistedAccountReducer = persistReducer(accountPersistConfig, accountRedu
 
 const store = configureStore({
     reducer: {
-        calendar: calendarReducer,
         tasks: tasksReducer,
         timer: timerReducer,
         deviceInfo: deviceInfoReducer,
@@ -36,11 +34,6 @@ const store = configureStore({
             
         }).concat(api.middleware),
 });
-//const bearerToken = store.getState().account.bearerToken;
-store.dispatch(insertDays());
-//store.dispatch(fetchWeeklyTasks({ bearerToken, fromDate: 0 }))
-
-
 
 export const persistor = persistStore(store);
 export default store;

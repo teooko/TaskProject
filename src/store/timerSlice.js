@@ -15,26 +15,6 @@ const initialState = {
     isBreak: false,
 };
 
-export const postStartTimer = createAsyncThunk(
-    'timer/startTimer',
-    async taskId => {
-        const response = await axios.post(
-            `${API_DOMAIN}/WorkSession/${taskId}`,
-        );
-        return response.data;
-    },
-);
-
-export const patchStopTimer = createAsyncThunk(
-    'timer/stopTimer',
-    async workSessionId => {
-        const response = await axios.patch(
-            `${API_DOMAIN}/WorkSession/${workSessionId}`,
-        );
-        return response.data;
-    },
-);
-
 const slice = createSlice({
     name: 'timer',
     initialState,
@@ -77,15 +57,6 @@ const slice = createSlice({
         setWorkSessionId(state, {payload}) {
             state.currentWorkSessionId = payload;
         }
-    },
-    extraReducers(builder) {
-        builder
-            .addCase(postStartTimer.fulfilled, (state, action) => {
-                state.currentWorkSessionId = action.payload.id;
-            })
-            .addCase(patchStopTimer.fulfilled, (state, action) => {
-                console.log(action.payload);
-            });
     },
 });
 

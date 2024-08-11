@@ -16,23 +16,6 @@ const transformDailyTasks = (response) => {
     return parsedResponse.map(({ name, time: seconds, color }) => ({ name, seconds, color }));
 };
 
-const parseWeeklyTasks = (response) => {
-    const today = Date.now();
-
-    return response.map(weekDay => {
-        const newTimestamp = new Date(weekDay.day);
-
-        const difference = today - newTimestamp;
-        const millisecondsPerDay = 24 * 60 * 60 * 1000;
-        const daysPassed = Math.floor(
-            difference / millisecondsPerDay,
-        );
-
-        state.days.daysById[daysPassed].colors =
-            weekDay.colors.$values;
-    });
-}
-
 function convertTimeStringToHours(timeString) {
     // Split the time string into components
     const [hours, minutes, seconds] = timeString.split(':');
@@ -131,10 +114,6 @@ const api = createApi({
             transformResponse: (response) => {console.log("Deleted task")},
             invalidatesTags: ['Task']
         }),
-        getWeeklyTasks: build.query({
-            query: (fromDate) => `/Task/weekly/${fromDate}`,
-            transformResponse: (response) => {}
-        }),
         getMonthlyActivity: build.query({
             query: () => `/Task/monthly`,
             transformResponse: (response) => parseMontlyTasks(response.$values)
@@ -160,14 +139,13 @@ const api = createApi({
                     url: `/WorkSession/${workSessionId}`,
                     method: `PATCH`,
                 }},
-            transformResponse: (response) => console.log(response),
             invalidatesTags: ['Daily', 'Task'],
         })
     }),
 });
 
 export const { useGetTasksQuery, useGetDailyTasksQuery, usePostTaskMutation, 
-    useDeleteTaskMutation, useGetWeeklyTasksQuery, useGetMonthlyActivityQuery, 
+    useDeleteTaskMutation, useGetMonthlyActivityQuery, 
     useGetTasksActivityQuery, useGetPastYearTasksQuery, usePostStartTimeStampMutation,
     usePatchStopTimeStampMutation } = api;
 export default api;

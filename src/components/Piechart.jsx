@@ -11,7 +11,7 @@ const Piechart = () => {
 
     return (
         <View style={styles.pieChart}>
-            {!isLoading ? <PieChart
+            {!isLoading  && dailyTasks !== undefined ? <PieChart
                 hasLegend={false}
                 data={dailyTasks}
                 width={Dimensions.get('window').width - 16}

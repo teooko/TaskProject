@@ -5,15 +5,12 @@ import Piechart from '../../components/Piechart';
 import TaskList from './TaskList';
 import {useSelector} from 'react-redux';
 import {useGetDailyTasksQuery} from "../../store/api";
-import {calendarNames} from "../../constants";
-
 const DailyActivity = () => {
     // TODO: Maybe get rid of useSelector?
-    const {selected, days} = useSelector(state => state.calendar);
     const {selectedDate} = useSelector(state => state.tasks);
     const {data: dailyTasks, error, isLoading} = useGetDailyTasksQuery(selectedDate);
     
-    const totalTime = !isLoading
+    const totalTime = !isLoading && dailyTasks !== undefined
         ? dailyTasks.reduce((acc, task) => (acc = acc + task.seconds), 0)
         : null;
     
@@ -22,11 +19,7 @@ const DailyActivity = () => {
             colors={['#E97C6F', '#FFC165']}
             style={styles.dailyActivity}>
             <Text style={styles.dailyActivityLabel}>
-                {selected === 0
-                    ? "Today's Activity"
-                    : `Activity from ${days.daysById[selected].monthDay}th of ${
-                          calendarNames.months[days.daysById[selected].month]
-                      }`}
+                {`Activity from ${selectedDate}`}
             </Text>
             <Text style={styles.timeLabel}>
                 {totalTime
