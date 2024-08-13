@@ -23,9 +23,7 @@ This is a mobile app that allows users to come together and use the Pomodoro Tec
   </tr>
 </table>
 
-
-
-
+You can check out the API in [this repositiory](https://github.com/teooko/TaskProjectBackend).
 
 ### For Android
 
