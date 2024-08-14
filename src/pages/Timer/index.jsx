@@ -55,59 +55,6 @@ function Timer({navigation}) {
         work: "Time to work",
         break: "Time to take a break"
     }
-    useEffect(() => {
-        if(roomWs !== null) {
-            roomWs.onmessage = async (e) => {
-                const data = JSON.parse(e.data);
-                if(e.data === 'connected')
-                    dispatch(fetchGroupSessionData(roomId)).then((response) => {
-                        if(response.payload.userId1)
-                        {
-                            dispatch(getAnotherUserClaims({bearerToken, userId: response.payload.userId1}))
-                        }
-                        if(response.payload.userId2)
-                        {
-                            dispatch(getAnotherUserClaims({bearerToken, userId: response.payload.userId2}))
-                        }
-                        if(response.payload.userId3)
-                        {
-                            dispatch(getAnotherUserClaims({bearerToken, userId: response.payload.userId3}))
-                        }
-                        if(response.payload.userId4)
-                        {
-                            dispatch(getAnotherUserClaims({bearerToken, userId: response.payload.userId4}))
-                        }
-                    })
-                else
-                {
-                    try {
-                        const data = JSON.parse(e.data);
-                        if(data.chat)
-                        {
-                            dispatch(addMessage(data.chat));
-                        }
-                        if(data.control !== null) {
-                            const num = Number(data.control.action);
-
-                            if (data.control.action === "press timer") {
-                                await handlePress();
-                                dispatch(addMessage(data));
-                            } else if (data.control.action === "reset timer") {
-                                await handleReset();
-                                dispatch(addMessage(data));
-                            } else if (!isNaN(num) && Number.isInteger(num)) {
-                                dispatch(setTime(num));
-                                dispatch(addMessage(data));
-                            }
-                        }
-                    }
-                    catch(e) {
-                        console.log(e);
-                    }
-                } 
-            };
-        }
-    }, [timerRunning, userIds]);
     
     const [postStartTimeStamp, result] = usePostStartTimeStampMutation();
     const [patchStopTimeStamp] = usePatchStopTimeStampMutation();
@@ -288,63 +235,13 @@ function Timer({navigation}) {
                     <TimerControls
                         svg={svg}
                         handleSkip={() => {
-                            if(roomWs !== null) {
-                                roomWs.send(JSON.stringify({
-                                    control:
-                                        {
-                                            user: userName,
-                                            action: "skip timer"
-                                        }
-                                }));
-                            }
                             handleSkip();
-                            dispatch(addMessage({
-                                control:
-                                    {
-                                        user: userName,
-                                        action: "skip timer",
-                                    }
-                            }));
                         }}
                         handleReset={() => {
-                            if(roomWs !== null) {
-                                roomWs.send(JSON.stringify({
-                                    control:
-                                        {
-                                            user: userName,
-                                            action: "reset timer"
-                                        }
-                                }));
-                            }
                             handleReset();
-                            dispatch(addMessage({
-                                control:
-                                    {
-                                        user: userName,
-                                        action: "reset timer",
-                                    }
-                            }));
                         }}
                         handlePress={() => {
-                            if(roomWs !== null) {
-                                roomWs.send(JSON.stringify({
-                                    control:
-                                        {
-                                            user: userName,
-                                            action: "press timer",
-                                            timerStatus: timerRunning,
-                                        }
-                                }));
-                            }
                             handlePress();
-                            dispatch(addMessage({
-                                control:
-                                    {
-                                        user: userName,
-                                        action: "press timer",
-                                        timerStatus: timerRunning,
-                                    }
-                            }));
                         }}
                     />
                     </View>
