@@ -14,12 +14,14 @@ const DailyActivity = () => {
         ? dailyTasks.reduce((acc, task) => (acc = acc + task.seconds), 0)
         : null;
     
+    const date = new Date(selectedDate);
+    
     return (
         <LinearGradient
             colors={['#E97C6F', '#FFC165']}
             style={styles.dailyActivity}>
             <Text style={styles.dailyActivityLabel}>
-                {`Activity from ${selectedDate}`}
+                {` ${date.toDateString()} activity`}
             </Text>
             <Text style={styles.timeLabel}>
                 {totalTime
