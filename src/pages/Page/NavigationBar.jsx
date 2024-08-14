@@ -1,10 +1,10 @@
 ﻿import {StyleSheet, View, Text} from 'react-native';
 import {icons} from '../../assets/Icons';
 import * as React from 'react';
-import NavigationButton from '../../components/NavigationButton';
 import {useContext} from "react";
 import {RightDrawerContext} from "./RightDrawer";
 import {useSelector} from "react-redux";
+import NavigationButton from "./NavigationButton";
 const NavigationBar = ({navigation}) => {
     const {menu, profile, speechBubble} = icons;
     const {userIds, newMessagesIndicator} = useSelector(state => state.webSocket);

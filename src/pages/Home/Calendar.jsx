@@ -1,7 +1,6 @@
 ﻿import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import ScrollingCalendar from '../../components/ScrollingCalendar';
-
+import ScrollingCalendar from "./ScrollingCalendar";
 const Calendar = () => {
     return (
         <View style={styles.calendar}>

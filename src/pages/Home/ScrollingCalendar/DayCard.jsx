@@ -1,9 +1,9 @@
 ﻿import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {SvgXml} from 'react-native-svg';
-import {icons} from '../../assets/Icons';
-import {calendarNames} from "../../constants";
-import {setSelectedDate} from "../../store/tasksSlice";
 import {useDispatch} from "react-redux";
+import {setSelectedDate} from "../../../store/tasksSlice";
+import {calendarNames} from "../../../constants";
+import {icons} from "../../../assets/Icons";
 const DayCard = ({props}) => {
     let dayNumber, dayName;
     const date = new Date(props.date);

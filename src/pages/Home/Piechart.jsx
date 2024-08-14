@@ -3,7 +3,7 @@ import {PieChart} from 'react-native-chart-kit';
 import {Dimensions, Text, View} from 'react-native';
 import {StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
-import {useGetDailyTasksQuery} from "../store/api";
+import {useGetDailyTasksQuery} from "../../store/api";
 
 const Piechart = () => {
     const {selectedDate} = useSelector(state => state.tasks);
@@ -24,7 +24,7 @@ const Piechart = () => {
                 backgroundColor="transparent"
                 absolute
                 fromZero
-            /> : <Text>Se incarca boss</Text>}
+            /> : <Text>Se incarca</Text>}
         </View>
     );
 };

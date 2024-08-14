@@ -1,7 +1,7 @@
 ﻿import CalendarStrip from 'react-native-calendar-strip';
 import DayCard from "./DayCard";
-import {useGetPastYearTasksQuery} from "../../store/api";
 import {Text} from "react-native";
+import {useGetPastYearTasksQuery} from "../../../store/api";
 const ScrollingCalendar = () => {
     const {data, isLoading, error} = useGetPastYearTasksQuery();
     const today = new Date();

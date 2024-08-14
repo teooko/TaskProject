@@ -1,10 +1,10 @@
 ﻿import {Pressable, StyleSheet, Text} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import React from 'react';
-import Piechart from '../../components/Piechart';
 import TaskList from './TaskList';
 import {useSelector} from 'react-redux';
 import {useGetDailyTasksQuery} from "../../store/api";
+import Piechart from "./Piechart";
 const DailyActivity = () => {
     // TODO: Maybe get rid of useSelector?
     const {selectedDate} = useSelector(state => state.tasks);

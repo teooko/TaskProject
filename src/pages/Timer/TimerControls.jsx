@@ -1,7 +1,7 @@
-﻿import NavigationButton from '../../components/NavigationButton';
-import {StyleSheet, View} from 'react-native';
+﻿import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {icons} from '../../assets/Icons';
+import NavigationButton from "./NavigationButton";
 
 const TimerControls = ({svg, handleReset, handlePress, handleSkip}) => {
     const {reset, forward} = icons;
