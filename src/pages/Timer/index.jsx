@@ -42,6 +42,7 @@ import {Notifier} from "react-native-notifier";
 import {Easing} from "react-native-reanimated";
 import {useGetTasksQuery, usePatchStopTimeStampMutation, usePostStartTimeStampMutation} from "../../store/api";
 import {patch} from "axios";
+import HorizontalTimer from "./HorizontalTimer";
 
 const {height, width} = Dimensions.get('window');
 function Timer({navigation}) {
@@ -184,24 +185,11 @@ function Timer({navigation}) {
     const {userName} = useSelector(state => state.account);
     return (
         <ScrollView style={{flex: 1, height: "100%"}} contentContainerStyle={{ flexGrow: 1 }}>
-            <View style={{display: "flex", justifyContent: "center", backgroundColor: "black", height: "100%", width: "100%", position: "absolute", zIndex: orientation === "PORTRAIT" ? -2 : 3}}>
-                <StatusBar hidden={orientation !== "PORTRAIT"}/>
-                <CountDown
-                    id={countDownId}
-                    size={100}
-                    until={time}
-                    style={styles.timer}
-                    onFinish={() => handleTimerFinished()}
-                    digitStyle={{width: 200, borderRadius: 20, backgroundColor: '#0F0F0F'}}
-                    digitTxtStyle={{color: 'white'}}
-                    separatorStyle={{color: "white"}}
-                    timeToShow={['H', 'M', 'S']}
-                    timeLabels={{m: null, s: null}}
-                    running={timerRunning}
-                    onPress={() => dispatch(openPicker())}
-                    onChange={(value) => dispatch(setCurrentTime(value))}
-                />
-            </View>
+            <HorizontalTimer countDownId={countDownId} 
+                             orientation={orientation} 
+                             handleTimerFinished={handleTimerFinished} 
+                             time={time}
+                             timerRunning={timerRunning}/>
                 <Page navigation={navigation}>
                     <Picker/>
                     <View style={{position: "absolute", top: 40, left: width / 2 - 150, width: 300, zIndex: 1}}>
