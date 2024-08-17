@@ -5,7 +5,7 @@ import {API_DOMAIN} from "../../config";
 const initialState = {
     currentWorkSessionId: 0,
     currentTaskId: 0,
-    timerRunning: false,
+    timerRunning: null,
     time: null,
     currentTime: 60,
     pickerVisible: false,

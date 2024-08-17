@@ -142,17 +142,19 @@ const api = createApi({
             invalidatesTags: ['Daily', 'Task'],
         }),
         postWorkSession: build.mutation({
-            query: (workSession) => {
-                return {
-                    body: workSession
-                }},
+            query: (workSession) => ({
+                url: `/WorkSession`,
+                method: 'POST',
+                body: workSession,
+            }),
+            //transformResponse: (response) => console.log(response),
             invalidatesTags: ['Daily', 'Task'],
-        })
+        }),
     }),
 });
 
 export const { useGetTasksQuery, useGetDailyTasksQuery, usePostTaskMutation, 
     useDeleteTaskMutation, useGetMonthlyActivityQuery, 
     useGetTasksActivityQuery, useGetPastYearTasksQuery, usePostStartTimeStampMutation,
-    usePatchStopTimeStampMutation, usePostWorkSession } = api;
+    usePatchStopTimeStampMutation, usePostWorkSessionMutation } = api;
 export default api;

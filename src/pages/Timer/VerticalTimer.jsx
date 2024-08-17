@@ -10,11 +10,16 @@ import {icons} from "../../assets/Icons";
 import TimerControls from "./TimerControls";
 import Page from "../Page";
 import {useDispatch, useSelector} from "react-redux";
-import {usePatchStopTimeStampMutation, usePostStartTimeStampMutation} from "../../store/api";
+import {
+    usePatchStopTimeStampMutation,
+    usePostStartTimeStampMutation,
+    usePostWorkSessionMutation
+} from "../../store/api";
 import useTimerAnimation from "../../hooks/useTimerAnimation";
 import {setIsBreak, setReset, setTime, setWorkSessionId, startTimer, stopTimer} from "../../store/timerSlice";
 import {Notifier} from "react-native-notifier";
 import {Easing} from "react-native-reanimated";
+import UseDebounce from "../../hooks/useDebounce";
 
 const {height, width} = Dimensions.get('window');
 const VerticalTimer = ({navigation}) => {
@@ -25,7 +30,8 @@ const VerticalTimer = ({navigation}) => {
 
     const [postStartTimeStamp, result] = usePostStartTimeStampMutation();
     const [patchStopTimeStamp] = usePatchStopTimeStampMutation();
-
+    
+    const [postWorkSession] = usePostWorkSessionMutation();
     const {startTimerAnimation, stopTimerAnimation, resetTimerAnimation, frontWaveStyle, backWaveStyle, riseAnimationStyle} = useTimerAnimation();
     useEffect(() => {
         if(result.data !== undefined)
@@ -41,22 +47,29 @@ const VerticalTimer = ({navigation}) => {
 
     const handleStopTimer = async id => {
         try {
-            await patchStopTimeStamp(id);
+           // await patchStopTimeStamp(id);
         } catch (error) {
             console.error(error);
         }
     };
+    
+    UseDebounce(postWorkSession, 500, timerRunning === false, [{
+        start: "2024-08-17T11:12:28.775Z",
+        end: "2024-08-17T11:12:28.775Z",
+        taskId: 46
+    }]);
+    
     const handlePress = async () => {
         if (!timerRunning) {
             // TODO: get rid of 'dispatch' as we use it everywhere
             dispatch(startTimer());
-            await handleStartTimer(currentTaskId);
+           // await handleStartTimer(currentTaskId);
             startTimerAnimation();
             setSvg(pause);
         } else {
             dispatch(stopTimer());
             stopTimerAnimation();
-            await handleStopTimer(currentWorkSessionId);
+            //await handleStopTimer(currentWorkSessionId);
             setSvg(start);
         }
     };
