@@ -140,6 +140,13 @@ const api = createApi({
                     method: `PATCH`,
                 }},
             invalidatesTags: ['Daily', 'Task'],
+        }),
+        postWorkSession: build.mutation({
+            query: (workSession) => {
+                return {
+                    body: workSession
+                }},
+            invalidatesTags: ['Daily', 'Task'],
         })
     }),
 });
@@ -147,5 +154,5 @@ const api = createApi({
 export const { useGetTasksQuery, useGetDailyTasksQuery, usePostTaskMutation, 
     useDeleteTaskMutation, useGetMonthlyActivityQuery, 
     useGetTasksActivityQuery, useGetPastYearTasksQuery, usePostStartTimeStampMutation,
-    usePatchStopTimeStampMutation } = api;
+    usePatchStopTimeStampMutation, usePostWorkSession } = api;
 export default api;
