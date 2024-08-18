@@ -26,7 +26,7 @@ This is a mobile app that allows users to come together and use the Pomodoro Tec
 You can check out the API in [this repositiory](https://github.com/teooko/TaskProjectBackend).
 
 ### For Android
-
+Make sure you replace the local ip address in the config.js file.
 ```bash
 # using npm
 npm run android
@@ -35,12 +35,3 @@ npm run android
 yarn android
 ```
 
-### For iOS
-
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
