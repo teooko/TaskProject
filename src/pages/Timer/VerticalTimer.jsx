@@ -1,4 +1,4 @@
-﻿import React, {useEffect, useState} from 'react';
+﻿import React, {useEffect, useRef, useState} from 'react';
 import Picker from "./Picker";
 import SelectTask from "./SelectTask";
 import Title from "./Title";
@@ -58,21 +58,28 @@ const VerticalTimer = ({navigation}) => {
         end: "2024-08-17T11:12:28.775Z",
         taskId: 46
     }]);
-    
-    const handlePress = async () => {
-        if (!timerRunning) {
-            // TODO: get rid of 'dispatch' as we use it everywhere
-            dispatch(startTimer());
-           // await handleStartTimer(currentTaskId);
-            startTimerAnimation();
-            setSvg(pause);
-        } else {
-            dispatch(stopTimer());
-            stopTimerAnimation();
-            //await handleStopTimer(currentWorkSessionId);
-            setSvg(start);
+
+    const [pressed, setPressed] = useState(false);
+
+    const timerRef = useRef(null); // Use useRef to persist timer ID
+
+    const toggleTimer = () => {
+        setPressed((state) => !state);
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
         }
+        if(timerRunning) {
+            stopTimerAnimation();
+            dispatch(stopTimer());
+        }
+        else
+            timerRef.current = setTimeout(() => {
+                setPressed(!timerRunning);
+                startTimerAnimation();
+                dispatch(startTimer());
+            }, 500);
     };
+    
 
     const handleReset = () => {
         resetTimerAnimation();
@@ -165,7 +172,7 @@ const VerticalTimer = ({navigation}) => {
                 </Pressable>
 
                 <TimerControls
-                    svg={svg}
+                    svg={pressed ? pause : start}
                     handleSkip={() => {
                         handleSkip();
                     }}
@@ -173,7 +180,7 @@ const VerticalTimer = ({navigation}) => {
                         handleReset();
                     }}
                     handlePress={() => {
-                        handlePress();
+                        toggleTimer();
                     }}
                 />
             </View>
