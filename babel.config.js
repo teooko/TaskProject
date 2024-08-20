@@ -7,5 +7,11 @@ module.exports = {
                 relativeSourceLocation: true,
             },
         ],
+        
     ],
+    env: {
+        development: {
+            plugins: [['@babel/plugin-transform-react-jsx', { runtime: 'classic' }]],
+        },
+    },
 };
